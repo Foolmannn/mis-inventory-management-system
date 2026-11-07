@@ -17,7 +17,7 @@ export default function Dashboard({ total_products, total_categories, total_stoc
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <h2 className='font-bold text-3xl text-red-300'>Hello world</h2>
+                            <h2 className='font-bold text-3xl text-red-300'>Hello world hi </h2>
                         </div>
                     </div>
                 </div>
