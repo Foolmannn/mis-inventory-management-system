@@ -35,3 +35,5 @@ Schemas
         - Total Stock: (total_stock)
         - Low Stock ( no of low stock products): (low_stock_count)
         - Inventory Value (total value of all products in stock): (inventory_value)
+
+    
