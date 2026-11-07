@@ -12,7 +12,41 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::select(
+            'id',
+            'name',
+            'description',
+            'purchase_price',
+            'selling_price',
+            'quantity',
+            'minimum_stock',
+            'category_id'
+        )
+            ->with('category:id,name')
+            ->orderBy('name')
+            ->paginate(20);
+
+
+        $products->getCollection()->each(function ($product) {
+            if ($product->quantity == 0) {
+                $product->status = 'out_of_stock';
+            } elseif ($product->quantity <= $product->minimum_stock) {
+                $product->status = 'low_stock';
+            } else {
+                $product->status = 'in_stock';
+            }
+        });
+
+        // Remove minimum stock from the product object before sending it to the frontend
+        $products->getCollection()->each(function ($product) {
+            unset($product->minimum_stock);
+        });
+
+        // dd($products[0]->toArray()); // show the first product data only
+
+        return inertia('Product/Index', [
+            'products' => $products,
+        ]);
     }
 
     /**

@@ -35,7 +35,10 @@ class DashboardController extends Controller
         $low_stock_count = $productStats->low_stock_count;
         $inventory_value = $productStats->inventory_value ?? 0;
 
-        // dd($total_products, $total_categories, $total_stock, $low_stock_count, $inventory_value, $categoryStatus);
+        // convert $inventory_value to a formatted string with 2 decimal places
+        $inventory_value = number_format($inventory_value, 2);
+
+        // dd($total_products, $total_categories, $total_stock, $low_stock_count, $inventory_value, $categoryStatus->toArray());
 
         return Inertia::render('Dashboard', [
             'total_products' => $total_products,

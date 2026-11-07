@@ -1,9 +1,10 @@
 Schemas
-categories
-id: integer, primary key, auto-increment
-name: string, unique
-created_at: timestamp
-updated_at: timestamp
+    categories
+        id: integer, primary key, auto-increment
+        name: string, unique
+        description: text
+        created_at: timestamp
+        updated_at: timestamp
 
     products
         id: integer, primary key, auto-increment
@@ -49,4 +50,32 @@ updated_at: timestamp
                                 },....
                             ]
 
-    ## Profile Page
+    ## Product/Index page
+        - List of products with pagination (20 per page)
+        - Each product should display:
+            - Id (id) integer
+            - Name (name) string
+            - Description (description) string
+            - Purchase Price (purchase_price) decimal(10, 2)
+            - Selling Price (selling_price) decimal(10, 2)
+            - Quantity (quantity) integer
+            - Minimum Stock (minimum_stock) integer
+            - category ( id:integer, name:string)
+
+                example data:
+                {
+                    "id": 1,
+                    "name": "Mouse",
+                    "description": "...",
+                    "purchase_price": "500.00",
+                    "selling_price": "700.00",
+                    "quantity": 20,
+                    "status": "low_stock", "in stock", "out_of_stock"
+                    "category": {
+                        "id": 2,
+                        "name": "Electronics"
+                    }
+                }
+
+
+
