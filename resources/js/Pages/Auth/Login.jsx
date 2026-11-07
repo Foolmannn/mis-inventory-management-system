@@ -90,18 +90,23 @@ export default function Login({ status, canResetPassword }) {
                         </Link>
                     )}
 
-                    // register link
-                    <Link
-                        href={route('register')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ms-4"
-                    >
-                        Register
-                    </Link>
+
 
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in
                     </PrimaryButton>
                 </div>
+                <div className="mt-4 flex items-center justify-end">
+
+                    {/* // register link */}
+                    <Link
+                        href={route('register')}
+                        className=" w-full text-center text-sm text-gray-500 underline hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                        new user? Register here
+                    </Link>
+                </div>
+
             </form>
         </GuestLayout>
     );
