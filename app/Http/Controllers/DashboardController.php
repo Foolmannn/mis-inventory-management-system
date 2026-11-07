@@ -19,6 +19,15 @@ class DashboardController extends Controller
         SUM(quantity * purchase_price) as inventory_value
         ")->first();
 
+        $categoryStatus = Category::query()
+            ->leftJoin('products', 'categories.id', '=', 'products.category_id')
+            ->select(
+                'categories.name',
+                DB::raw('COALESCE(SUM(products.quantity), 0) as total_stocks')
+            )
+            ->groupBy('categories.id', 'categories.name')
+            ->get();
+
         $total_categories = Category::count();
 
         $total_products = $productStats->total_products;
@@ -26,7 +35,7 @@ class DashboardController extends Controller
         $low_stock_count = $productStats->low_stock_count;
         $inventory_value = $productStats->inventory_value ?? 0;
 
-        // dd($total_products, $total_categories, $total_stock, $low_stock_count, $inventory_value);
+        // dd($total_products, $total_categories, $total_stock, $low_stock_count, $inventory_value, $categoryStatus);
 
         return Inertia::render('Dashboard', [
             'total_products' => $total_products,
@@ -34,6 +43,7 @@ class DashboardController extends Controller
             'total_stock' => $total_stock,
             'low_stock_count' => $low_stock_count,
             'inventory_value' => $inventory_value,
+            'category_status' => $categoryStatus,
         ]);
     }
 }

@@ -1,9 +1,9 @@
 Schemas
-    categories
-        id: integer, primary key, auto-increment
-        name: string, unique
-        created_at: timestamp
-        updated_at: timestamp
+categories
+id: integer, primary key, auto-increment
+name: string, unique
+created_at: timestamp
+updated_at: timestamp
 
     products
         id: integer, primary key, auto-increment
@@ -26,14 +26,27 @@ Schemas
         created_at: timestamp
         updated_at: timestamp
 
-
-
 ## Pages and data to be needed in fronted
+
     Dashboard
         - Total Products: (total_products)
         - Total Categories: (total_categories)
         - Total Stock: (total_stock)
         - Low Stock ( no of low stock products): (low_stock_count)
         - Inventory Value (total value of all products in stock): (inventory_value)
+        - category_status{
+            name: string
+            total_stocks: integer
+        } -> it is an array of objects, 
+                         -> eg:: "category_status": [
+                                {
+                                    "name": "Electronics",
+                                    "total_stocks": 120
+                                },
+                                {
+                                    "name": "Furniture",
+                                    "total_stocks": 45
+                                },....
+                            ]
 
-    
+    ## Profile Page
