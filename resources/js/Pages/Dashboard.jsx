@@ -1,7 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard() {
+export default function Dashboard({ total_products, total_categories, total_stock, low_stock_count, inventory_value }) {
+    console.log('Dashboard props:', { total_products, total_categories, total_stock, low_stock_count, inventory_value });
     return (
         <AuthenticatedLayout
             header={
