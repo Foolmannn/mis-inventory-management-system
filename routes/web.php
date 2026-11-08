@@ -46,8 +46,10 @@ Route::middleware('auth')->group(function () {
 // Category routes for admin users only
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
-    // Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+    Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
     Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/category/{category}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
     // Route::put('/category/{category}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/category/{category}', [CategoryController::class, 'destroy'])->name('category.destroy');
 });
@@ -57,6 +59,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
 // Staff Management routes (only accessible to admin users )
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
+    Route::get('/staff/create', [StaffController::class, 'create'])->name('staff.create');
+    Route::post('/staff', [StaffController::class, 'store'])->name('staff.store');
+    Route::get('/staff/{staff}/edit', [StaffController::class, 'edit'])->name('staff.edit');
+    Route::put('/staff/{staff}', [StaffController::class, 'update'])->name('staff.update');
+    Route::delete('/staff/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy');
 });
 
 
