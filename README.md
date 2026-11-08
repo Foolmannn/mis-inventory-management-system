@@ -99,8 +99,20 @@ Schemas
     ## Pages You need to create in frontend
         - Dashboard
         - Product/Index
-        - Product/Create
-        - Product/Edit -> it gets props 'product' from backend product:
+        - Product/Create -> it gets props 'categories' from backend categories( for dropdown select):
+                                                                    - id: integer
+                                                                    - name: string
+
+                then you will send data to backend by post request to store product:
+                    - name: string
+                    - description: string
+                    - purchase_price: decimal(10, 2)
+                    - selling_price: decimal(10, 2)
+                    - quantity: integer
+                    - minimum_stock: integer
+                    - category_id: integer (selected from dropdown)
+
+        - Product/Edit -> it gets props 'product' and 'categories'(for dropdown select) from backend:
                                                                     - id: integer
                                                                     - name: string
                                                                     - description: string

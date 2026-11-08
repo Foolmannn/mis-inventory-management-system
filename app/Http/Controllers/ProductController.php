@@ -54,15 +54,32 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return inertia('Product/Create');
+        $categories = \App\Models\Category::select('id', 'name')->orderBy('name')->get();
+        return inertia('Product/Create', [
+            'categories' => $categories
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Product $product)
     {
-        //
+        //validate the request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'purchase_price' => 'required|numeric|min:0',
+            'selling_price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+            'minimum_stock' => 'required|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        //create a new product
+        $product = Product::create($validatedData); 
+
+        return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
 
     /**
@@ -78,8 +95,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $categories = \App\Models\Category::select('id', 'name')->orderBy('name')->get();
         return inertia('Product/Edit', [
-            'product' => $product
+            'product' => $product,
+            'categories' => $categories
         ]);
     }
 
@@ -88,7 +107,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        // validate the request data
+        $validatedData = $request->validate([   
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'purchase_price' => 'required|numeric|min:0',
+            'selling_price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
+            'minimum_stock' => 'required|integer|min:0',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        // find the product by id and update it with the validated data
+        $product = Product::findOrFail($product->id);
+        $product->update($validatedData);
+
+        return redirect()->route('product.index')->with('success', 'Product updated successfully.');
     }
 
     /**
@@ -96,6 +130,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        // find the product by id and delete it
+        $product = Product::findOrFail($product->id);
+        $product->delete();
+
+        return redirect()->route('product.index')->with('success', 'Product deleted successfully.');
     }
 }
