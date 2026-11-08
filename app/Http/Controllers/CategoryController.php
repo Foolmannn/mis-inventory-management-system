@@ -17,7 +17,7 @@ class CategoryController extends Controller
             ->orderBy('name')
             ->paginate(20);
 
-        dd($categories[0]->toArray()); // show the first category data only
+        // dd($categories[0]->toArray()); // show the first category data only
 
         return inertia('Category/Index', [
             'categories' => $categories,

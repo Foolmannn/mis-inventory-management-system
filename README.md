@@ -78,4 +78,19 @@ Schemas
                 }
 
 
+    ## Category/Index page
+        - List of categories with pagination (20 per page)
+        - Each category should display:
+            - Id (id) integer
+            - Name (name) string
+            - Description (description) string
+            - Total Products (products_count) integer
 
+
+    ## Staff/Index page
+        - List of staff members with pagination (20 per page)
+        - Each staff member should display:
+            - Id (id) integer
+            - Name (name) string
+            - Email (email) string
+            - Role (role) enum('admin', 'staff')

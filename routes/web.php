@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StaffController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +31,11 @@ Route::middleware('auth')->group(function () {
 // Category routes
 Route::middleware('auth')->group(function () {
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+});
+
+// Staff Management routes (only accessible to admin users )
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/staff', [StaffController::class, 'index'])->name('staff.index');
 });
 
 Route::middleware('auth')->group(function () {
