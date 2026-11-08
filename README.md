@@ -94,3 +94,25 @@ Schemas
             - Name (name) string
             - Email (email) string
             - Role (role) enum('admin', 'staff')
+
+
+    ## Pages You need to create in frontend
+        - Dashboard
+        - Product/Index
+        - Product/Create
+        - Product/Edit -> it gets props 'product' from backend product:
+                                                                    - id: integer
+                                                                    - name: string
+                                                                    - description: string
+                                                                    - purchase_price: decimal(10, 2)
+                                                                    - selling_price: decimal(10, 2)
+                                                                    - quantity: integer
+                                                                    - minimum_stock: integer
+                                                                    - category: object (id: integer, name: string)
+        - Category/Index
+        - Category/Create
+        - Category/Edit -> it gets props 'category' from backend category:
+                                                                    - id: integer
+                                                                    - name: string
+                                                                    - description: string
+        - Staff/Index
