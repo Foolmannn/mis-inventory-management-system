@@ -38,7 +38,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validate the request data 
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name',
+            'description' => 'nullable|string|max:1000',
+        ]);
+
+        //save the category to the database
+        $category = Category::create($validatedData);
+
+        return redirect()->route('category.index')->with('success', 'Category created successfully.');
     }
 
     /**
@@ -64,7 +73,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        //validate the request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'description' => 'nullable|string|max:1000',
+        ]);
+
+        //find the category by id and update it
+        $category = Category::findOrFail($category->id);
+        $category->update($validatedData);
+
+        return redirect()->route('category.index')->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -72,6 +91,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        // find the category by id and delete it
+        $category = Category::findOrFail($category->id);
+        $category->delete();
+
+        return redirect()->route('category.index')->with('success', 'Category deleted successfully.');
     }
 }
