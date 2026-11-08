@@ -18,7 +18,7 @@ class DashboardController extends Controller
         SUM(CASE WHEN quantity <= minimum_stock THEN 1 ELSE 0 END) as low_stock_count,
         SUM(quantity * purchase_price) as inventory_value
         ")->first();
-
+        // dd($productStats->toArray());
         $categoryStatus = Category::query()
             ->leftJoin('products', 'categories.id', '=', 'products.category_id')
             ->select(

@@ -40,14 +40,7 @@ const demoCategoryData = [
     { name: 'Instant', stock: 18, color: 'bg-amber-400' },
 ];
 
-// Format currency in Nepalese Rupees.
-const formatNPR = (amount) => {
-    return new Intl.NumberFormat('en-NP', {
-        style: 'currency',
-        currency: 'NPR',
-        maximumFractionDigits: 0,
-    }).format(Number(amount) || 0);
-};
+
 
 // Reusable icon component.
 function Icon({ name, className = 'h-6 w-6' }) {
@@ -316,7 +309,7 @@ export default function Dashboard({
 
                     <StatCard
                         title="Inventory Value"
-                        value={formatNPR(inventory_value)}
+                        value={`Rs.${inventory_value}`}
                         subtitle="At purchase price"
                         icon="money"
                         iconColor="text-emerald-600"
