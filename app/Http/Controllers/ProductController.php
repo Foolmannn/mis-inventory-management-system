@@ -10,23 +10,73 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    // adding filtering option for porducts based on category, stock status and serch query in ascending and descending order
+    public function index(Request $request)
     {
-        $products = Product::select(
-            'id',
+        $query = Product::query();
+
+        // Filter by category
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Filter by stock status
+        if ($request->filled('stock_status')) {
+            switch ($request->stock_status) {
+                case 'in_stock':
+                    $query->where('quantity', '>', 0);
+                    break;
+
+                case 'low_stock':
+                    $query->whereColumn('quantity', '<=', 'minimum_stock')
+                        ->where('quantity', '>', 0);
+                    break;
+
+                case 'out_of_stock':
+                    $query->where('quantity', 0);
+                    break;
+            }
+        }
+
+        // Search by product name
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Sorting
+        $allowedSorts = [
             'name',
-            'description',
             'purchase_price',
             'selling_price',
             'quantity',
-            'minimum_stock',
-            'category_id'
-        )
+            'created_at',
+        ];
+
+        $sortField = in_array($request->input('sort'), $allowedSorts)
+            ? $request->input('sort')
+            : 'name';
+
+        $sortDirection = $request->input('direction') === 'desc'
+            ? 'desc'
+            : 'asc';
+
+        $products = $query
+            ->select(
+                'id',
+                'name',
+                'description',
+                'purchase_price',
+                'selling_price',
+                'quantity',
+                'minimum_stock',
+                'category_id'
+            )
             ->with('category:id,name')
-            ->orderBy('name')
-            ->paginate(20);
+            ->orderBy($sortField, $sortDirection)
+            ->paginate(20)
+            ->withQueryString();
 
-
+        // Add computed status
         $products->getCollection()->each(function ($product) {
             if ($product->quantity == 0) {
                 $product->status = 'out_of_stock';
@@ -36,13 +86,6 @@ class ProductController extends Controller
                 $product->status = 'in_stock';
             }
         });
-
-        // Remove minimum stock from the product object before sending it to the frontend
-        // $products->getCollection()->each(function ($product) {
-        //     unset($product->minimum_stock);
-        // });
-
-        // dd($products[0]->toArray()); // show the first product data only
 
         return inertia('Product/Index', [
             'products' => $products,
@@ -77,7 +120,7 @@ class ProductController extends Controller
         ]);
 
         //create a new product
-        $product = Product::create($validatedData); 
+        $product = Product::create($validatedData);
 
         return redirect()->route('product.index')->with('success', 'Product created successfully.');
     }
@@ -108,7 +151,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         // validate the request data
-        $validatedData = $request->validate([   
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'purchase_price' => 'required|numeric|min:0',
