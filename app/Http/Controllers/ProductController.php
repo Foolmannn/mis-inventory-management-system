@@ -38,9 +38,9 @@ class ProductController extends Controller
         });
 
         // Remove minimum stock from the product object before sending it to the frontend
-        $products->getCollection()->each(function ($product) {
-            unset($product->minimum_stock);
-        });
+        // $products->getCollection()->each(function ($product) {
+        //     unset($product->minimum_stock);
+        // });
 
         // dd($products[0]->toArray()); // show the first product data only
 
