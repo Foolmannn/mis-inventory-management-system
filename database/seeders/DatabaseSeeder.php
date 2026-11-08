@@ -27,5 +27,7 @@ class DatabaseSeeder extends Seeder
         Category::factory()->count(10)->create();
 
         Product::factory()->count(100)->create();
+
+        $this->call(UserSeeder::class);
     }
 }
