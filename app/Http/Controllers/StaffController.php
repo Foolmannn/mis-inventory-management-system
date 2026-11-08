@@ -16,7 +16,7 @@ class StaffController extends Controller
             ->orderBy('name')
             ->paginate(20);
 
-        dd($staffMembers->toArray()); 
+        // dd($staffMembers->toArray()); 
 
         return inertia('Staff/Index', ['staffMembers' => $staffMembers]);
     }
