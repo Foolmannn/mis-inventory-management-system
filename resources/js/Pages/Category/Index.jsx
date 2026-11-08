@@ -27,7 +27,7 @@ const categoryColors = [
 ];
 
 // Category table.
-function CategoryTable({ categories, canManage }) {
+function CategoryTable({ categories, canManage , openDeleteModal}) {
     if (categories.length === 0) {
         return (
             <div className="px-6 py-20 text-center">
@@ -136,10 +136,10 @@ function CategoryTable({ categories, canManage }) {
                                             className="rounded-lg p-2 text-slate-500 transition hover:bg-indigo-50 hover:text-indigo-600"
                                         >
                                             <MdEdit size={21} />
+                            
                                         </Link>
-                                    </div>
-                                </td>
-                            )}
+
+            {/* Delete button */}
                             <button
                                 type="button"
                                 title="Delete category"
@@ -148,6 +148,9 @@ function CategoryTable({ categories, canManage }) {
                             >
                                 <MdDeleteOutline size={21} />
                             </button>
+                                    </div>
+                                </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>
@@ -296,6 +299,7 @@ const confirmDelete = () => {
                     <CategoryTable
                         categories={filteredCategories}
                         canManage={canManage}
+                        openDeleteModal={openDeleteModal}
                     />
 
                     {/* Pagination */}
