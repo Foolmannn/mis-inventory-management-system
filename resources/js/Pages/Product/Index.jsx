@@ -1,34 +1,9 @@
-// import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-// import { Head } from '@inertiajs/react';
-
-// export default function Product({  }) {
-//     console.log('Product props:', {  });
-//     return (
-//         <AuthenticatedLayout
-//             header={
-//                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-//                     Product
-//                 </h2>
-//             }
-//         >
-//             <Head title="Product" />
-
-//             <div className="py-12">
-//                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-//                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-//                         <div className="p-6 text-gray-900">
-//                             <h2 className='font-bold text-3xl text-red-300'>Hello world product page </h2>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         </AuthenticatedLayout>
-//     );
-// }
-
 import { useMemo, useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import Modal from '@/Components/Modal';
+import DangerButton from '@/Components/DangerButton';
+import SecondaryButton from '@/Components/SecondaryButton';
 
 // Normalize backend stock status.
 function normalizeStatus(status) {
@@ -129,18 +104,18 @@ function formatPrice(price) {
 }
 
 // Product table.
-function ProductTable({ products }) {
-    const handleDelete = (product) => {
-        if (
-            !window.confirm(
-                `Are you sure you want to delete "${product.name}"?`
-            )
-        ) {
-            return;
-        }
+function ProductTable({ products, openDeleteModal }) {
+    // const handleDelete = (product) => {
+    //     if (
+    //         !window.confirm(
+    //             `Are you sure you want to delete "${product.name}"?`
+    //         )
+    //     ) {
+    //         return;
+    //     }
 
-        router.delete(route('products.destroy', product.id));
-    };
+    //     router.delete(route('products.destroy', product.id));
+    // };
 
     if (products.length === 0) {
         return (
@@ -257,14 +232,15 @@ function ProductTable({ products }) {
                                         <Icon name="edit" />
                                     </Link>
 
-                                    {/* <button
-                                        type="button"
-                                        title="Delete product"
-                                        onClick={() => handleDelete(product)}
-                                        className="rounded-lg p-2 text-slate-500 hover:bg-red-50 hover:text-red-600"
-                                    >
-                                        <Icon name="delete" />
-                                    </button> */}
+{/* Delete Button  */}
+                                    <button
+                                            type="button"
+                                            title="Delete product"
+                                            onClick={() => openDeleteModal(product)}
+                                            className="rounded-lg p-2 text-slate-500 hover:bg-red-50 hover:text-red-600"
+                                        >
+                                            <Icon name="delete" />
+                                        </button>
                                 </div>
                             </td>
                         </tr>
@@ -282,6 +258,36 @@ export default function Index({ products, categories = [] }) {
     const [stockFilter, setStockFilter] = useState('all');
     const [showFilters, setShowFilters] = useState(false);
 
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [deleting, setDeleting] = useState(false);
+
+    const openDeleteModal = (product) => {
+        setSelectedProduct(product);
+    };
+
+    const closeDeleteModal = () => {
+        if (deleting) return;
+        setSelectedProduct(null);
+    };
+
+    const confirmDelete = () => {
+        if (!selectedProduct) return;
+
+        setDeleting(true);
+
+        router.delete(
+            route('product.destroy', selectedProduct.id),
+            {
+                preserveScroll: true,
+                onSuccess: () => {
+                    setSelectedProduct(null);
+                },
+                onFinish: () => {
+                    setDeleting(false);
+                },
+            }
+        );
+    };
     // Laravel paginator returns records inside products.data.
     const productList = Array.isArray(products)
         ? products
@@ -461,7 +467,7 @@ export default function Index({ products, categories = [] }) {
                     </div>
 
                     {/* Table */}
-                    <ProductTable products={filteredProducts} />
+                    <ProductTable products={filteredProducts} openDeleteModal={openDeleteModal} />
 
                     {/* Pagination */}
                     {paginationLinks.length > 0 && (
@@ -497,6 +503,50 @@ export default function Index({ products, categories = [] }) {
                     )}
                 </div>
             </div>
+
+            <Modal
+                    show={selectedProduct !== null}
+                    onClose={closeDeleteModal}
+                    maxWidth="md"
+                >
+                    <div className="p-6">
+                        <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+                            <Icon name="delete" className="h-6 w-6" />
+                        </div>
+
+                        <h2 className="text-lg font-bold text-slate-900">
+                            Delete Product?
+                        </h2>
+
+                        <p className="mt-2 text-sm leading-6 text-slate-500">
+                            Are you sure you want to delete{' '}
+                            <span className="font-semibold text-slate-800">
+                                "{selectedProduct?.name}"
+                            </span>
+                            ?
+                        </p>
+
+                        <p className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                            This action cannot be undone.
+                        </p>
+
+                        <div className="mt-6 flex justify-end gap-3">
+                            <SecondaryButton
+                                onClick={closeDeleteModal}
+                                disabled={deleting}
+                            >
+                                Cancel
+                            </SecondaryButton>
+
+                            <DangerButton
+                                onClick={confirmDelete}
+                                disabled={deleting}
+                            >
+                                {deleting ? 'Deleting...' : 'Delete Product'}
+                            </DangerButton>
+                        </div>
+                    </div>
+                </Modal>
         </AuthenticatedLayout>
     );
 }
