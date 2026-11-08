@@ -104,18 +104,8 @@ function formatPrice(price) {
 }
 
 // Product table.
-function ProductTable({ products, openDeleteModal }) {
-    // const handleDelete = (product) => {
-    //     if (
-    //         !window.confirm(
-    //             `Are you sure you want to delete "${product.name}"?`
-    //         )
-    //     ) {
-    //         return;
-    //     }
+function ProductTable({ products, openDeleteModal ,canManage }) {
 
-    //     router.delete(route('products.destroy', product.id));
-    // };
 
     if (products.length === 0) {
         return (
@@ -214,7 +204,7 @@ function ProductTable({ products, openDeleteModal }) {
                             </td>
 
                             {/* Actions */}
-                            <td className="px-5 py-4">
+                            {canManage && (<td className="px-5 py-4">
                                 <div className="flex items-center justify-end gap-1">
                                     {/* <Link
                                         href={route('products.show', product.id)}
@@ -243,6 +233,7 @@ function ProductTable({ products, openDeleteModal }) {
                                         </button>
                                 </div>
                             </td>
+                            )}
                         </tr>
                     ))}
                 </tbody>
@@ -252,7 +243,12 @@ function ProductTable({ products, openDeleteModal }) {
 }
 
 // Main page.
-export default function Index({ products, categories = [] }) {
+export default function Index({ auth,products, categories = [] }) {
+    // Check whether the logged-in user is an admin.
+
+    const user = auth?.user;
+    const canManage = user?.role === 'admin';
+
     const [search, setSearch] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [stockFilter, setStockFilter] = useState('all');
@@ -427,13 +423,14 @@ export default function Index({ products, categories = [] }) {
                         </button>
 
                         {/* Add product */}
-                        <Link
+                        {canManage && (<Link
                             href={route('product.create')}
                             className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
                         >
                             <Icon name="plus" />
                             Add product
                         </Link>
+                        )}
                     </div>
 
                     {/* Advanced filters */}
@@ -467,7 +464,7 @@ export default function Index({ products, categories = [] }) {
                     </div>
 
                     {/* Table */}
-                    <ProductTable products={filteredProducts} openDeleteModal={openDeleteModal} />
+                    <ProductTable products={filteredProducts} openDeleteModal={openDeleteModal} canManage={canManage} />
 
                     {/* Pagination */}
                     {paginationLinks.length > 0 && (
