@@ -11,14 +11,38 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $categories = Category::select('id', 'name', 'description')
-            ->withCount('products')
-            ->orderBy('name')
-            ->paginate(20);
 
-        // dd($categories[0]->toArray()); // show the first category data only
+    public function index(Request $request)
+    {
+        $query = Category::query();
+
+        // Search by category name
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // Sorting
+        $allowedSorts = [
+            'name',
+            'products_count',
+        ];
+
+        $sortField = $request->input('sort', 'name');
+        $sortField = in_array($sortField, $allowedSorts)
+            ? $sortField
+            : 'name';
+
+        $sortDirection = $request->input('direction', 'asc');
+        $sortDirection = $sortDirection === 'desc'
+            ? 'desc'
+            : 'asc';
+
+        $categories = $query
+            ->select('id', 'name', 'description')
+            ->withCount('products')
+            ->orderBy($sortField, $sortDirection)
+            ->paginate(20)
+            ->withQueryString();
 
         return inertia('Category/Index', [
             'categories' => $categories,
