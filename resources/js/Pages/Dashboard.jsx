@@ -27,7 +27,7 @@
 // }
 
 import { useState } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head ,Link } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
 // Temporary chart data.
@@ -345,30 +345,36 @@ export default function Dashboard({
                         </p>
 
                         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-
+                            <Link href={route('product.create')}>
                             <QuickAction
                                 icon="add"
                                 title="Add product"
                                 description="Register a new product"
                             />
-
+                            </Link>
+                            {/* to update */}
+                            <Link href={route('product.create')}> 
                             <QuickAction
                                 icon="update"
                                 title="Update stock"
                                 description="Manage stock quantities"
-                            />
-
+                                />
+                                </Link>
+                            <Link href={route('product.index')}>
                             <QuickAction
                                 icon="products"
                                 title="View products"
                                 description="Browse your inventory"
-                            />
-
+                                />
+                                </Link>
+                                {/* to update */}
+                            <Link href={route('product.create')}>
                             <QuickAction
                                 icon="reports"
                                 title="Open reports"
                                 description="View inventory analytics"
-                            />
+                                />
+                                </Link>
 
                         </div>
                     </div>
