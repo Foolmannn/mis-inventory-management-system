@@ -1,4 +1,9 @@
+import { router } from '@inertiajs/react';
 
+import Modal from '@/Components/Modal';
+import DangerButton from '@/Components/DangerButton';
+import SecondaryButton from '@/Components/SecondaryButton';
+import { MdDeleteOutline } from 'react-icons/md';
 import { useMemo, useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import {
@@ -135,6 +140,14 @@ function CategoryTable({ categories, canManage }) {
                                     </div>
                                 </td>
                             )}
+                            <button
+                                type="button"
+                                title="Delete category"
+                                onClick={() => openDeleteModal(category)}
+                                className="rounded-lg p-2 text-slate-500 transition hover:bg-red-50 hover:text-red-600"
+                            >
+                                <MdDeleteOutline size={21} />
+                            </button>
                         </tr>
                     ))}
                 </tbody>
@@ -146,7 +159,37 @@ function CategoryTable({ categories, canManage }) {
 // Main Categories page.
 export default function Index({ categories, auth }) {
     const [search, setSearch] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(null);
+const [deleting, setDeleting] = useState(false);
 
+const openDeleteModal = (category) => {
+    setSelectedCategory(category);
+};
+
+const closeDeleteModal = () => {
+    if (deleting) return;
+
+    setSelectedCategory(null);
+};
+
+const confirmDelete = () => {
+    if (!selectedCategory) return;
+
+    setDeleting(true);
+
+    router.delete(
+        route('category.destroy', selectedCategory.id),
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                setSelectedCategory(null);
+            },
+            onFinish: () => {
+                setDeleting(false);
+            },
+        }
+    );
+};
     // Support both Laravel paginator and a normal array.
     const categoryList = Array.isArray(categories)
         ? categories
@@ -288,6 +331,60 @@ export default function Index({ categories, auth }) {
                     )}
                 </div>
             </div>
+            
+{/* Delete confirmation modal */}
+<Modal
+    show={selectedCategory !== null}
+    onClose={closeDeleteModal}
+    maxWidth="md"
+>
+    <div className="p-6">
+
+        {/* Warning icon */}
+        <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+            <MdDeleteOutline size={27} />
+        </div>
+
+        {/* Modal heading */}
+        <h2 className="text-lg font-bold text-slate-900">
+            Delete Category?
+        </h2>
+
+        {/* Warning message */}
+        <p className="mt-2 text-sm leading-6 text-slate-500">
+            Are you sure you want to delete the category{' '}
+            <span className="font-semibold text-slate-800">
+                "{selectedCategory?.name}"
+            </span>
+            ?
+        </p>
+
+        <p className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+            This action cannot be undone. Please make sure this category
+            is no longer needed before proceeding.
+        </p>
+
+        {/* Buttons */}
+        <div className="mt-6 flex justify-end gap-3">
+
+            <SecondaryButton
+                onClick={closeDeleteModal}
+                disabled={deleting}
+            >
+                Cancel
+            </SecondaryButton>
+
+            <DangerButton
+                onClick={confirmDelete}
+                disabled={deleting}
+            >
+                {deleting ? 'Deleting...' : 'Delete Category'}
+            </DangerButton>
+
+        </div>
+    </div>
+</Modal>
+
         </AuthenticatedLayout>
     );
 }
