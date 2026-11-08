@@ -81,6 +81,10 @@ class StaffController extends Controller
 
         // find the staff member by id and update their information
         $staffMember = User::findOrFail($id);
+        // Only update password when a new password is provided
+        if (empty($validatedData['password'])) {
+            unset($validatedData['password']);
+        }
         $staffMember->update($validatedData);
 
         return redirect()->route('staff.index')->with('success', 'Staff member updated successfully.');
