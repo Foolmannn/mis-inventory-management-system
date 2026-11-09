@@ -1,5 +1,6 @@
 import { router, useForm } from '@inertiajs/react';
 import { useEffect } from 'react';
+import { RiResetLeftFill } from 'react-icons/ri';
 
 export default function SearchFilters({
   categories,
@@ -101,12 +102,14 @@ export default function SearchFilters({
         </select>
 
         {/* Reset */}
-        <button
-          onClick={resetFilters}
-          className="rounded-lg border px-4 py-2"
-        >
-          Reset
-        </button>
+                  <button
+                            type="button"
+                            onClick={resetFilters}
+                            className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                        >
+                          <RiResetLeftFill size={20}/>
+                            Reset
+                        </button>
 
       </div>
 

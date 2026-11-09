@@ -23,7 +23,7 @@ export default function AuthenticatedLayout({ header, children }) {
             <Sidebar />
 
             {/* Main section */}
-            <div className="ml-[298px] min-h-screen">
+            <div className="ml-[250px] min-h-screen">
 
                 {/* Topbar */}
                 <header className="fixed left-[298px] right-0 top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200 bg-white px-8">

@@ -10,6 +10,7 @@ import {
     MdSettings,
     MdLogout,
     MdInventory2,
+    MdHistoryEdu
 } from 'react-icons/md';
 
 const navigation = [
@@ -36,11 +37,11 @@ const navigation = [
     {
         title: 'Stock History',
         routeName: 'stock-history.index',
-        icon: MdInventory2,
+        icon: MdHistoryEdu,
     },
     {
         title: 'Reports',
-        routeName: null,
+        routeName: 'reports.index',
         icon: MdAssessment,
     },
     {
@@ -88,7 +89,7 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className="fixed inset-y-0 left-0 z-40 flex w-[298px] flex-col border-r border-slate-200 bg-white">
+        <aside className="fixed inset-y-0 left-0 z-40 flex w-[250px] flex-col border-r border-slate-200 bg-white">
 
             {/* Brand */}
             <div className="flex h-32 shrink-0 items-center gap-3 border-b border-slate-100 px-5">

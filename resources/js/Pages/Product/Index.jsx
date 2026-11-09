@@ -1,9 +1,10 @@
-import { useMemo, useState, useRef, useEffect } from "react";
+import {  useState, useRef, useEffect } from "react";
 import { Head, Link, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Modal from "@/Components/Modal";
 import DangerButton from "@/Components/DangerButton";
 import SecondaryButton from "@/Components/SecondaryButton";
+import { RiResetLeftFill } from "react-icons/ri";
 
 // Normalize backend stock status.
 function normalizeStatus(status) {
@@ -72,7 +73,10 @@ function Icon({ name, className = "h-5 w-5" }) {
                 <path d="M3 6h18m-2 0-1 14H6L5 6m4 0V4h6v2m-5 4v6m4-6v6" />
             </>
         ),
-        filter: <path d="M4 5h16l-6.5 8v5l-3 1v-6L4 5Z" />,
+
+
+
+
     };
 
     return (
@@ -141,34 +145,36 @@ function ProductTable({ products, openDeleteModal, canManage }) {
                 </thead>
 
                 <tbody className="divide-y divide-slate-100">
-                    {products.map((product) => (
+                    {products.map((product ,index) => (
                         <tr
                             key={product.id}
                             className="transition hover:bg-slate-50/80"
                         >
                             {/* Product */}
+                     
+                                 
                             <td className="px-5 py-4">
                                 <div className="flex items-center gap-3">
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
                                         <Icon name="box" />
                                     </div>
 
+                                       <p className="mt-0.5 text-xm text-gray-900 font-bold">
+                                            {index+1}.
+                                        </p>
                                     <div className="min-w-0">
                                         <p className="font-semibold text-slate-800">
                                             {product.name}
                                         </p>
 
-                                        <p
+                                        {/* <p
                                             className="mt-0.5 max-w-48 truncate text-xs text-slate-400"
                                             title={product.description}
                                         >
                                             {product.description ||
                                                 "No description"}
-                                        </p>
+                                        </p> */}
 
-                                        <p className="mt-0.5 text-xs text-slate-400">
-                                            ID: {product.id}
-                                        </p>
                                     </div>
                                 </div>
                             </td>
@@ -265,7 +271,6 @@ export default function Index({
 
     const [direction, setDirection] = useState(filters.direction || "asc");
 
-    const [showFilters, setShowFilters] = useState(false);
 
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [deleting, setDeleting] = useState(false);
@@ -359,7 +364,6 @@ export default function Index({
         setStockFilter("all");
         setSort("name");
         setDirection("asc");
-        setShowFilters(false);
     };
 
     return (
@@ -469,11 +473,12 @@ export default function Index({
                         {/* Advanced filters */}
                         <button
                             type="button"
-                            onClick={() => setShowFilters(!showFilters)}
+                            onClick={resetFilters}
                             className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
                         >
-                            <Icon name="filter" />
-                            Filters
+                    <RiResetLeftFill size={20}/>
+
+                            Reset
                         </button>
 
                         {/* Add product */}
@@ -488,22 +493,7 @@ export default function Index({
                         )}
                     </div>
 
-                    {/* Advanced filters */}
-                    {showFilters && (
-                        <div className="flex flex-wrap items-center gap-3 border-t border-slate-100 bg-slate-50 px-5 py-4">
-                            <p className="text-sm font-medium text-slate-600">
-                                Active filters:
-                            </p>
-
-                            <button
-                                type="button"
-                                onClick={resetFilters}
-                                className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
-                            >
-                                Clear all filters
-                            </button>
-                        </div>
-                    )}
+   
 
                     {/* Results summary */}
                     <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 px-5 py-3">

@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\StockManagementController;
+use App\Http\Controllers\ReportsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,6 +38,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/product/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
     Route::put('/product/{product}', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+});
+
+// report route
+Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('/reports', [ReportsController::class, 'index'])
+        ->name('reports.index');
 });
 
 
@@ -87,7 +94,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('stock-history.index');
 });
 
-
+// reports 
+Route::get('/reports', [ReportsController::class, 'index'])
+    ->name('reports.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

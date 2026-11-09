@@ -479,7 +479,7 @@ export default function Dashboard({
                                     />
                                 </Link>
                                 {/* to update */}
-                                <Link href={route("product.create")}>
+                                <Link href={route("stock-management.index")}>
                                     <QuickAction
                                         icon="update"
                                         title="Update stock"
