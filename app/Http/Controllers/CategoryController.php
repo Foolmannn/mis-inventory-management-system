@@ -43,9 +43,14 @@ class CategoryController extends Controller
             ->orderBy($sortField, $sortDirection)
             ->paginate(20)
             ->withQueryString();
-
+// updated to retain the filter values
         return inertia('Category/Index', [
             'categories' => $categories,
+            'filters' => [
+                'search' => $request->input('search', ''),
+                'sort' => $sortField,
+                'direction' => $sortDirection,
+            ],
         ]);
     }
 

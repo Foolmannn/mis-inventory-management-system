@@ -4,7 +4,7 @@ import Modal from '@/Components/Modal';
 import DangerButton from '@/Components/DangerButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import { MdDeleteOutline } from 'react-icons/md';
-import { useMemo, useState } from 'react';
+import { useEffect,useMemo, useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import {
     MdCategory,
@@ -12,6 +12,8 @@ import {
     MdAdd,
     MdEdit,
     MdInventory2,
+        MdArrowUpward,
+    MdArrowDownward,
 } from 'react-icons/md';
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
@@ -160,10 +162,55 @@ function CategoryTable({ categories, canManage , openDeleteModal}) {
 }
 
 // Main Categories page.
-export default function Index({ categories, auth }) {
-    const [search, setSearch] = useState('');
+export default function Index({ categories, auth ,filters={} }) {
+    // const [search, setSearch] = useState('');
+     const [search, setSearch] = useState(filters.search || '');
     const [selectedCategory, setSelectedCategory] = useState(null);
 const [deleting, setDeleting] = useState(false);
+
+
+
+    // Sorting state
+    const [sort, setSort] = useState(filters.sort || 'name');
+    const [direction, setDirection] = useState(
+        filters.direction || 'asc'
+    );
+
+
+    // Send search and sorting parameters to Laravel
+const applyFilters = (newSort, newDirection) => {
+    router.get(
+        route('category.index'),
+        {
+            search: search,
+            sort: newSort,
+            direction: newDirection,
+        },
+        {
+            preserveState: true,
+            preserveScroll: true,
+            replace: true,
+        }
+    );
+};
+
+// dropdown handler
+
+const handleSortChange = (e) => {
+    const newSort = e.target.value;
+
+    setSort(newSort);
+
+    applyFilters(newSort, direction);
+};
+
+const toggleSortDirection = () => {
+    const newDirection = direction === 'asc' ? 'desc' : 'asc';
+
+    setDirection(newDirection);
+
+    applyFilters(sort, newDirection);
+};
 
 const openDeleteModal = (category) => {
     setSelectedCategory(category);
@@ -206,23 +253,45 @@ const confirmDelete = () => {
     const user = auth?.user;
     const canManage = user?.role === 'admin';
 
-    // Search categories.
-    const filteredCategories = useMemo(() => {
-        const searchText = search.toLowerCase().trim();
+    // // Search categories.
+    // const filteredCategories = useMemo(() => {
+    //     const searchText = search.toLowerCase().trim();
 
-        if (!searchText) return categoryList;
+    //     if (!searchText) return categoryList;
 
-        return categoryList.filter((category) => {
-            return (
-                String(category.id).includes(searchText) ||
-                category.name?.toLowerCase().includes(searchText) ||
-                category.description?.toLowerCase().includes(searchText)
-            );
-        });
-    }, [categoryList, search]);
+    //     return categoryList.filter((category) => {
+    //         return (
+    //             String(category.id).includes(searchText) ||
+    //             category.name?.toLowerCase().includes(searchText) ||
+    //             category.description?.toLowerCase().includes(searchText)
+    //         );
+    //     });
+    // }, [categoryList, search]);
 
     const totalCategories =
         categories?.total ?? categoryList.length;
+   
+   
+        // Server-side search with debounce
+useEffect(() => {
+    const timeout = setTimeout(() => {
+        router.get(
+            route('category.index'),
+            {
+                search: search,
+                sort: sort,
+                direction: direction,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            }
+        );
+    }, 400);
+
+    return () => clearTimeout(timeout);
+}, [search]);
 
     return (
         <AuthenticatedLayout
@@ -277,27 +346,68 @@ const confirmDelete = () => {
                         )}
                     </div>
 
-                    {/* Search */}
-                    <div className="border-t border-slate-100 px-6 py-4">
-                        <div className="relative max-w-md">
-                            <MdSearch
-                                size={21}
-                                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-                            />
+{/* Search and Sorting */}
+<div className="border-t border-slate-100 px-6 py-4">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
-                            <input
-                                type="search"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                                placeholder="Search categories..."
-                                className="w-full rounded-lg border border-slate-200 py-2.5 pl-10 pr-4 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-                            />
-                        </div>
-                    </div>
+        {/* Search */}
+        <div className="relative w-full sm:max-w-md">
+            <MdSearch
+                size={21}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            />
+
+            <input
+                type="search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search categories..."
+                className="w-full rounded-lg border border-slate-200 py-2.5 pl-10 pr-4 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+            />
+        </div>
+
+        {/* Sorting */}
+        <div className="flex items-center gap-2">
+
+            <span className="whitespace-nowrap text-sm font-medium text-slate-500">
+                Sort by:
+            </span>
+
+            {/* Sort dropdown */}
+            <select
+                value={sort}
+                onChange={handleSortChange}
+                className="rounded-lg border border-slate-200 bg-white px-7 py-2.5 text-sm text-slate-700 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+            >
+                <option value="name">Category Name </option>
+                <option value="products_count">Product Count</option>
+            </select>
+
+            {/* Sort direction button */}
+            <button
+                type="button"
+                onClick={toggleSortDirection}
+                title={
+                    direction === 'asc'
+                        ? 'Ascending order'
+                        : 'Descending order'
+                }
+                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
+            >
+                {direction === 'asc' ? (
+                    <MdArrowUpward size={20} />
+                ) : (
+                    <MdArrowDownward size={20} />
+                )}
+            </button>
+
+        </div>
+    </div>
+</div>
 
                     {/* Categories table */}
                     <CategoryTable
-                        categories={filteredCategories}
+                        categories={categoryList}
                         canManage={canManage}
                         openDeleteModal={openDeleteModal}
                     />
@@ -317,6 +427,7 @@ const confirmDelete = () => {
                                         key={index}
                                         href={link.url || '#'}
                                         preserveScroll
+                                        preserveState
                                         className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
                                             link.active
                                                 ? 'bg-indigo-600 text-white'
