@@ -34,6 +34,11 @@ const navigation = [
         icon: MdInventory,
     },
     {
+        title: 'Stock History',
+        routeName: 'stock-history.index',
+        icon: MdInventory2,
+    },
+    {
         title: 'Reports',
         routeName: null,
         icon: MdAssessment,

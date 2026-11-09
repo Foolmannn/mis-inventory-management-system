@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StockHistoryController;
 use App\Http\Controllers\StockManagementController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -78,7 +79,13 @@ Route::post('/stock-management/remove', [StockManagementController::class, 'remo
     ->middleware(['auth'])
     ->name('stock-management.remove');
 
-// Stock Management routes (only accessible to admin)
+
+// stock history
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/stock-history', [StockHistoryController::class, 'index'])
+        ->name('stock-history.index');
+});
 
 
 
