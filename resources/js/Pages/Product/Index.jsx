@@ -211,13 +211,7 @@ function ProductTable({ products, openDeleteModal ,canManage }) {
                             {/* Actions */}
                             {canManage && (<td className="px-5 py-4">
                                 <div className="flex items-center justify-end gap-1">
-                                    {/* <Link
-                                        href={route('products.show', product.id)}
-                                        title="View product"
-                                        className="rounded-lg p-2 text-slate-500 hover:bg-indigo-50 hover:text-indigo-600"
-                                    >
-                                        <Icon name="eye" />
-                                    </Link> */}
+
 
                                     <Link
                                         href={route('product.edit', product.id)}

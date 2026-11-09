@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -11,87 +12,102 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     // adding filtering option for porducts based on category, stock status and serch query in ascending and descending order
-    public function index(Request $request)
-    {
-        $query = Product::query();
+public function index(Request $request)
+{
+    $query = Product::query();
 
-        // Filter by category
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->category_id);
+    // Filter by category
+    if ($request->filled('category_id')) {
+        $query->where('category_id', $request->category_id);
+    }
+
+    // Filter by stock status
+    if ($request->filled('stock_status')) {
+        switch ($request->stock_status) {
+            case 'in_stock':
+                $query->whereColumn('quantity', '>', 0);
+                break;
+
+            case 'low_stock':
+                $query->whereColumn('quantity', '<=', 'minimum_stock')
+                    ->where('quantity', '>', 0);
+                break;
+
+            case 'out_of_stock':
+                $query->where('quantity', 0);
+                break;
         }
+    }
 
-        // Filter by stock status
-        if ($request->filled('stock_status')) {
-            switch ($request->stock_status) {
-                case 'in_stock':
-                    $query->where('quantity', '>', 0);
-                    break;
+    // Search by product name
+    if ($request->filled('search')) {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
 
-                case 'low_stock':
-                    $query->whereColumn('quantity', '<=', 'minimum_stock')
-                        ->where('quantity', '>', 0);
-                    break;
+    // Allowed sorting columns
+    $allowedSorts = [
+        'name',
+        'purchase_price',
+        'selling_price',
+        'quantity',
+        'created_at',
+    ];
 
-                case 'out_of_stock':
-                    $query->where('quantity', 0);
-                    break;
-            }
-        }
+    $sortField = in_array($request->input('sort'), $allowedSorts)
+        ? $request->input('sort')
+        : 'name';
 
-        // Search by product name
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        }
+    $sortDirection = $request->input('direction') === 'desc'
+        ? 'desc'
+        : 'asc';
 
-        // Sorting
-        $allowedSorts = [
+    // Fetch products
+    $products = $query
+        ->select(
+            'id',
             'name',
+            'description',
             'purchase_price',
             'selling_price',
             'quantity',
-            'created_at',
-        ];
+            'minimum_stock',
+            'category_id'
+        )
+        ->with('category:id,name')
+        ->orderBy($sortField, $sortDirection)
+        ->paginate(20)
+        ->withQueryString();
 
-        $sortField = in_array($request->input('sort'), $allowedSorts)
-            ? $request->input('sort')
-            : 'name';
+    // Add computed stock status
+    $products->getCollection()->each(function ($product) {
+        if ($product->quantity == 0) {
+            $product->status = 'out_of_stock';
+        } elseif ($product->quantity <= $product->minimum_stock) {
+            $product->status = 'low_stock';
+        } else {
+            $product->status = 'in_stock';
+        }
+    });
 
-        $sortDirection = $request->input('direction') === 'desc'
-            ? 'desc'
-            : 'asc';
+    // Fetch categories for the category dropdown
+    $categories = Category::select('id', 'name')
+        ->orderBy('name')
+        ->get();
 
-        $products = $query
-            ->select(
-                'id',
-                'name',
-                'description',
-                'purchase_price',
-                'selling_price',
-                'quantity',
-                'minimum_stock',
-                'category_id'
-            )
-            ->with('category:id,name')
-            ->orderBy($sortField, $sortDirection)
-            ->paginate(20)
-            ->withQueryString();
+    return inertia('Product/Index', [
+        'products' => $products,
+        'categories' => $categories,
 
-        // Add computed status
-        $products->getCollection()->each(function ($product) {
-            if ($product->quantity == 0) {
-                $product->status = 'out_of_stock';
-            } elseif ($product->quantity <= $product->minimum_stock) {
-                $product->status = 'low_stock';
-            } else {
-                $product->status = 'in_stock';
-            }
-        });
-
-        return inertia('Product/Index', [
-            'products' => $products,
-        ]);
-    }
-
+        // Send current filters to React
+        'filters' => [
+            'search' => $request->input('search', ''),
+            'category_id' => $request->input('category_id', 'all'),
+            'stock_status' => $request->input('stock_status', 'all'),
+            'sort' => $sortField,
+            'direction' => $sortDirection,
+        ],
+    ]);
+}
     /**
      * Show the form for creating a new resource.
      */
