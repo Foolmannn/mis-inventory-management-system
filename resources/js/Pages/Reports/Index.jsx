@@ -130,33 +130,34 @@ function StockStatusChart({ stockStatus }) {
 
     return (
         <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="mb-6">
-                <h3 className="text-base font-semibold text-slate-800">
+            <div className="mb-0">
+                {/* <h3 className="text-base font-semibold text-slate-800">
                     Stock Status
-                </h3>
-                <p className="mt-1 text-sm text-slate-500">
+                </h3> */}
+                <p className=" text-sm text-slate-500">
                     Distribution of product availability
                 </p>
             </div>
 
-            <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-around">
+            <div className="flex flex-col items-center gap-2 sm:flex-row sm:justify-around">
                 <div
-                    className="relative flex h-44 w-44 shrink-0 items-center justify-center rounded-full"
+                    className="relative flex h-24 w-24 shrink-0 items-center justify-center rounded-full "
                     style={{
                         background: total > 0
                             ? `conic-gradient(${gradient.join(', ')})`
                             : '#e2e8f0',
                     }}
                 >
-                    <div className="flex h-28 w-28 flex-col items-center justify-center rounded-full bg-white">
-                        <span className="text-2xl font-bold text-slate-800">
+                    <div className="flex h-10 w-10 flex-col items-center justify-center rounded-full bg-white">
+                        <span className="text-sm font-bold text-slate-800">
                             {formatNumber(total)}
                         </span>
                         <span className="text-xs text-slate-400">
-                            Products
+                            {/* Products */}
                         </span>
                     </div>
                 </div>
+
 
                 <div className="w-full space-y-4">
                     {stockStatus.map((item) => (
@@ -184,7 +185,9 @@ function StockStatusChart({ stockStatus }) {
                         </div>
                     ))}
                 </div>
+                
             </div>
+            
         </div>
     );
 }
@@ -211,7 +214,7 @@ function DonutChart({
     formatter,
     renderDetails,
 }) {
-    console.log(data)
+    // console.log(data)
     const total = data.reduce(
         (sum, item) => sum + Number(item[valueKey] || 0),
         0
@@ -268,7 +271,7 @@ function DonutChart({
                     </div>
 
                     {/* Legend */}
-                    <div className="max-h-64 w-full space-y-4 overflow-y-auto">
+                    <div className="max-h-64 w-full space-y-4 overflow-y-auto ml-20 mr-20">
                         {chartData.map((item, index) => (
                             <div
                                 key={item.id}
@@ -282,8 +285,8 @@ function DonutChart({
                                     }}
                                 />
 
-                                <div className="min-w-0 flex-1">
-                                    <div className="flex items-start justify-between gap-2">
+                                <div className="min-w-0 flex-1 ">
+                                    <div className="flex items-start justify-between gap-2 mr-10">
                                         <span className="truncate text-sm font-medium text-slate-700">
                                             {item.name}
                                         </span>
@@ -292,12 +295,12 @@ function DonutChart({
                                             {formatter(item[valueKey])}
                                         </span>
                                     </div>
+                                        {renderDetails && (
+                                            <span className="mt-1">
+                                                {renderDetails(item)}
+                                            </span>
+                                        )}
 
-                                    {renderDetails && (
-                                        <div className="mt-1">
-                                            {renderDetails(item)}
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         ))}
@@ -397,16 +400,16 @@ export default function Index({
         }
     };
     const total_category = categories.length
-//     console.log({
-//     stats,
-//     stock_by_category,
-//     stock_status,
-//     value_by_category,
-//     products,
-//     categories,
-//     filters ,
-//     product_value_chart ,
-// })
+    console.log({
+    stats,
+    stock_by_category,
+    stock_status,
+    value_by_category,
+    products,
+    categories,
+    filters ,
+    product_value_chart ,
+})
     return (
         <AuthenticatedLayout>
             <Head title="Inventory Reports" />
@@ -436,15 +439,17 @@ export default function Index({
                 </div>
 
                 {/* Summary Cards */}
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-5">
-                    <SummaryCard
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-5">
+                    {/* <SummaryCard
                         title="Total Products"
                         value={formatNumber(stats.total_products)}
                         subtitle="Registered products"
                         icon="📦"
                         color="indigo"
-                    />
-
+                    /> */}
+                        <StockStatusChart
+                            stockStatus={stock_status}
+                        />
                     <SummaryCard
                         title="Total Stock"
                         value={formatNumber(stats.total_stock)}
@@ -481,10 +486,11 @@ export default function Index({
                         icon="💹"
                         color="emerald"
                     />
+
                 </div>
 
 {/* Inventory Analytics */}
-<div className="mt-7 grid grid-cols-1 gap-6 xl:grid-cols-2">
+<div className="mt-7 grid grid-cols-1 gap-6 xl:grid-cols-1">
 
     {/* Category-wise Inventory */}
     <DonutChart
@@ -523,10 +529,7 @@ export default function Index({
         formatter={formatCurrency}
     />
 
-    {/* Stock Status */}
-    <StockStatusChart
-        stockStatus={stock_status}
-    />
+
 
 </div>
 
@@ -748,24 +751,7 @@ export default function Index({
                     )}
                 </div>
 
-                {/* Additional Valuation Summary */}
-                <div className="mt-6 rounded-xl border border-indigo-100 bg-indigo-50 p-5">
-                    <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
-                        <div>
-                            <h3 className="font-semibold text-indigo-900">
-                                Potential Selling Value
-                            </h3>
 
-                            <p className="mt-1 text-sm text-indigo-700">
-                                Estimated value if all current stock is sold at its listed selling price.
-                            </p>
-                        </div>
-
-                        <p className="text-xl font-bold text-indigo-900">
-                            {formatCurrency(stats.potential_selling_value)}
-                        </p>
-                    </div>
-                </div>
 
             </div>
         </AuthenticatedLayout>
