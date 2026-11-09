@@ -1,23 +1,22 @@
+import { Head, Link, useForm } from "@inertiajs/react";
 
-import { Head, Link, useForm } from '@inertiajs/react';
-
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function Edit({ category }) {
     const { data, setData, put, processing, errors } = useForm({
-        name: category.name || '',
-        description: category.description || '',
+        name: category.name || "",
+        description: category.description || "",
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        put(route('category.update', category.id));
+        put(route("category.update", category.id));
     };
 
     return (
@@ -27,7 +26,7 @@ export default function Edit({ category }) {
                     <span className="text-slate-400">MyStore</span>
                     <span className="text-slate-300">›</span>
                     <Link
-                        href={route('category.index')}
+                        href={route("category.index")}
                         className="text-slate-500 hover:text-indigo-600"
                     >
                         Categories
@@ -42,7 +41,6 @@ export default function Edit({ category }) {
             <Head title={`Edit ${category.name}`} />
 
             <div className="min-h-screen bg-slate-50 px-5 py-8 sm:px-8">
-
                 {/* Heading */}
                 <div className="mb-7">
                     <h1 className="text-3xl font-bold text-slate-900">
@@ -56,7 +54,6 @@ export default function Edit({ category }) {
 
                 {/* Form card */}
                 <div className="max-w-3xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-
                     <div className="border-b border-slate-100 px-6 py-5">
                         <h2 className="text-lg font-bold text-slate-900">
                             Category Information
@@ -68,9 +65,7 @@ export default function Edit({ category }) {
                     </div>
 
                     <form onSubmit={submit}>
-
                         <div className="space-y-6 p-6">
-
                             {/* Name */}
                             <div>
                                 <InputLabel
@@ -85,7 +80,7 @@ export default function Edit({ category }) {
                                     value={data.name}
                                     className="mt-2 block w-full"
                                     onChange={(e) =>
-                                        setData('name', e.target.value)
+                                        setData("name", e.target.value)
                                     }
                                     required
                                 />
@@ -108,7 +103,7 @@ export default function Edit({ category }) {
                                     name="description"
                                     value={data.description}
                                     onChange={(e) =>
-                                        setData('description', e.target.value)
+                                        setData("description", e.target.value)
                                     }
                                     rows={5}
                                     placeholder="Describe this category..."
@@ -124,15 +119,14 @@ export default function Edit({ category }) {
 
                         {/* Actions */}
                         <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
-
-                            <Link href={route('category.index')}>
+                            <Link href={route("category.index")}>
                                 <SecondaryButton type="button">
                                     Cancel
                                 </SecondaryButton>
                             </Link>
 
                             <PrimaryButton disabled={processing}>
-                                {processing ? 'Updating...' : 'Update Category'}
+                                {processing ? "Updating..." : "Update Category"}
                             </PrimaryButton>
                         </div>
                     </form>

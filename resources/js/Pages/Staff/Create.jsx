@@ -1,25 +1,24 @@
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, useForm } from "@inertiajs/react";
 
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function Create() {
     const { data, setData, post, processing, errors } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-        role: 'staff',
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+        role: "staff",
     });
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('staff.store'));
+        post(route("staff.store"));
     };
 
     return (
@@ -34,11 +33,10 @@ export default function Create() {
 
             <div className="py-8">
                 <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-
                     {/* Breadcrumb */}
                     <div className="mb-6 flex items-center gap-2 text-sm">
                         <Link
-                            href={route('staff.index')}
+                            href={route("staff.index")}
                             className="text-gray-500 hover:text-indigo-600"
                         >
                             Staff Management
@@ -59,12 +57,12 @@ export default function Create() {
                             </h3>
 
                             <p className="mt-1 text-sm text-gray-500">
-                                Create a new employee account and assign their role.
+                                Create a new employee account and assign their
+                                role.
                             </p>
                         </div>
 
                         <form onSubmit={submit} className="space-y-6 p-6">
-
                             {/* Name */}
                             <div>
                                 <InputLabel htmlFor="name" value="Full Name" />
@@ -74,41 +72,59 @@ export default function Create() {
                                     type="text"
                                     className="mt-1 block w-full"
                                     value={data.name}
-                                    onChange={(e) => setData('name', e.target.value)}
+                                    onChange={(e) =>
+                                        setData("name", e.target.value)
+                                    }
                                     placeholder="Enter full name"
                                     autoComplete="name"
                                     required
                                 />
 
-                                <InputError message={errors.name} className="mt-2" />
+                                <InputError
+                                    message={errors.name}
+                                    className="mt-2"
+                                />
                             </div>
 
                             {/* Email */}
                             <div>
-                                <InputLabel htmlFor="email" value="Email Address" />
+                                <InputLabel
+                                    htmlFor="email"
+                                    value="Email Address"
+                                />
 
                                 <TextInput
                                     id="email"
                                     type="email"
                                     className="mt-1 block w-full"
                                     value={data.email}
-                                    onChange={(e) => setData('email', e.target.value)}
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
                                     placeholder="Enter email address"
                                     autoComplete="email"
                                     required
                                 />
 
-                                <InputError message={errors.email} className="mt-2" />
+                                <InputError
+                                    message={errors.email}
+                                    className="mt-2"
+                                />
                             </div>
 
                             {/* Role */}
                             <div>
-                                <InputLabel htmlFor="role" value="Account Role" />
+                                <InputLabel
+                                    htmlFor="role"
+                                    value="Account Role"
+                                />
 
                                 <select
                                     id="role"
                                     value={data.role}
-                                    onChange={(e) => setData('role', e.target.value)}
+                                    onChange={(e) =>
+                                        setData("role", e.target.value)
+                                    }
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                     required
                                 >
@@ -116,18 +132,24 @@ export default function Create() {
                                     <option value="admin">Admin</option>
                                 </select>
 
-                                <InputError message={errors.role} className="mt-2" />
+                                <InputError
+                                    message={errors.role}
+                                    className="mt-2"
+                                />
 
                                 <p className="mt-1 text-xs text-gray-500">
-                                    Staff accounts have employee access. Admin accounts
-                                    have administrative access.
+                                    Staff accounts have employee access. Admin
+                                    accounts have administrative access.
                                 </p>
                             </div>
 
                             {/* Passwords */}
                             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                 <div>
-                                    <InputLabel htmlFor="password" value="Password" />
+                                    <InputLabel
+                                        htmlFor="password"
+                                        value="Password"
+                                    />
 
                                     <TextInput
                                         id="password"
@@ -135,7 +157,7 @@ export default function Create() {
                                         className="mt-1 block w-full"
                                         value={data.password}
                                         onChange={(e) =>
-                                            setData('password', e.target.value)
+                                            setData("password", e.target.value)
                                         }
                                         placeholder="Enter password"
                                         autoComplete="new-password"
@@ -160,7 +182,10 @@ export default function Create() {
                                         className="mt-1 block w-full"
                                         value={data.password_confirmation}
                                         onChange={(e) =>
-                                            setData('password_confirmation', e.target.value)
+                                            setData(
+                                                "password_confirmation",
+                                                e.target.value,
+                                            )
                                         }
                                         placeholder="Confirm password"
                                         autoComplete="new-password"
@@ -176,14 +201,16 @@ export default function Create() {
 
                             {/* Actions */}
                             <div className="flex items-center justify-end gap-3 border-t border-gray-200 pt-5">
-                                <Link href={route('staff.index')}>
+                                <Link href={route("staff.index")}>
                                     <SecondaryButton type="button">
                                         Cancel
                                     </SecondaryButton>
                                 </Link>
 
                                 <PrimaryButton disabled={processing}>
-                                    {processing ? 'Creating...' : 'Create Account'}
+                                    {processing
+                                        ? "Creating..."
+                                        : "Create Account"}
                                 </PrimaryButton>
                             </div>
                         </form>
