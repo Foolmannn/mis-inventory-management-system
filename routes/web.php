@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StockManagementController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -64,6 +65,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/staff/{staff}', [StaffController::class, 'update'])->name('staff.update');
     Route::delete('/staff/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy');
 });
+
+Route::get('/stock-management', [StockManagementController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('stock-management.index');
+
+Route::post('/stock-management/add', [StockManagementController::class, 'addStock'])
+    ->middleware(['auth', 'admin'])
+    ->name('stock-management.add');
+
+Route::post('/stock-management/remove', [StockManagementController::class, 'removeStock'])
+    ->middleware(['auth'])
+    ->name('stock-management.remove');
+
+// Stock Management routes (only accessible to admin)
 
 
 

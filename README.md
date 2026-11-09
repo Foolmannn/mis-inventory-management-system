@@ -27,6 +27,16 @@ Schemas
         created_at: timestamp
         updated_at: timestamp
 
+    stock_movements
+        id pk
+        product_id fk
+        user_id fk
+        action (enum('add', 'remove'))
+        quantity
+        reason
+        created_at
+        updated_at
+
 ## Pages and data to be needed in fronted
 
     Dashboard
