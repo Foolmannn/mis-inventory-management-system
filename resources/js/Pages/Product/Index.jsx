@@ -137,7 +137,12 @@ function ProductTable({ products, openDeleteModal ,canManage }) {
                         <th className="px-5 py-4">Quantity</th>
                         <th className="px-5 py-4">Min. Stock</th>
                         <th className="px-5 py-4">Status</th>
-                        <th className="px-5 py-4 text-right">Actions</th>
+                
+                        {canManage && (
+                            <th className="px-6 py-4 text-right">
+                                Actions
+                            </th>
+                        )}
                     </tr>
                 </thead>
 
