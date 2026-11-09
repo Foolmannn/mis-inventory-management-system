@@ -39,10 +39,16 @@ public function index(Request $request)
         }
     }
 
-    // Search by product name
-    if ($request->filled('search')) {
-        $query->where('name', 'like', '%' . $request->search . '%');
-    }
+    // Search by product name,id,description
+if ($request->filled('search')) {
+    $search = $request->search;
+
+    $query->where(function ($q) use ($search) {
+        $q->where('name', 'like', "%{$search}%")
+            ->orWhere('description', 'like', "%{$search}%")
+            ->orWhere('id', 'like', "%{$search}%");
+    });
+}
 
     // Allowed sorting columns
     $allowedSorts = [
