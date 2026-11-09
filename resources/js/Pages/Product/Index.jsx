@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState ,useRef,useEffect } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import Modal from '@/Components/Modal';
@@ -242,19 +242,99 @@ function ProductTable({ products, openDeleteModal ,canManage }) {
 }
 
 // Main page.
-export default function Index({ auth,products, categories = [] }) {
-    // Check whether the logged-in user is an admin.
+// export default function Index({ auth,products, categories = [] }) {
+//     // Check whether the logged-in user is an admin.
 
+//     const user = auth?.user;
+//     const canManage = user?.role === 'admin';
+
+//     const [search, setSearch] = useState('');
+//     const [categoryFilter, setCategoryFilter] = useState('all');
+//     const [stockFilter, setStockFilter] = useState('all');
+//     const [showFilters, setShowFilters] = useState(false);
+
+//     const [selectedProduct, setSelectedProduct] = useState(null);
+//     const [deleting, setDeleting] = useState(false);
+
+export default function Index({
+    auth,
+    products,
+    categories = [],
+    filters = {},
+}) {
     const user = auth?.user;
     const canManage = user?.role === 'admin';
 
-    const [search, setSearch] = useState('');
-    const [categoryFilter, setCategoryFilter] = useState('all');
-    const [stockFilter, setStockFilter] = useState('all');
+    // Initialize controls using the filters returned by Laravel
+    const [search, setSearch] = useState(filters.search || '');
+
+    const [categoryFilter, setCategoryFilter] = useState(
+        String(filters.category_id || 'all')
+    );
+
+    const [stockFilter, setStockFilter] = useState(
+        filters.stock_status || 'all'
+    );
+
+    // Sorting states
+    const [sort, setSort] = useState(filters.sort || 'name');
+
+    const [direction, setDirection] = useState(
+        filters.direction || 'asc'
+    );
+
     const [showFilters, setShowFilters] = useState(false);
 
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [deleting, setDeleting] = useState(false);
+
+    // Prevent an unnecessary request when the page first loads
+const lastAppliedFilters = useRef(
+    JSON.stringify({
+        search,
+        categoryFilter,
+        stockFilter,
+        sort,
+        direction,
+    })
+);
+
+useEffect(() => {
+    const currentFilters = JSON.stringify({
+        search,
+        categoryFilter,
+        stockFilter,
+        sort,
+        direction,
+    });
+
+    // Skip if these filters have already been applied
+    if (lastAppliedFilters.current === currentFilters) {
+        return;
+    }
+
+    lastAppliedFilters.current = currentFilters;
+
+    const timeout = setTimeout(() => {
+        router.get(
+            route('product.index'),
+            {
+                search,
+                category_id: categoryFilter === 'all' ? '' : categoryFilter,
+                stock_status: stockFilter === 'all' ? '' : stockFilter,
+                sort,
+                direction,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            }
+        );
+    }, 400);
+
+    return () => clearTimeout(timeout);
+}, [search, categoryFilter, stockFilter, sort, direction]);
 
     const openDeleteModal = (product) => {
         setSelectedProduct(product);
@@ -288,51 +368,22 @@ export default function Index({ auth,products, categories = [] }) {
         ? products
         : products?.data || [];
 
-    // For now, filtering applies to the currently loaded page.
-    // We will move these filters to Laravel for full-dataset searching.
-    const filteredProducts = useMemo(() => {
-        return productList.filter((product) => {
-            const searchText = search.toLowerCase();
 
-            const matchesSearch =
-                String(product.id).includes(searchText) ||
-                product.name?.toLowerCase().includes(searchText) ||
-                product.description?.toLowerCase().includes(searchText);
-
-            const matchesCategory =
-                categoryFilter === 'all' ||
-                String(product.category?.id) === categoryFilter;
-
-            const matchesStock =
-                stockFilter === 'all' ||
-                normalizeStatus(product.status) === stockFilter;
-
-            return matchesSearch && matchesCategory && matchesStock;
-        });
-    }, [productList, search, categoryFilter, stockFilter]);
 
     const paginationLinks = Array.isArray(products?.links)
         ? products.links
         : [];
 
-    const categoryOptions = categories.length
-        ? categories
-        : productList.reduce((result, product) => {
-            if (
-                product.category &&
-                !result.some((item) => item.id === product.category.id)
-            ) {
-                result.push(product.category);
-            }
-            return result;
-        }, []);
+const categoryOptions = categories;
 
-    const resetFilters = () => {
-        setSearch('');
-        setCategoryFilter('all');
-        setStockFilter('all');
-        setShowFilters(false);
-    };
+const resetFilters = () => {
+    setSearch('');
+    setCategoryFilter('all');
+    setStockFilter('all');
+    setSort('name');
+    setDirection('asc');
+    setShowFilters(false);
+};
 
     return (
         <AuthenticatedLayout
@@ -410,6 +461,32 @@ export default function Index({ auth,products, categories = [] }) {
                             <option value="low_stock">Low Stock</option>
                             <option value="out_of_stock">Out of Stock</option>
                         </select>
+{/* Sort field */}
+<select
+    value={sort}
+    onChange={(e) => setSort(e.target.value)}
+    className="rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
+>
+    <option value="name">Name</option>
+    <option value="purchase_price">Purchase Price</option>
+    <option value="selling_price">Selling Price</option>
+    <option value="quantity">Quantity</option>
+    <option value="created_at">Date Created</option>
+</select>
+
+{/* Sort direction */}
+<button
+    type="button"
+    onClick={() =>
+        setDirection((previous) =>
+            previous === 'asc' ? 'desc' : 'asc'
+        )
+    }
+    title={direction === 'asc' ? 'Ascending' : 'Descending'}
+    className="inline-flex items-center justify-center rounded-lg border border-slate-200 px-4 py-3 text-lg font-semibold text-slate-700 transition hover:bg-slate-50"
+>
+    {direction === 'asc' ? '↑' : '↓'}
+</button>
 
                         {/* Advanced filters */}
                         <button
@@ -452,9 +529,15 @@ export default function Index({ auth,products, categories = [] }) {
                     {/* Results summary */}
                     <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 px-5 py-3">
                         <p className="text-sm text-slate-500">
-                            Showing <span className="font-semibold text-slate-800">
-                                {filteredProducts.length}
-                            </span> products on this page
+Showing{' '}
+<span className="font-semibold text-slate-800">
+    {products?.from ?? 0}–{products?.to ?? 0}
+</span>{' '}
+of{' '}
+<span className="font-semibold text-slate-800">
+    {products?.total ?? 0}
+</span>{' '}
+products
                         </p>
 
                         <p className="text-xs text-slate-400">
@@ -463,7 +546,7 @@ export default function Index({ auth,products, categories = [] }) {
                     </div>
 
                     {/* Table */}
-                    <ProductTable products={filteredProducts} openDeleteModal={openDeleteModal} canManage={canManage} />
+                    <ProductTable products={productList} openDeleteModal={openDeleteModal} canManage={canManage} />
 
                     {/* Pagination */}
                     {paginationLinks.length > 0 && (
