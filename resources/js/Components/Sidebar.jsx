@@ -30,7 +30,7 @@ const navigation = [
     },
     {
         title: 'Stock Management',
-        routeName: null,
+        routeName: 'stock-management.index',
         icon: MdInventory,
     },
     {

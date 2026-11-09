@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\StockMovement;
 use Illuminate\Http\Request;
@@ -12,6 +13,10 @@ class StockManagementController extends Controller
 {
     public function index(Request $request)
     {
+        $categories = Category::select('id', 'name')
+            ->orderBy('name')
+            ->get();
+
         $query = Product::query();
 
         // Category filter
@@ -107,7 +112,16 @@ class StockManagementController extends Controller
                 $selectedProduct->status = 'in_stock';
             }
 
-            $stockHistory = StockMovement::with('user:id,name')
+            $stockHistory = StockMovement::select(
+                'id',
+                'product_id',
+                'user_id',
+                'action',
+                'quantity',
+                'reason',
+                'created_at'
+            )
+                ->with('user:id,name')
                 ->where('product_id', $productId)
                 ->latest()
                 ->paginate(10, ['*'], 'history_page')
@@ -116,8 +130,16 @@ class StockManagementController extends Controller
 
         return inertia('StockManagement/Index', [
             'products' => $products,
+            'filters' => [
+                'search' => $request->search,
+                'category_id' => $request->category_id,
+                'stock_status' => $request->stock_status,
+                'sort' => $request->sort,
+                'direction' => $request->direction,
+            ],
             'selectedProduct' => $selectedProduct,
             'stockHistory' => $stockHistory,
+            'categories' => $categories,
         ]);
     }
 
