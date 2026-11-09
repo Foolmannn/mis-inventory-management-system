@@ -117,7 +117,7 @@ function StatCard({
 
 
 
-function InventoryOverview({ categories = [] }) {
+function InventoryOverview({ categories = [] ,isAdmin}) {
     const [currentPage, setCurrentPage] = useState(1);
 
     const ITEMS_PER_PAGE = 10;
@@ -161,7 +161,7 @@ function InventoryOverview({ categories = [] }) {
     ];
 
     return (
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="w-full rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
             {/* Header */}
             <div className="flex flex-wrap items-start justify-between gap-3">
@@ -184,7 +184,7 @@ function InventoryOverview({ categories = [] }) {
             {currentCategories.length > 0 ? (
                 <>
                     <div className="mt-8 overflow-visible">
-                        <div className="flex h-64 items-end gap-4 border-b border-l border-slate-200 px-4 sm:gap-8">
+                    <div className="flex h-64 items-end gap-4 border-b border-l border-slate-200 px-4 sm:gap-8">
 
                             {currentCategories.map((category, index) => {
                                 const stock =
@@ -367,6 +367,7 @@ function QuickAction({ icon, title, description }) {
 }
 
 export default function Dashboard({
+    auth,
     total_products = 0,
     total_categories = 0,
     total_stock = 0,
@@ -378,7 +379,8 @@ export default function Dashboard({
     recent_products = [],
     low_stock_products = [],
 }) {
-
+    const user = auth?.user;
+    const isAdmin = user?.role === 'admin';
      const categories = stock_by_category;
 console.table(stock_by_category);
 
@@ -480,13 +482,15 @@ console.log("Is array:", Array.isArray(stock_by_category));
                 {/* Charts and quick actions */}
                 <div className="mt-7 grid grid-cols-1 gap-6 xl:grid-cols-5">
 
-                    {/* Inventory chart */}
-                    <div className="xl:col-span-3">
-                        <InventoryOverview categories={categories} />
-                    </div>
+    {/* Inventory Chart */}
+    <div className={isAdmin ? "xl:col-span-3" : "xl:col-span-5"}>
+        <InventoryOverview categories={categories} />
+    </div>
 
                     {/* Quick actions */}
-                    <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm xl:col-span-2">
+                    {isAdmin && (
+
+                        <div className="xl:col-span-2">
 
                         <h3 className="text-lg font-semibold text-slate-900">
                             Quick actions
@@ -530,6 +534,7 @@ console.log("Is array:", Array.isArray(stock_by_category));
 
                         </div>
                     </div>
+                    )}
 
                 </div>
             </div>
