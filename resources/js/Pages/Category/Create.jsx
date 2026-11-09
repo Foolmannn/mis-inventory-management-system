@@ -1,23 +1,22 @@
+import { Head, Link, useForm } from "@inertiajs/react";
 
-import { Head, Link, useForm } from '@inertiajs/react';
-
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function Create() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        description: '',
+        name: "",
+        description: "",
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('category.store'), {
+        post(route("category.store"), {
             onSuccess: () => reset(),
         });
     };
@@ -29,7 +28,7 @@ export default function Create() {
                     <span className="text-slate-400">MyStore</span>
                     <span className="text-slate-300">›</span>
                     <Link
-                        href={route('category.index')}
+                        href={route("category.index")}
                         className="text-slate-500 hover:text-indigo-600"
                     >
                         Categories
@@ -44,7 +43,6 @@ export default function Create() {
             <Head title="Add Category" />
 
             <div className="min-h-screen bg-slate-50 px-5 py-8 sm:px-8">
-
                 {/* Page heading */}
                 <div className="mb-7">
                     <h1 className="text-3xl font-bold text-slate-900">
@@ -52,13 +50,13 @@ export default function Create() {
                     </h1>
 
                     <p className="mt-2 text-sm text-slate-500">
-                        Create a new category to organize your inventory products.
+                        Create a new category to organize your inventory
+                        products.
                     </p>
                 </div>
 
                 {/* Form card */}
                 <div className="max-w-3xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-
                     <div className="border-b border-slate-100 px-6 py-5">
                         <h2 className="text-lg font-bold text-slate-900">
                             Category Information
@@ -70,9 +68,7 @@ export default function Create() {
                     </div>
 
                     <form onSubmit={submit}>
-
                         <div className="space-y-6 p-6">
-
                             {/* Category name */}
                             <div>
                                 <InputLabel
@@ -89,7 +85,7 @@ export default function Create() {
                                     placeholder="e.g. Electronics, Groceries"
                                     isFocused
                                     onChange={(e) =>
-                                        setData('name', e.target.value)
+                                        setData("name", e.target.value)
                                     }
                                     required
                                 />
@@ -112,7 +108,7 @@ export default function Create() {
                                     name="description"
                                     value={data.description}
                                     onChange={(e) =>
-                                        setData('description', e.target.value)
+                                        setData("description", e.target.value)
                                     }
                                     rows={5}
                                     placeholder="Describe what types of products belong in this category..."
@@ -125,22 +121,22 @@ export default function Create() {
                                 />
 
                                 <p className="mt-2 text-xs text-slate-400">
-                                    Provide a short description to help identify this category.
+                                    Provide a short description to help identify
+                                    this category.
                                 </p>
                             </div>
                         </div>
 
                         {/* Form actions */}
                         <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
-
-                            <Link href={route('category.index')}>
+                            <Link href={route("category.index")}>
                                 <SecondaryButton type="button">
                                     Cancel
                                 </SecondaryButton>
                             </Link>
 
                             <PrimaryButton disabled={processing}>
-                                {processing ? 'Creating...' : 'Create Category'}
+                                {processing ? "Creating..." : "Create Category"}
                             </PrimaryButton>
                         </div>
                     </form>

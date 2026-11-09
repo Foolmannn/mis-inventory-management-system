@@ -1,12 +1,9 @@
-
-import { Head ,Link } from '@inertiajs/react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { useState } from 'react';
-
-
+import { Head, Link } from "@inertiajs/react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { useState } from "react";
 
 // Reusable icon component.
-function Icon({ name, className = 'h-6 w-6' }) {
+function Icon({ name, className = "h-6 w-6" }) {
     const icons = {
         products: (
             <>
@@ -57,9 +54,7 @@ function Icon({ name, className = 'h-6 w-6' }) {
                 <path d="M8 16V9m5 7V5m5 11v-4" />
             </>
         ),
-        arrow: (
-            <path d="m9 18 6-6-6-6" />
-        ),
+        arrow: <path d="m9 18 6-6-6-6" />,
     };
 
     return (
@@ -94,62 +89,49 @@ function StatCard({
                 <span className="absolute right-5 top-5 h-2.5 w-2.5 rounded-full bg-amber-400" />
             )}
 
-            <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${iconBackground} ${iconColor}`}>
+            <div
+                className={`flex h-12 w-12 items-center justify-center rounded-xl ${iconBackground} ${iconColor}`}
+            >
                 <Icon name={icon} className="h-6 w-6" />
             </div>
 
-            <p className="mt-5 text-base font-medium text-slate-500">
-                {title}
-            </p>
+            <p className="mt-5 text-base font-medium text-slate-500">{title}</p>
 
             <h3 className="mt-1 pr-10 text-3xl font-bold tracking-tight text-slate-950">
                 {value}
             </h3>
 
-            <p className="mt-2 text-sm text-slate-400">
-                {subtitle}
-            </p>
+            <p className="mt-2 text-sm text-slate-400">{subtitle}</p>
         </div>
     );
 }
 
 // Inventory chart.
 
-
-
-function InventoryOverview({ categories = [] ,isAdmin}) {
+function InventoryOverview({ categories = [], isAdmin }) {
     const [currentPage, setCurrentPage] = useState(1);
 
     const ITEMS_PER_PAGE = 10;
 
-    const validCategories = Array.isArray(categories)
-        ? categories
-        : [];
+    const validCategories = Array.isArray(categories) ? categories : [];
 
-    const totalPages = Math.ceil(
-        validCategories.length / ITEMS_PER_PAGE
-    );
+    const totalPages = Math.ceil(validCategories.length / ITEMS_PER_PAGE);
 
     // Keep page valid if categories change
-    const safePage = Math.min(
-        currentPage,
-        Math.max(totalPages, 1)
-    );
+    const safePage = Math.min(currentPage, Math.max(totalPages, 1));
 
     const startIndex = (safePage - 1) * ITEMS_PER_PAGE;
 
     const currentCategories = validCategories.slice(
         startIndex,
-        startIndex + ITEMS_PER_PAGE
+        startIndex + ITEMS_PER_PAGE,
     );
 
     // Use the maximum stock across ALL categories
     // so bar heights remain consistent between pages.
     const maxStock = Math.max(
-        ...validCategories.map(
-            (item) => Number(item.stock) || 0
-        ),
-        1
+        ...validCategories.map((item) => Number(item.stock) || 0),
+        1,
     );
 
     const colors = [
@@ -162,7 +144,6 @@ function InventoryOverview({ categories = [] ,isAdmin}) {
 
     return (
         <div className="w-full rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-
             {/* Header */}
             <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
@@ -184,14 +165,11 @@ function InventoryOverview({ categories = [] ,isAdmin}) {
             {currentCategories.length > 0 ? (
                 <>
                     <div className="mt-8 overflow-visible">
-                    <div className="flex h-64 items-end gap-4 border-b border-l border-slate-200 px-4 sm:gap-8">
-
+                        <div className="flex h-64 items-end gap-4 border-b border-l border-slate-200 px-4 sm:gap-8">
                             {currentCategories.map((category, index) => {
-                                const stock =
-                                    Number(category.stock) || 0;
+                                const stock = Number(category.stock) || 0;
 
-                                const percentage =
-                                    (stock / maxStock) * 100;
+                                const percentage = (stock / maxStock) * 100;
 
                                 return (
                                     <div
@@ -199,11 +177,10 @@ function InventoryOverview({ categories = [] ,isAdmin}) {
                                         className="group relative flex h-full min-w-0 flex-1 flex-col items-center justify-end"
                                     >
                                         {/* Bar area */}
-                               <div className="relative flex w-full flex-1 items-end justify-center">
-
-    {/* Hover tooltip */}
-    <div
-        className="
+                                        <div className="relative flex w-full flex-1 items-end justify-center">
+                                            {/* Hover tooltip */}
+                                            <div
+                                                className="
             pointer-events-none
             absolute
             bottom-full
@@ -226,21 +203,22 @@ function InventoryOverview({ categories = [] ,isAdmin}) {
             group-hover:opacity-100
             group-hover:visible
         "
-    >
-        <p className="font-semibold">
-            {category.name}
-        </p>
+                                            >
+                                                <p className="font-semibold">
+                                                    {category.name}
+                                                </p>
 
-        <p className="mt-1 text-slate-300">
-            Category ID: {category.id}
-        </p>
+                                                <p className="mt-1 text-slate-300">
+                                                    Category ID: {category.id}
+                                                </p>
 
-        <p className="mt-1 font-medium text-emerald-400">
-            Stock: {stock} units
-        </p>
+                                                <p className="mt-1 font-medium text-emerald-400">
+                                                    Stock: {stock} units
+                                                </p>
 
-        {/* Tooltip arrow */}
-        <div className="
+                                                {/* Tooltip arrow */}
+                                                <div
+                                                    className="
             absolute
             left-1/2
             top-full
@@ -248,21 +226,25 @@ function InventoryOverview({ categories = [] ,isAdmin}) {
             border-4
             border-transparent
             border-t-slate-900
-        " />
-    </div>
+        "
+                                                />
+                                            </div>
 
-    {/* Vertical bar */}
-    <div
-        className={`w-full max-w-16 rounded-t-lg ${
-            colors[index % colors.length]
-        } transition-all duration-300 hover:opacity-80`}
-        style={{
-            height: stock > 0
-                ? `${Math.max(percentage, 1.5)}%`
-                : "0%",
-        }}
-    />
-</div>
+                                            {/* Vertical bar */}
+                                            <div
+                                                className={`w-full max-w-16 rounded-t-lg ${
+                                                    colors[
+                                                        index % colors.length
+                                                    ]
+                                                } transition-all duration-300 hover:opacity-80`}
+                                                style={{
+                                                    height:
+                                                        stock > 0
+                                                            ? `${Math.max(percentage, 1.5)}%`
+                                                            : "0%",
+                                                }}
+                                            />
+                                        </div>
 
                                         {/* Category name */}
                                         <span
@@ -284,26 +266,24 @@ function InventoryOverview({ categories = [] ,isAdmin}) {
 
                     {/* Pagination */}
                     <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-
                         <p className="text-xs text-slate-500">
                             Showing{" "}
                             <span className="font-semibold text-slate-700">
                                 {startIndex + 1}–
                                 {Math.min(
                                     startIndex + ITEMS_PER_PAGE,
-                                    validCategories.length
+                                    validCategories.length,
                                 )}
                             </span>{" "}
                             of {validCategories.length} categories
                         </p>
 
                         <div className="flex items-center gap-2">
-
                             <button
                                 type="button"
                                 onClick={() =>
                                     setCurrentPage((page) =>
-                                        Math.max(1, page - 1)
+                                        Math.max(1, page - 1),
                                     )
                                 }
                                 disabled={safePage === 1}
@@ -320,15 +300,16 @@ function InventoryOverview({ categories = [] ,isAdmin}) {
                                 type="button"
                                 onClick={() =>
                                     setCurrentPage((page) =>
-                                        Math.min(totalPages, page + 1)
+                                        Math.min(totalPages, page + 1),
                                     )
                                 }
-                                disabled={safePage === totalPages || totalPages === 0}
+                                disabled={
+                                    safePage === totalPages || totalPages === 0
+                                }
                                 className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 Next
                             </button>
-
                         </div>
                     </div>
                 </>
@@ -343,9 +324,6 @@ function InventoryOverview({ categories = [] ,isAdmin}) {
     );
 }
 
-
-
-
 // Quick action card.
 function QuickAction({ icon, title, description }) {
     return (
@@ -355,12 +333,8 @@ function QuickAction({ icon, title, description }) {
             </div>
 
             <div>
-                <h4 className="font-semibold text-slate-800">
-                    {title}
-                </h4>
-                <p className="mt-1 text-xs text-slate-400">
-                    {description}
-                </p>
+                <h4 className="font-semibold text-slate-800">{title}</h4>
+                <p className="mt-1 text-xs text-slate-400">{description}</p>
             </div>
         </div>
     );
@@ -374,17 +348,17 @@ export default function Dashboard({
     in_stock_count = 0,
     low_stock_count = 0,
     out_of_stock_count = 0,
-    inventory_value = '0.00',
+    inventory_value = "0.00",
     stock_by_category = [],
     recent_products = [],
     low_stock_products = [],
 }) {
     const user = auth?.user;
-    const isAdmin = user?.role === 'admin';
-     const categories = stock_by_category;
-console.table(stock_by_category);
+    const isAdmin = user?.role === "admin";
+    const categories = stock_by_category;
+    console.table(stock_by_category);
 
-console.log("Is array:", Array.isArray(stock_by_category));
+    console.log("Is array:", Array.isArray(stock_by_category));
 
     return (
         <AuthenticatedLayout
@@ -399,7 +373,6 @@ console.log("Is array:", Array.isArray(stock_by_category));
             <Head title="Dashboard" />
 
             <div className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-
                 {/* Page heading */}
                 <div className="mb-7">
                     <h1 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -413,7 +386,6 @@ console.log("Is array:", Array.isArray(stock_by_category));
 
                 {/* Summary cards */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4">
-
                     <StatCard
                         title="Total Products"
                         value={total_products}
@@ -476,66 +448,62 @@ console.log("Is array:", Array.isArray(stock_by_category));
                         iconColor="text-emerald-600"
                         iconBackground="bg-emerald-50"
                     />
-
                 </div>
 
                 {/* Charts and quick actions */}
                 <div className="mt-7 grid grid-cols-1 gap-6 xl:grid-cols-5">
-
-    {/* Inventory Chart */}
-    <div className={isAdmin ? "xl:col-span-3" : "xl:col-span-5"}>
-        <InventoryOverview categories={categories} />
-    </div>
+                    {/* Inventory Chart */}
+                    <div
+                        className={isAdmin ? "xl:col-span-3" : "xl:col-span-5"}
+                    >
+                        <InventoryOverview categories={categories} />
+                    </div>
 
                     {/* Quick actions */}
                     {isAdmin && (
-
                         <div className="xl:col-span-2">
+                            <h3 className="text-lg font-semibold text-slate-900">
+                                Quick actions
+                            </h3>
 
-                        <h3 className="text-lg font-semibold text-slate-900">
-                            Quick actions
-                        </h3>
+                            <p className="mt-1 text-sm text-slate-500">
+                                Common inventory tasks
+                            </p>
 
-                        <p className="mt-1 text-sm text-slate-500">
-                            Common inventory tasks
-                        </p>
-
-                        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                            <Link href={route('product.create')}>
-                            <QuickAction
-                                icon="add"
-                                title="Add product"
-                                description="Register a new product"
-                            />
-                            </Link>
-                            {/* to update */}
-                            <Link href={route('product.create')}> 
-                            <QuickAction
-                                icon="update"
-                                title="Update stock"
-                                description="Manage stock quantities"
-                                />
-                                </Link>
-                            <Link href={route('product.index')}>
-                            <QuickAction
-                                icon="products"
-                                title="View products"
-                                description="Browse your inventory"
-                                />
+                            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                                <Link href={route("product.create")}>
+                                    <QuickAction
+                                        icon="add"
+                                        title="Add product"
+                                        description="Register a new product"
+                                    />
                                 </Link>
                                 {/* to update */}
-                            <Link href={route('product.create')}>
-                            <QuickAction
-                                icon="reports"
-                                title="Open reports"
-                                description="View inventory analytics"
-                                />
+                                <Link href={route("product.create")}>
+                                    <QuickAction
+                                        icon="update"
+                                        title="Update stock"
+                                        description="Manage stock quantities"
+                                    />
                                 </Link>
-
+                                <Link href={route("product.index")}>
+                                    <QuickAction
+                                        icon="products"
+                                        title="View products"
+                                        description="Browse your inventory"
+                                    />
+                                </Link>
+                                {/* to update */}
+                                <Link href={route("product.create")}>
+                                    <QuickAction
+                                        icon="reports"
+                                        title="Open reports"
+                                        description="View inventory analytics"
+                                    />
+                                </Link>
+                            </div>
                         </div>
-                    </div>
                     )}
-
                 </div>
             </div>
         </AuthenticatedLayout>
