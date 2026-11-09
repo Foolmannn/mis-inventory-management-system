@@ -436,7 +436,7 @@ const resetFilters = () => {
                         <select
                             value={categoryFilter}
                             onChange={(e) => setCategoryFilter(e.target.value)}
-                            className="rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
+                            className="rounded-lg border border-slate-200 px-4 py-3 pr-10 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
                         >
                             <option value="all">All categories</option>
 
@@ -454,7 +454,7 @@ const resetFilters = () => {
                         <select
                             value={stockFilter}
                             onChange={(e) => setStockFilter(e.target.value)}
-                            className="rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
+                            className="rounded-lg border border-slate-200 px-4 py-3 pr-10 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
                         >
                             <option value="all">All stock</option>
                             <option value="in_stock">In Stock</option>
@@ -465,7 +465,7 @@ const resetFilters = () => {
 <select
     value={sort}
     onChange={(e) => setSort(e.target.value)}
-    className="rounded-lg border border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
+    className="rounded-lg border pr-10 border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
 >
     <option value="name">Name</option>
     <option value="purchase_price">Purchase Price</option>

@@ -139,7 +139,7 @@ function StatCard({
                 {title}
             </p>
 
-            <h3 className="mt-1 text-3xl font-bold tracking-tight text-slate-950">
+            <h3 className="mt-1 pr-10 text-3xl font-bold tracking-tight text-slate-950">
                 {value}
             </h3>
 
@@ -268,7 +268,7 @@ export default function Dashboard({
                 </div>
 
                 {/* Summary cards */}
-                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-5">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-5">
 
                     <StatCard
                         title="Total Products"
