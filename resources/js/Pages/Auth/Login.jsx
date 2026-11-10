@@ -99,12 +99,12 @@ export default function Login({ status, canResetPassword }) {
                 <div className="mt-4 flex items-center justify-end">
 
                     {/* // register link */}
-                    <Link
+                    {/* <Link
                         href={route('register')}
                         className=" w-full text-center text-sm text-gray-500 underline hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         new user? Register here
-                    </Link>
+                    </Link> */}
                 </div>
 
             </form>

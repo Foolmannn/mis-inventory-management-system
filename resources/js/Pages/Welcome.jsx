@@ -30,17 +30,17 @@ export default function Welcome() {
 
                             <Link
                                 href={route('login')}
-                                className="rounded-lg px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                                className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
                             >
                                 Login
                             </Link>
 
-                            <Link
+                            {/* <Link
                                 href={route('register')}
                                 className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
                             >
                                 Register
-                            </Link>
+                            </Link> */}
 
                         </div>
                     </div>

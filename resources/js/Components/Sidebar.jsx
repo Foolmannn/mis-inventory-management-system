@@ -77,6 +77,9 @@ export default function Sidebar() {
             dashboard: '/dashboard',
             'product.index': '/product',
             'category.index': '/category',
+            'stock-management.index': '/stock-management',
+            'stock-history.index': '/stock-history',
+            'reports.index': '/reports',
             'staff.index': '/staff',
         };
 
