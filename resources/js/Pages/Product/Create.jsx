@@ -1,27 +1,26 @@
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, Link, useForm } from "@inertiajs/react";
 
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
-
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import SecondaryButton from '@/Components/SecondaryButton';
+import InputLabel from "@/Components/InputLabel";
+import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/InputError";
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
 
 export default function Create({ categories = [] }) {
     const { data, setData, post, processing, errors } = useForm({
-        name: '',
-        description: '',
-        purchase_price: '',
-        selling_price: '',
-        category_id: '',
+        name: "",
+        description: "",
+        purchase_price: "",
+        selling_price: "",
+        category_id: "",
         quantity: 0,
         minimum_stock: 0,
     });
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('product.store'));
+        post(route("product.store"));
     };
 
     return (
@@ -36,11 +35,10 @@ export default function Create({ categories = [] }) {
 
             <div className="py-8">
                 <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-
                     {/* Breadcrumb */}
                     <div className="mb-6 flex items-center gap-2 text-sm">
                         <Link
-                            href={route('product.index')}
+                            href={route("product.index")}
                             className="text-gray-500 hover:text-indigo-600"
                         >
                             Products
@@ -62,61 +60,87 @@ export default function Create({ categories = [] }) {
                         </div>
 
                         <form onSubmit={submit} className="space-y-6 p-6">
-
                             {/* Product Name */}
                             <div>
-                                <InputLabel htmlFor="name" value="Product Name" />
+                                <InputLabel
+                                    htmlFor="name"
+                                    value="Product Name"
+                                />
 
                                 <TextInput
                                     id="name"
                                     type="text"
                                     className="mt-1 block w-full"
                                     value={data.name}
-                                    onChange={(e) => setData('name', e.target.value)}
+                                    onChange={(e) =>
+                                        setData("name", e.target.value)
+                                    }
                                     placeholder="Enter product name"
                                     required
                                 />
 
-                                <InputError message={errors.name} className="mt-2" />
+                                <InputError
+                                    message={errors.name}
+                                    className="mt-2"
+                                />
                             </div>
 
                             {/* Description */}
                             <div>
-                                <InputLabel htmlFor="description" value="Description" />
+                                <InputLabel
+                                    htmlFor="description"
+                                    value="Description"
+                                />
 
                                 <textarea
                                     id="description"
                                     rows="4"
                                     value={data.description}
-                                    onChange={(e) => setData('description', e.target.value)}
+                                    onChange={(e) =>
+                                        setData("description", e.target.value)
+                                    }
                                     placeholder="Enter product description"
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 />
 
-                                <InputError message={errors.description} className="mt-2" />
+                                <InputError
+                                    message={errors.description}
+                                    className="mt-2"
+                                />
                             </div>
 
                             {/* Category */}
                             <div>
-                                <InputLabel htmlFor="category_id" value="Category" />
+                                <InputLabel
+                                    htmlFor="category_id"
+                                    value="Category"
+                                />
 
                                 <select
                                     id="category_id"
                                     value={data.category_id}
-                                    onChange={(e) => setData('category_id', e.target.value)}
+                                    onChange={(e) =>
+                                        setData("category_id", e.target.value)
+                                    }
                                     required
                                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                                 >
                                     <option value="">Select a category</option>
 
                                     {categories.map((category) => (
-                                        <option key={category.id} value={category.id}>
+                                        <option
+                                            key={category.id}
+                                            value={category.id}
+                                        >
                                             {category.name}
                                         </option>
                                     ))}
                                 </select>
 
-                                <InputError message={errors.category_id} className="mt-2" />
+                                <InputError
+                                    message={errors.category_id}
+                                    className="mt-2"
+                                />
                             </div>
 
                             {/* Prices */}
@@ -135,7 +159,10 @@ export default function Create({ categories = [] }) {
                                         className="mt-1 block w-full"
                                         value={data.purchase_price}
                                         onChange={(e) =>
-                                            setData('purchase_price', e.target.value)
+                                            setData(
+                                                "purchase_price",
+                                                e.target.value,
+                                            )
                                         }
                                         placeholder="0.00"
                                         required
@@ -161,7 +188,10 @@ export default function Create({ categories = [] }) {
                                         className="mt-1 block w-full"
                                         value={data.selling_price}
                                         onChange={(e) =>
-                                            setData('selling_price', e.target.value)
+                                            setData(
+                                                "selling_price",
+                                                e.target.value,
+                                            )
                                         }
                                         placeholder="0.00"
                                         required
@@ -177,7 +207,10 @@ export default function Create({ categories = [] }) {
                             {/* Stock */}
                             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                 <div>
-                                    <InputLabel htmlFor="quantity" value="Initial Quantity" />
+                                    <InputLabel
+                                        htmlFor="quantity"
+                                        value="Initial Quantity"
+                                    />
 
                                     <TextInput
                                         id="quantity"
@@ -186,7 +219,7 @@ export default function Create({ categories = [] }) {
                                         className="mt-1 block w-full"
                                         value={data.quantity}
                                         onChange={(e) =>
-                                            setData('quantity', e.target.value)
+                                            setData("quantity", e.target.value)
                                         }
                                         required
                                     />
@@ -210,7 +243,10 @@ export default function Create({ categories = [] }) {
                                         className="mt-1 block w-full"
                                         value={data.minimum_stock}
                                         onChange={(e) =>
-                                            setData('minimum_stock', e.target.value)
+                                            setData(
+                                                "minimum_stock",
+                                                e.target.value,
+                                            )
                                         }
                                         required
                                     />
@@ -224,14 +260,16 @@ export default function Create({ categories = [] }) {
 
                             {/* Actions */}
                             <div className="flex items-center justify-end gap-3 border-t border-gray-200 pt-5">
-                                <Link href={route('product.index')}>
+                                <Link href={route("product.index")}>
                                     <SecondaryButton type="button">
                                         Cancel
                                     </SecondaryButton>
                                 </Link>
 
                                 <PrimaryButton disabled={processing}>
-                                    {processing ? 'Creating...' : 'Create Product'}
+                                    {processing
+                                        ? "Creating..."
+                                        : "Create Product"}
                                 </PrimaryButton>
                             </div>
                         </form>

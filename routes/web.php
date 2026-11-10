@@ -5,6 +5,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StockHistoryController;
+use App\Http\Controllers\StockManagementController;
+use App\Http\Controllers\ReportsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -37,6 +40,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
 });
 
+// report route
+Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('/reports', [ReportsController::class, 'index'])
+        ->name('reports.index');
+});
+
 
 
 // Category routes for staff + admin users
@@ -65,7 +74,29 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/staff/{staff}', [StaffController::class, 'destroy'])->name('staff.destroy');
 });
 
+Route::get('/stock-management', [StockManagementController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('stock-management.index');
 
+Route::post('/stock-management/add', [StockManagementController::class, 'addStock'])
+    ->middleware(['auth', 'admin'])
+    ->name('stock-management.add');
+
+Route::post('/stock-management/remove', [StockManagementController::class, 'removeStock'])
+    ->middleware(['auth'])
+    ->name('stock-management.remove');
+
+
+// stock history
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/stock-history', [StockHistoryController::class, 'index'])
+        ->name('stock-history.index');
+});
+
+// reports 
+Route::get('/reports', [ReportsController::class, 'index'])
+    ->name('reports.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

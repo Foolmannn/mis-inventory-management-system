@@ -1,35 +1,35 @@
-import { router } from '@inertiajs/react';
+import { router } from "@inertiajs/react";
 
-import Modal from '@/Components/Modal';
-import DangerButton from '@/Components/DangerButton';
-import SecondaryButton from '@/Components/SecondaryButton';
-import { MdDeleteOutline } from 'react-icons/md';
-import { useEffect,useMemo, useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import Modal from "@/Components/Modal";
+import DangerButton from "@/Components/DangerButton";
+import SecondaryButton from "@/Components/SecondaryButton";
+import { MdDeleteOutline } from "react-icons/md";
+import { useEffect, useMemo, useState } from "react";
+import { Head, Link } from "@inertiajs/react";
 import {
     MdCategory,
     MdSearch,
     MdAdd,
     MdEdit,
     MdInventory2,
-        MdArrowUpward,
+    MdArrowUpward,
     MdArrowDownward,
-} from 'react-icons/md';
+} from "react-icons/md";
 
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 
 // Different icon colors for category rows.
 const categoryColors = [
-    'bg-blue-50 text-blue-600',
-    'bg-orange-50 text-orange-600',
-    'bg-purple-50 text-purple-600',
-    'bg-cyan-50 text-cyan-600',
-    'bg-rose-50 text-rose-600',
-    'bg-emerald-50 text-emerald-600',
+    "bg-blue-50 text-blue-600",
+    "bg-orange-50 text-orange-600",
+    "bg-purple-50 text-purple-600",
+    "bg-cyan-50 text-cyan-600",
+    "bg-rose-50 text-rose-600",
+    "bg-emerald-50 text-emerald-600",
 ];
 
 // Category table.
-function CategoryTable({ categories, canManage , openDeleteModal}) {
+function CategoryTable({ categories, canManage, openDeleteModal }) {
     if (categories.length === 0) {
         return (
             <div className="px-6 py-20 text-center">
@@ -51,7 +51,6 @@ function CategoryTable({ categories, canManage , openDeleteModal}) {
     return (
         <div className="overflow-x-auto">
             <table className="w-full min-w-[750px] text-left">
-
                 {/* Table headings */}
                 <thead className="bg-slate-50">
                     <tr className="border-y border-slate-100 text-xs font-semibold uppercase tracking-wide text-slate-500">
@@ -60,9 +59,7 @@ function CategoryTable({ categories, canManage , openDeleteModal}) {
                         <th className="px-6 py-4">Products</th>
 
                         {canManage && (
-                            <th className="px-6 py-4 text-right">
-                                Actions
-                            </th>
+                            <th className="px-6 py-4 text-right">Actions</th>
                         )}
                     </tr>
                 </thead>
@@ -103,9 +100,9 @@ function CategoryTable({ categories, canManage , openDeleteModal}) {
                             <td className="px-6 py-4">
                                 <p
                                     className="max-w-md truncate text-sm text-slate-500"
-                                    title={category.description || ''}
+                                    title={category.description || ""}
                                 >
-                                    {category.description || 'No description'}
+                                    {category.description || "No description"}
                                 </p>
                             </td>
 
@@ -120,8 +117,8 @@ function CategoryTable({ categories, canManage , openDeleteModal}) {
                                     {category.products_count ?? 0}
 
                                     {category.products_count === 1
-                                        ? 'product'
-                                        : 'products'}
+                                        ? "product"
+                                        : "products"}
                                 </span>
                             </td>
 
@@ -131,25 +128,26 @@ function CategoryTable({ categories, canManage , openDeleteModal}) {
                                     <div className="flex justify-end">
                                         <Link
                                             href={route(
-                                                'category.edit',
-                                                category.id
+                                                "category.edit",
+                                                category.id,
                                             )}
                                             title="Edit category"
                                             className="rounded-lg p-2 text-slate-500 transition hover:bg-indigo-50 hover:text-indigo-600"
                                         >
                                             <MdEdit size={21} />
-                            
                                         </Link>
 
-            {/* Delete button */}
-                            <button
-                                type="button"
-                                title="Delete category"
-                                onClick={() => openDeleteModal(category)}
-                                className="rounded-lg p-2 text-slate-500 transition hover:bg-red-50 hover:text-red-600"
-                            >
-                                <MdDeleteOutline size={21} />
-                            </button>
+                                        {/* Delete button */}
+                                        <button
+                                            type="button"
+                                            title="Delete category"
+                                            onClick={() =>
+                                                openDeleteModal(category)
+                                            }
+                                            className="rounded-lg p-2 text-slate-500 transition hover:bg-red-50 hover:text-red-600"
+                                        >
+                                            <MdDeleteOutline size={21} />
+                                        </button>
                                     </div>
                                 </td>
                             )}
@@ -162,74 +160,67 @@ function CategoryTable({ categories, canManage , openDeleteModal}) {
 }
 
 // Main Categories page.
-export default function Index({ categories, auth ,filters={} }) {
+export default function Index({ categories, auth, filters = {} }) {
     // const [search, setSearch] = useState('');
-     const [search, setSearch] = useState(filters.search || '');
+    const [search, setSearch] = useState(filters.search || "");
     const [selectedCategory, setSelectedCategory] = useState(null);
-const [deleting, setDeleting] = useState(false);
-
-
+    const [deleting, setDeleting] = useState(false);
 
     // Sorting state
-    const [sort, setSort] = useState(filters.sort || 'name');
-    const [direction, setDirection] = useState(
-        filters.direction || 'asc'
-    );
-
+    const [sort, setSort] = useState(filters.sort || "name");
+    const [direction, setDirection] = useState(filters.direction || "asc");
 
     // Send search and sorting parameters to Laravel
-const applyFilters = (newSort, newDirection) => {
-    router.get(
-        route('category.index'),
-        {
-            search: search,
-            sort: newSort,
-            direction: newDirection,
-        },
-        {
-            preserveState: true,
-            preserveScroll: true,
-            replace: true,
-        }
-    );
-};
+    const applyFilters = (newSort, newDirection) => {
+        router.get(
+            route("category.index"),
+            {
+                search: search,
+                sort: newSort,
+                direction: newDirection,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+            },
+        );
+    };
 
-// dropdown handler
+    // dropdown handler
 
-const handleSortChange = (e) => {
-    const newSort = e.target.value;
+    const handleSortChange = (e) => {
+        const newSort = e.target.value;
 
-    setSort(newSort);
+        setSort(newSort);
 
-    applyFilters(newSort, direction);
-};
+        applyFilters(newSort, direction);
+    };
 
-const toggleSortDirection = () => {
-    const newDirection = direction === 'asc' ? 'desc' : 'asc';
+    const toggleSortDirection = () => {
+        const newDirection = direction === "asc" ? "desc" : "asc";
 
-    setDirection(newDirection);
+        setDirection(newDirection);
 
-    applyFilters(sort, newDirection);
-};
+        applyFilters(sort, newDirection);
+    };
 
-const openDeleteModal = (category) => {
-    setSelectedCategory(category);
-};
+    const openDeleteModal = (category) => {
+        setSelectedCategory(category);
+    };
 
-const closeDeleteModal = () => {
-    if (deleting) return;
+    const closeDeleteModal = () => {
+        if (deleting) return;
 
-    setSelectedCategory(null);
-};
+        setSelectedCategory(null);
+    };
 
-const confirmDelete = () => {
-    if (!selectedCategory) return;
+    const confirmDelete = () => {
+        if (!selectedCategory) return;
 
-    setDeleting(true);
+        setDeleting(true);
 
-    router.delete(
-        route('category.destroy', selectedCategory.id),
-        {
+        router.delete(route("category.destroy", selectedCategory.id), {
             preserveScroll: true,
             onSuccess: () => {
                 setSelectedCategory(null);
@@ -237,9 +228,8 @@ const confirmDelete = () => {
             onFinish: () => {
                 setDeleting(false);
             },
-        }
-    );
-};
+        });
+    };
     // Support both Laravel paginator and a normal array.
     const categoryList = Array.isArray(categories)
         ? categories
@@ -251,47 +241,30 @@ const confirmDelete = () => {
 
     // Check whether the logged-in user is an admin.
     const user = auth?.user;
-    const canManage = user?.role === 'admin';
+    const canManage = user?.role === "admin";
 
-    // // Search categories.
-    // const filteredCategories = useMemo(() => {
-    //     const searchText = search.toLowerCase().trim();
+    const totalCategories = categories?.total ?? categoryList.length;
 
-    //     if (!searchText) return categoryList;
+    // Server-side search with debounce
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            router.get(
+                route("category.index"),
+                {
+                    search: search,
+                    sort: sort,
+                    direction: direction,
+                },
+                {
+                    preserveState: true,
+                    preserveScroll: true,
+                    replace: true,
+                },
+            );
+        }, 400);
 
-    //     return categoryList.filter((category) => {
-    //         return (
-    //             String(category.id).includes(searchText) ||
-    //             category.name?.toLowerCase().includes(searchText) ||
-    //             category.description?.toLowerCase().includes(searchText)
-    //         );
-    //     });
-    // }, [categoryList, search]);
-
-    const totalCategories =
-        categories?.total ?? categoryList.length;
-   
-   
-        // Server-side search with debounce
-useEffect(() => {
-    const timeout = setTimeout(() => {
-        router.get(
-            route('category.index'),
-            {
-                search: search,
-                sort: sort,
-                direction: direction,
-            },
-            {
-                preserveState: true,
-                preserveScroll: true,
-                replace: true,
-            }
-        );
-    }, 400);
-
-    return () => clearTimeout(timeout);
-}, [search]);
+        return () => clearTimeout(timeout);
+    }, [search]);
 
     return (
         <AuthenticatedLayout
@@ -306,7 +279,6 @@ useEffect(() => {
             <Head title="Categories" />
 
             <div className="min-h-screen bg-slate-50 px-5 py-8 sm:px-8">
-
                 {/* Page heading */}
                 <div className="mb-7">
                     <h1 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -320,10 +292,8 @@ useEffect(() => {
 
                 {/* Main category card */}
                 <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-
                     {/* Card header */}
                     <div className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
-
                         <div>
                             <h2 className="text-lg font-bold text-slate-900">
                                 Product categories
@@ -337,7 +307,7 @@ useEffect(() => {
                         {/* Add category */}
                         {canManage && (
                             <Link
-                                href={route('category.create')}
+                                href={route("category.create")}
                                 className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                                 <MdAdd size={21} />
@@ -346,64 +316,63 @@ useEffect(() => {
                         )}
                     </div>
 
-{/* Search and Sorting */}
-<div className="border-t border-slate-100 px-6 py-4">
-    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    {/* Search and Sorting */}
+                    <div className="border-t border-slate-100 px-6 py-4">
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                            {/* Search */}
+                            <div className="relative w-full sm:max-w-md">
+                                <MdSearch
+                                    size={21}
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                                />
 
-        {/* Search */}
-        <div className="relative w-full sm:max-w-md">
-            <MdSearch
-                size={21}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-            />
+                                <input
+                                    type="search"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    placeholder="Search categories..."
+                                    className="w-full rounded-lg border border-slate-200 py-2.5 pl-10 pr-4 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                                />
+                            </div>
 
-            <input
-                type="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search categories..."
-                className="w-full rounded-lg border border-slate-200 py-2.5 pl-10 pr-4 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-            />
-        </div>
+                            {/* Sorting */}
+                            <div className="flex items-center gap-2">
+                                <span className="whitespace-nowrap text-sm font-medium text-slate-500">
+                                    Sort by:
+                                </span>
 
-        {/* Sorting */}
-        <div className="flex items-center gap-2">
+                                {/* Sort dropdown */}
+                                <select
+                                    value={sort}
+                                    onChange={handleSortChange}
+                                    className="rounded-lg border border-slate-200 bg-white px-7 py-2.5 text-sm text-slate-700 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                                >
+                                    <option value="name">Category Name </option>
+                                    <option value="products_count">
+                                        Product Count
+                                    </option>
+                                </select>
 
-            <span className="whitespace-nowrap text-sm font-medium text-slate-500">
-                Sort by:
-            </span>
-
-            {/* Sort dropdown */}
-            <select
-                value={sort}
-                onChange={handleSortChange}
-                className="rounded-lg border border-slate-200 bg-white px-7 py-2.5 text-sm text-slate-700 outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
-            >
-                <option value="name">Category Name </option>
-                <option value="products_count">Product Count</option>
-            </select>
-
-            {/* Sort direction button */}
-            <button
-                type="button"
-                onClick={toggleSortDirection}
-                title={
-                    direction === 'asc'
-                        ? 'Ascending order'
-                        : 'Descending order'
-                }
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
-            >
-                {direction === 'asc' ? (
-                    <MdArrowUpward size={20} />
-                ) : (
-                    <MdArrowDownward size={20} />
-                )}
-            </button>
-
-        </div>
-    </div>
-</div>
+                                {/* Sort direction button */}
+                                <button
+                                    type="button"
+                                    onClick={toggleSortDirection}
+                                    title={
+                                        direction === "asc"
+                                            ? "Ascending order"
+                                            : "Descending order"
+                                    }
+                                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-600"
+                                >
+                                    {direction === "asc" ? (
+                                        <MdArrowUpward size={20} />
+                                    ) : (
+                                        <MdArrowDownward size={20} />
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* Categories table */}
                     <CategoryTable
@@ -415,9 +384,8 @@ useEffect(() => {
                     {/* Pagination */}
                     {paginationLinks.length > 0 && (
                         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 px-6 py-4">
-
                             <p className="text-sm text-slate-500">
-                                Page {categories.current_page} of{' '}
+                                Page {categories.current_page} of{" "}
                                 {categories.last_page}
                             </p>
 
@@ -425,20 +393,20 @@ useEffect(() => {
                                 {paginationLinks.map((link, index) => (
                                     <Link
                                         key={index}
-                                        href={link.url || '#'}
+                                        href={link.url || "#"}
                                         preserveScroll
                                         preserveState
                                         className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
                                             link.active
-                                                ? 'bg-indigo-600 text-white'
+                                                ? "bg-indigo-600 text-white"
                                                 : link.url
-                                                    ? 'text-slate-600 hover:bg-slate-100'
-                                                    : 'cursor-not-allowed text-slate-300'
+                                                  ? "text-slate-600 hover:bg-slate-100"
+                                                  : "cursor-not-allowed text-slate-300"
                                         }`}
                                     >
                                         {link.label
-                                            .replace(/&laquo;/g, '«')
-                                            .replace(/&raquo;/g, '»')}
+                                            .replace(/&laquo;/g, "«")
+                                            .replace(/&raquo;/g, "»")}
                                     </Link>
                                 ))}
                             </div>
@@ -446,60 +414,56 @@ useEffect(() => {
                     )}
                 </div>
             </div>
-            
-{/* Delete confirmation modal */}
-<Modal
-    show={selectedCategory !== null}
-    onClose={closeDeleteModal}
-    maxWidth="md"
->
-    <div className="p-6">
 
-        {/* Warning icon */}
-        <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
-            <MdDeleteOutline size={27} />
-        </div>
-
-        {/* Modal heading */}
-        <h2 className="text-lg font-bold text-slate-900">
-            Delete Category?
-        </h2>
-
-        {/* Warning message */}
-        <p className="mt-2 text-sm leading-6 text-slate-500">
-            Are you sure you want to delete the category{' '}
-            <span className="font-semibold text-slate-800">
-                "{selectedCategory?.name}"
-            </span>
-            ?
-        </p>
-
-        <p className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">
-            This action cannot be undone. Please make sure this category
-            is no longer needed before proceeding.
-        </p>
-
-        {/* Buttons */}
-        <div className="mt-6 flex justify-end gap-3">
-
-            <SecondaryButton
-                onClick={closeDeleteModal}
-                disabled={deleting}
+            {/* Delete confirmation modal */}
+            <Modal
+                show={selectedCategory !== null}
+                onClose={closeDeleteModal}
+                maxWidth="md"
             >
-                Cancel
-            </SecondaryButton>
+                <div className="p-6">
+                    {/* Warning icon */}
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+                        <MdDeleteOutline size={27} />
+                    </div>
 
-            <DangerButton
-                onClick={confirmDelete}
-                disabled={deleting}
-            >
-                {deleting ? 'Deleting...' : 'Delete Category'}
-            </DangerButton>
+                    {/* Modal heading */}
+                    <h2 className="text-lg font-bold text-slate-900">
+                        Delete Category?
+                    </h2>
 
-        </div>
-    </div>
-</Modal>
+                    {/* Warning message */}
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                        Are you sure you want to delete the category{" "}
+                        <span className="font-semibold text-slate-800">
+                            "{selectedCategory?.name}"
+                        </span>
+                        ?
+                    </p>
 
+                    <p className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                        This action cannot be undone. Please make sure this
+                        category is no longer needed before proceeding.
+                    </p>
+
+                    {/* Buttons */}
+                    <div className="mt-6 flex justify-end gap-3">
+                        <SecondaryButton
+                            onClick={closeDeleteModal}
+                            disabled={deleting}
+                        >
+                            Cancel
+                        </SecondaryButton>
+
+                        <DangerButton
+                            onClick={confirmDelete}
+                            disabled={deleting}
+                        >
+                            {deleting ? "Deleting..." : "Delete Category"}
+                        </DangerButton>
+                    </div>
+                </div>
+            </Modal>
         </AuthenticatedLayout>
     );
 }

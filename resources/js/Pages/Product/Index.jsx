@@ -1,15 +1,16 @@
-import { useMemo, useState ,useRef,useEffect } from 'react';
-import { Head, Link, router } from '@inertiajs/react';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import Modal from '@/Components/Modal';
-import DangerButton from '@/Components/DangerButton';
-import SecondaryButton from '@/Components/SecondaryButton';
+import {  useState, useRef, useEffect } from "react";
+import { Head, Link, router } from "@inertiajs/react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import Modal from "@/Components/Modal";
+import DangerButton from "@/Components/DangerButton";
+import SecondaryButton from "@/Components/SecondaryButton";
+import { RiResetLeftFill } from "react-icons/ri";
 
 // Normalize backend stock status.
 function normalizeStatus(status) {
-    return String(status || '')
+    return String(status || "")
         .toLowerCase()
-        .replaceAll(' ', '_');
+        .replaceAll(" ", "_");
 }
 
 // Stock status badge.
@@ -17,31 +18,31 @@ function ProductStatus({ status }) {
     const normalized = normalizeStatus(status);
 
     const styles = {
-        in_stock: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
-        low_stock: 'bg-amber-50 text-amber-700 ring-amber-200',
-        out_of_stock: 'bg-red-50 text-red-700 ring-red-200',
+        in_stock: "bg-emerald-50 text-emerald-700 ring-emerald-200",
+        low_stock: "bg-amber-50 text-amber-700 ring-amber-200",
+        out_of_stock: "bg-red-50 text-red-700 ring-red-200",
     };
 
     const labels = {
-        in_stock: 'In Stock',
-        low_stock: 'Low Stock',
-        out_of_stock: 'Out of Stock',
+        in_stock: "In Stock",
+        low_stock: "Low Stock",
+        out_of_stock: "Out of Stock",
     };
 
     return (
         <span
             className={`inline-flex whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${
                 styles[normalized] ||
-                'bg-slate-100 text-slate-600 ring-slate-200'
+                "bg-slate-100 text-slate-600 ring-slate-200"
             }`}
         >
-            {labels[normalized] || status || 'Unknown'}
+            {labels[normalized] || status || "Unknown"}
         </span>
     );
 }
 
 // Reusable icon.
-function Icon({ name, className = 'h-5 w-5' }) {
+function Icon({ name, className = "h-5 w-5" }) {
     const icons = {
         search: (
             <>
@@ -72,9 +73,10 @@ function Icon({ name, className = 'h-5 w-5' }) {
                 <path d="M3 6h18m-2 0-1 14H6L5 6m4 0V4h6v2m-5 4v6m4-6v6" />
             </>
         ),
-        filter: (
-            <path d="M4 5h16l-6.5 8v5l-3 1v-6L4 5Z" />
-        ),
+
+
+
+
     };
 
     return (
@@ -95,18 +97,16 @@ function Icon({ name, className = 'h-5 w-5' }) {
 
 // Currency formatting.
 function formatPrice(price) {
-    return new Intl.NumberFormat('en-NP', {
-        style: 'currency',
-        currency: 'NPR',
+    return new Intl.NumberFormat("en-NP", {
+        style: "currency",
+        currency: "NPR",
         minimumFractionDigits: 0,
         maximumFractionDigits: 2,
     }).format(Number(price) || 0);
 }
 
 // Product table.
-function ProductTable({ products, openDeleteModal ,canManage }) {
-
-
+function ProductTable({ products, openDeleteModal, canManage }) {
     if (products.length === 0) {
         return (
             <div className="px-6 py-20 text-center">
@@ -137,50 +137,51 @@ function ProductTable({ products, openDeleteModal ,canManage }) {
                         <th className="px-5 py-4">Quantity</th>
                         <th className="px-5 py-4">Min. Stock</th>
                         <th className="px-5 py-4">Status</th>
-                
+
                         {canManage && (
-                            <th className="px-6 py-4 text-right">
-                                Actions
-                            </th>
+                            <th className="px-6 py-4 text-right">Actions</th>
                         )}
                     </tr>
                 </thead>
 
                 <tbody className="divide-y divide-slate-100">
-                    {products.map((product) => (
+                    {products.map((product ,index) => (
                         <tr
                             key={product.id}
                             className="transition hover:bg-slate-50/80"
                         >
                             {/* Product */}
+                     
+                                 
                             <td className="px-5 py-4">
                                 <div className="flex items-center gap-3">
                                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
                                         <Icon name="box" />
                                     </div>
 
+                                       <p className="mt-0.5 text-xm text-gray-900 font-bold">
+                                            {index+1}.
+                                        </p>
                                     <div className="min-w-0">
                                         <p className="font-semibold text-slate-800">
                                             {product.name}
                                         </p>
 
-                                        <p
+                                        {/* <p
                                             className="mt-0.5 max-w-48 truncate text-xs text-slate-400"
                                             title={product.description}
                                         >
-                                            {product.description || 'No description'}
-                                        </p>
+                                            {product.description ||
+                                                "No description"}
+                                        </p> */}
 
-                                        <p className="mt-0.5 text-xs text-slate-400">
-                                            ID: {product.id}
-                                        </p>
                                     </div>
                                 </div>
                             </td>
 
                             {/* Category */}
                             <td className="px-5 py-4 text-sm text-slate-600">
-                                {product.category?.name || 'Uncategorized'}
+                                {product.category?.name || "Uncategorized"}
                             </td>
 
                             {/* Purchase price */}
@@ -209,29 +210,33 @@ function ProductTable({ products, openDeleteModal ,canManage }) {
                             </td>
 
                             {/* Actions */}
-                            {canManage && (<td className="px-5 py-4">
-                                <div className="flex items-center justify-end gap-1">
+                            {canManage && (
+                                <td className="px-5 py-4">
+                                    <div className="flex items-center justify-end gap-1">
+                                        <Link
+                                            href={route(
+                                                "product.edit",
+                                                product.id,
+                                            )}
+                                            title="Edit product"
+                                            className="rounded-lg p-2 text-slate-500 hover:bg-indigo-50 hover:text-indigo-600"
+                                        >
+                                            <Icon name="edit" />
+                                        </Link>
 
-
-                                    <Link
-                                        href={route('product.edit', product.id)}
-                                        title="Edit product"
-                                        className="rounded-lg p-2 text-slate-500 hover:bg-indigo-50 hover:text-indigo-600"
-                                    >
-                                        <Icon name="edit" />
-                                    </Link>
-
-{/* Delete Button  */}
-                                    <button
+                                        {/* Delete Button  */}
+                                        <button
                                             type="button"
                                             title="Delete product"
-                                            onClick={() => openDeleteModal(product)}
+                                            onClick={() =>
+                                                openDeleteModal(product)
+                                            }
                                             className="rounded-lg p-2 text-slate-500 hover:bg-red-50 hover:text-red-600"
                                         >
                                             <Icon name="delete" />
                                         </button>
-                                </div>
-                            </td>
+                                    </div>
+                                </td>
                             )}
                         </tr>
                     ))}
@@ -241,21 +246,6 @@ function ProductTable({ products, openDeleteModal ,canManage }) {
     );
 }
 
-// Main page.
-// export default function Index({ auth,products, categories = [] }) {
-//     // Check whether the logged-in user is an admin.
-
-//     const user = auth?.user;
-//     const canManage = user?.role === 'admin';
-
-//     const [search, setSearch] = useState('');
-//     const [categoryFilter, setCategoryFilter] = useState('all');
-//     const [stockFilter, setStockFilter] = useState('all');
-//     const [showFilters, setShowFilters] = useState(false);
-
-//     const [selectedProduct, setSelectedProduct] = useState(null);
-//     const [deleting, setDeleting] = useState(false);
-
 export default function Index({
     auth,
     products,
@@ -263,78 +253,75 @@ export default function Index({
     filters = {},
 }) {
     const user = auth?.user;
-    const canManage = user?.role === 'admin';
+    const canManage = user?.role === "admin";
 
     // Initialize controls using the filters returned by Laravel
-    const [search, setSearch] = useState(filters.search || '');
+    const [search, setSearch] = useState(filters.search || "");
 
     const [categoryFilter, setCategoryFilter] = useState(
-        String(filters.category_id || 'all')
+        String(filters.category_id || "all"),
     );
 
     const [stockFilter, setStockFilter] = useState(
-        filters.stock_status || 'all'
+        filters.stock_status || "all",
     );
 
     // Sorting states
-    const [sort, setSort] = useState(filters.sort || 'name');
+    const [sort, setSort] = useState(filters.sort || "name");
 
-    const [direction, setDirection] = useState(
-        filters.direction || 'asc'
-    );
+    const [direction, setDirection] = useState(filters.direction || "asc");
 
-    const [showFilters, setShowFilters] = useState(false);
 
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [deleting, setDeleting] = useState(false);
 
     // Prevent an unnecessary request when the page first loads
-const lastAppliedFilters = useRef(
-    JSON.stringify({
-        search,
-        categoryFilter,
-        stockFilter,
-        sort,
-        direction,
-    })
-);
+    const lastAppliedFilters = useRef(
+        JSON.stringify({
+            search,
+            categoryFilter,
+            stockFilter,
+            sort,
+            direction,
+        }),
+    );
 
-useEffect(() => {
-    const currentFilters = JSON.stringify({
-        search,
-        categoryFilter,
-        stockFilter,
-        sort,
-        direction,
-    });
+    useEffect(() => {
+        const currentFilters = JSON.stringify({
+            search,
+            categoryFilter,
+            stockFilter,
+            sort,
+            direction,
+        });
 
-    // Skip if these filters have already been applied
-    if (lastAppliedFilters.current === currentFilters) {
-        return;
-    }
+        // Skip if these filters have already been applied
+        if (lastAppliedFilters.current === currentFilters) {
+            return;
+        }
 
-    lastAppliedFilters.current = currentFilters;
+        lastAppliedFilters.current = currentFilters;
 
-    const timeout = setTimeout(() => {
-        router.get(
-            route('product.index'),
-            {
-                search,
-                category_id: categoryFilter === 'all' ? '' : categoryFilter,
-                stock_status: stockFilter === 'all' ? '' : stockFilter,
-                sort,
-                direction,
-            },
-            {
-                preserveState: true,
-                preserveScroll: true,
-                replace: true,
-            }
-        );
-    }, 400);
+        const timeout = setTimeout(() => {
+            router.get(
+                route("product.index"),
+                {
+                    search,
+                    category_id: categoryFilter === "all" ? "" : categoryFilter,
+                    stock_status: stockFilter === "all" ? "" : stockFilter,
+                    sort,
+                    direction,
+                },
+                {
+                    preserveState: true,
+                    preserveScroll: true,
+                    replace: true,
+                },
+            );
+        }, 400);
 
-    return () => clearTimeout(timeout);
-}, [search, categoryFilter, stockFilter, sort, direction]);
+        return () => clearTimeout(timeout);
+    }, [search, categoryFilter, stockFilter, sort, direction]);
 
     const openDeleteModal = (product) => {
         setSelectedProduct(product);
@@ -350,40 +337,34 @@ useEffect(() => {
 
         setDeleting(true);
 
-        router.delete(
-            route('product.destroy', selectedProduct.id),
-            {
-                preserveScroll: true,
-                onSuccess: () => {
-                    setSelectedProduct(null);
-                },
-                onFinish: () => {
-                    setDeleting(false);
-                },
-            }
-        );
+        router.delete(route("product.destroy", selectedProduct.id), {
+            preserveScroll: true,
+            onSuccess: () => {
+                setSelectedProduct(null);
+            },
+            onFinish: () => {
+                setDeleting(false);
+            },
+        });
     };
     // Laravel paginator returns records inside products.data.
     const productList = Array.isArray(products)
         ? products
         : products?.data || [];
 
-
-
     const paginationLinks = Array.isArray(products?.links)
         ? products.links
         : [];
 
-const categoryOptions = categories;
+    const categoryOptions = categories;
 
-const resetFilters = () => {
-    setSearch('');
-    setCategoryFilter('all');
-    setStockFilter('all');
-    setSort('name');
-    setDirection('asc');
-    setShowFilters(false);
-};
+    const resetFilters = () => {
+        setSearch("");
+        setCategoryFilter("all");
+        setStockFilter("all");
+        setSort("name");
+        setDirection("asc");
+    };
 
     return (
         <AuthenticatedLayout
@@ -398,7 +379,6 @@ const resetFilters = () => {
             <Head title="Products" />
 
             <div className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
-
                 {/* Heading */}
                 <div className="mb-7">
                     <h1 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -412,10 +392,8 @@ const resetFilters = () => {
 
                 {/* Product container */}
                 <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-
                     {/* Toolbar */}
                     <div className="flex flex-col gap-4 p-5 xl:flex-row xl:items-center">
-
                         {/* Search */}
                         <div className="relative min-w-0 flex-1">
                             <Icon
@@ -461,116 +439,112 @@ const resetFilters = () => {
                             <option value="low_stock">Low Stock</option>
                             <option value="out_of_stock">Out of Stock</option>
                         </select>
-{/* Sort field */}
-<select
-    value={sort}
-    onChange={(e) => setSort(e.target.value)}
-    className="rounded-lg border pr-10 border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
->
-    <option value="name">Name</option>
-    <option value="purchase_price">Purchase Price</option>
-    <option value="selling_price">Selling Price</option>
-    <option value="quantity">Quantity</option>
-    <option value="created_at">Date Created</option>
-</select>
+                        {/* Sort field */}
+                        <select
+                            value={sort}
+                            onChange={(e) => setSort(e.target.value)}
+                            className="rounded-lg border pr-10 border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
+                        >
+                            <option value="name">Name</option>
+                            <option value="purchase_price">
+                                Purchase Price
+                            </option>
+                            <option value="selling_price">Selling Price</option>
+                            <option value="quantity">Quantity</option>
+                            <option value="created_at">Date Created</option>
+                        </select>
 
-{/* Sort direction */}
-<button
-    type="button"
-    onClick={() =>
-        setDirection((previous) =>
-            previous === 'asc' ? 'desc' : 'asc'
-        )
-    }
-    title={direction === 'asc' ? 'Ascending' : 'Descending'}
-    className="inline-flex items-center justify-center rounded-lg border border-slate-200 px-4 py-3 text-lg font-semibold text-slate-700 transition hover:bg-slate-50"
->
-    {direction === 'asc' ? '↑' : '↓'}
-</button>
+                        {/* Sort direction */}
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setDirection((previous) =>
+                                    previous === "asc" ? "desc" : "asc",
+                                )
+                            }
+                            title={
+                                direction === "asc" ? "Ascending" : "Descending"
+                            }
+                            className="inline-flex items-center justify-center rounded-lg border border-slate-200 px-4 py-3 text-lg font-semibold text-slate-700 transition hover:bg-slate-50"
+                        >
+                            {direction === "asc" ? "↑" : "↓"}
+                        </button>
 
                         {/* Advanced filters */}
                         <button
                             type="button"
-                            onClick={() => setShowFilters(!showFilters)}
+                            onClick={resetFilters}
                             className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
                         >
-                            <Icon name="filter" />
-                            Filters
+                    <RiResetLeftFill size={20}/>
+
+                            Reset
                         </button>
 
                         {/* Add product */}
-                        {canManage && (<Link
-                            href={route('product.create')}
-                            className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
-                        >
-                            <Icon name="plus" />
-                            Add product
-                        </Link>
+                        {canManage && (
+                            <Link
+                                href={route("product.create")}
+                                className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
+                            >
+                                <Icon name="plus" />
+                                Add product
+                            </Link>
                         )}
                     </div>
 
-                    {/* Advanced filters */}
-                    {showFilters && (
-                        <div className="flex flex-wrap items-center gap-3 border-t border-slate-100 bg-slate-50 px-5 py-4">
-                            <p className="text-sm font-medium text-slate-600">
-                                Active filters:
-                            </p>
-
-                            <button
-                                type="button"
-                                onClick={resetFilters}
-                                className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
-                            >
-                                Clear all filters
-                            </button>
-                        </div>
-                    )}
+   
 
                     {/* Results summary */}
                     <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 px-5 py-3">
                         <p className="text-sm text-slate-500">
-Showing{' '}
-<span className="font-semibold text-slate-800">
-    {products?.from ?? 0}–{products?.to ?? 0}
-</span>{' '}
-of{' '}
-<span className="font-semibold text-slate-800">
-    {products?.total ?? 0}
-</span>{' '}
-products
+                            Showing{" "}
+                            <span className="font-semibold text-slate-800">
+                                {products?.from ?? 0}–{products?.to ?? 0}
+                            </span>{" "}
+                            of{" "}
+                            <span className="font-semibold text-slate-800">
+                                {products?.total ?? 0}
+                            </span>{" "}
+                            products
                         </p>
 
                         <p className="text-xs text-slate-400">
-                            {products?.total ?? productList.length} total products
+                            {products?.total ?? productList.length} total
+                            products
                         </p>
                     </div>
 
                     {/* Table */}
-                    <ProductTable products={productList} openDeleteModal={openDeleteModal} canManage={canManage} />
+                    <ProductTable
+                        products={productList}
+                        openDeleteModal={openDeleteModal}
+                        canManage={canManage}
+                    />
 
                     {/* Pagination */}
                     {paginationLinks.length > 0 && (
                         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 px-5 py-4">
-
                             <p className="text-sm text-slate-500">
-                                Page {products.current_page} of {products.last_page}
+                                Page {products.current_page} of{" "}
+                                {products.last_page}
                             </p>
 
                             <div className="flex flex-wrap items-center gap-1">
                                 {paginationLinks.map((link, index) => (
                                     <Link
                                         key={index}
-                                        href={link.url || '#'}
+                                        href={link.url || "#"}
                                         preserveScroll
                                         onClick={(e) => {
                                             if (!link.url) e.preventDefault();
                                         }}
                                         className={`rounded-lg px-3 py-2 text-sm font-medium ${
                                             link.active
-                                                ? 'bg-indigo-600 text-white'
+                                                ? "bg-indigo-600 text-white"
                                                 : link.url
-                                                    ? 'text-slate-600 hover:bg-slate-100'
-                                                    : 'cursor-not-allowed text-slate-300'
+                                                  ? "text-slate-600 hover:bg-slate-100"
+                                                  : "cursor-not-allowed text-slate-300"
                                         }`}
                                         dangerouslySetInnerHTML={{
                                             __html: link.label,
@@ -584,48 +558,48 @@ products
             </div>
 
             <Modal
-                    show={selectedProduct !== null}
-                    onClose={closeDeleteModal}
-                    maxWidth="md"
-                >
-                    <div className="p-6">
-                        <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
-                            <Icon name="delete" className="h-6 w-6" />
-                        </div>
-
-                        <h2 className="text-lg font-bold text-slate-900">
-                            Delete Product?
-                        </h2>
-
-                        <p className="mt-2 text-sm leading-6 text-slate-500">
-                            Are you sure you want to delete{' '}
-                            <span className="font-semibold text-slate-800">
-                                "{selectedProduct?.name}"
-                            </span>
-                            ?
-                        </p>
-
-                        <p className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">
-                            This action cannot be undone.
-                        </p>
-
-                        <div className="mt-6 flex justify-end gap-3">
-                            <SecondaryButton
-                                onClick={closeDeleteModal}
-                                disabled={deleting}
-                            >
-                                Cancel
-                            </SecondaryButton>
-
-                            <DangerButton
-                                onClick={confirmDelete}
-                                disabled={deleting}
-                            >
-                                {deleting ? 'Deleting...' : 'Delete Product'}
-                            </DangerButton>
-                        </div>
+                show={selectedProduct !== null}
+                onClose={closeDeleteModal}
+                maxWidth="md"
+            >
+                <div className="p-6">
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+                        <Icon name="delete" className="h-6 w-6" />
                     </div>
-                </Modal>
+
+                    <h2 className="text-lg font-bold text-slate-900">
+                        Delete Product?
+                    </h2>
+
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                        Are you sure you want to delete{" "}
+                        <span className="font-semibold text-slate-800">
+                            "{selectedProduct?.name}"
+                        </span>
+                        ?
+                    </p>
+
+                    <p className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                        This action cannot be undone.
+                    </p>
+
+                    <div className="mt-6 flex justify-end gap-3">
+                        <SecondaryButton
+                            onClick={closeDeleteModal}
+                            disabled={deleting}
+                        >
+                            Cancel
+                        </SecondaryButton>
+
+                        <DangerButton
+                            onClick={confirmDelete}
+                            disabled={deleting}
+                        >
+                            {deleting ? "Deleting..." : "Delete Product"}
+                        </DangerButton>
+                    </div>
+                </div>
+            </Modal>
         </AuthenticatedLayout>
     );
 }
