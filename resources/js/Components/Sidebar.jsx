@@ -112,7 +112,7 @@ export default function Sidebar() {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 overflow-y-auto px-2 py-6">
+            <nav className="custom-scrollbar flex-1 overflow-y-auto px-2 py-6">
 
                 <p className="mb-4 px-4 text-xs font-bold tracking-[0.16em] text-slate-400 dark:text-slate-200">
                     WORKSPACE
