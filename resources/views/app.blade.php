@@ -4,6 +4,17 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <script>
+            (() => {
+                const savedTheme = document.cookie.match(/(?:^|; )theme=(dark|light)(?:;|$)/)?.[1];
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.classList.toggle(
+                    'dark',
+                    savedTheme ? savedTheme === 'dark' : prefersDark
+                );
+            })();
+        </script>
+
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->

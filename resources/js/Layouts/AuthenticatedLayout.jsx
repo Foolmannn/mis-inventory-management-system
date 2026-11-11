@@ -1,11 +1,27 @@
 
 import { Link, usePage } from '@inertiajs/react';
-import { MdNotificationsNone, MdKeyboardArrowDown } from 'react-icons/md';
+import { useEffect, useState } from 'react';
+import { MdDarkMode, MdLightMode, MdNotificationsNone, MdKeyboardArrowDown } from 'react-icons/md';
 import Sidebar from '@/Components/Sidebar';
 
 export default function AuthenticatedLayout({ header, children }) {
     const { props } = usePage();
     const user = props.auth?.user;
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    useEffect(() => {
+        setIsDarkMode(document.documentElement.classList.contains('dark'));
+    }, []);
+
+    const toggleTheme = () => {
+        const nextIsDarkMode = !document.documentElement.classList.contains('dark');
+        const theme = nextIsDarkMode ? 'dark' : 'light';
+        const secureCookie = window.location.protocol === 'https:' ? '; Secure' : '';
+
+        document.documentElement.classList.toggle('dark', nextIsDarkMode);
+        document.cookie = `theme=${theme}; Max-Age=31536000; Path=/; SameSite=Lax${secureCookie}`;
+        setIsDarkMode(nextIsDarkMode);
+    };
 
     const initials = user?.name
         ? user.name
@@ -48,7 +64,7 @@ export default function AuthenticatedLayout({ header, children }) {
                         </button>
 
                         {/* User profile */}
-                        <Link
+                        {/* <Link
                             href={route('profile.edit')}
                             className="flex items-center gap-3"
                         >
@@ -72,7 +88,18 @@ export default function AuthenticatedLayout({ header, children }) {
                                 size={20}
                                 className="text-slate-400 dark:text-slate-600"
                             />
-                        </Link>
+                        </Link> */}
+
+                        <button
+                            type="button"
+                            onClick={toggleTheme}
+                            aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
+                            aria-pressed={isDarkMode}
+                            title={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
+                            className="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-indigo-600 dark:text-slate-300 dark:hover:bg-[#1a2c52] dark:hover:text-indigo-400"
+                        >
+                            {isDarkMode ? <MdLightMode size={22} /> : <MdDarkMode size={22} />}
+                        </button>
                     </div>
                 </header>
 
