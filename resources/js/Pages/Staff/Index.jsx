@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Head, Link, router, usePage } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Modal from "@/Components/Modal";
@@ -11,8 +11,6 @@ import { MdAdd, MdEdit, MdDeleteOutline, MdMoreHoriz } from "react-icons/md";
 export default function Index({ staffMembers }) {
     const [selectedStaff, setSelectedStaff] = useState(null);
     const [deleting, setDeleting] = useState(false);
-
-    const { flash } = usePage().props;
 
     // Laravel pagination data
     const staffList = staffMembers?.data ?? [];
@@ -53,19 +51,6 @@ export default function Index({ staffMembers }) {
                         Manage employee access and accounts.
                     </p>
                 </div>
-
-                {/* Flash Messages */}
-                {flash?.success && (
-                    <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700 dark:border-green-900 dark:bg-green-950/40 dark:text-green-300">
-                        {flash.success}
-                    </div>
-                )}
-
-                {flash?.error && (
-                    <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300">
-                        {flash.error}
-                    </div>
-                )}
 
                 {/* Staff Table Card */}
                 <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-[#0e172a]">

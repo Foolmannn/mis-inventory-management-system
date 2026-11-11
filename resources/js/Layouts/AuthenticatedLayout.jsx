@@ -1,11 +1,14 @@
 
 import { useEffect, useState } from 'react';
+import { usePage } from '@inertiajs/react';
 import { MdClose, MdDarkMode, MdLightMode, MdMenu, MdNotificationsNone } from 'react-icons/md';
 import Sidebar from '@/Components/Sidebar';
+import Toast from '@/Components/Toast';
 
 export default function AuthenticatedLayout({ header, children }) {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { flash } = usePage().props;
 
     useEffect(() => {
         setIsDarkMode(document.documentElement.classList.contains('dark'));
@@ -102,6 +105,7 @@ export default function AuthenticatedLayout({ header, children }) {
                     {children}
                 </main>
             </div>
+            <Toast flash={flash} />
         </div>
     );
 }
