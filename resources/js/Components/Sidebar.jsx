@@ -50,11 +50,11 @@ const navigation = [
         icon: MdPeople,
         adminOnly: true,
     },
-    {
-        title: 'Settings',
-        routeName: null,
-        icon: MdSettings,
-    },
+    // {
+    //     title: 'Settings',
+    //     routeName: null,
+    //     icon: MdSettings,
+    // },
 ];
 
 export default function Sidebar() {

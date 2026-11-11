@@ -388,7 +388,7 @@ export default function Dashboard({
                     <StatCard
                         title="Total Products"
                         value={total_products}
-                        subtitle="+2 this month"
+                        subtitle="Active catalog"
                         icon="products"
                         iconColor="text-indigo-600 dark:text-indigo-400"
                         iconBackground="bg-indigo-50 dark:bg-indigo-950"
@@ -493,7 +493,7 @@ export default function Dashboard({
                                     />
                                 </Link>
                                 {/* to update */}
-                                <Link href={route("product.create")}>
+                                <Link href={route("reports.index")}>
                                     <QuickAction
                                         icon="reports"
                                         title="Open reports"

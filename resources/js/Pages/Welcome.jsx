@@ -1,6 +1,35 @@
 import { Head, Link } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
+import { MdDarkMode, MdLightMode } from 'react-icons/md';
 
 export default function Welcome() {
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    useEffect(() => {
+        const matchDarkMode = () => {
+            const savedTheme = document.cookie
+                .split('; ')
+                .find((row) => row.startsWith('theme='));
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const nextIsDarkMode = savedTheme ? savedTheme.split('=')[1] === 'dark' : prefersDark;
+
+            document.documentElement.classList.toggle('dark', nextIsDarkMode);
+            setIsDarkMode(nextIsDarkMode);
+        };
+
+        matchDarkMode();
+    }, []);
+
+    const toggleTheme = () => {
+        const nextIsDarkMode = !document.documentElement.classList.contains('dark');
+        const theme = nextIsDarkMode ? 'dark' : 'light';
+        const secureCookie = window.location.protocol === 'https:' ? '; Secure' : '';
+
+        document.documentElement.classList.toggle('dark', nextIsDarkMode);
+        document.cookie = `theme=${theme}; Max-Age=31536000; Path=/; SameSite=Lax${secureCookie}`;
+        setIsDarkMode(nextIsDarkMode);
+    };
+
     return (
         <>
             <Head title="Welcome" />
@@ -28,6 +57,16 @@ export default function Welcome() {
 
                         {/* Authentication Buttons */}
                         <div className="flex items-center gap-3">
+                            <button
+                                type="button"
+                                onClick={toggleTheme}
+                                aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
+                                aria-pressed={isDarkMode}
+                                title={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
+                                className="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-indigo-600 dark:text-slate-300 dark:hover:bg-[#1a2c52] dark:hover:text-indigo-400"
+                            >
+                                {isDarkMode ? <MdLightMode size={22} /> : <MdDarkMode size={22} />}
+                            </button>
 
                             <Link
                                 href={route('login')}

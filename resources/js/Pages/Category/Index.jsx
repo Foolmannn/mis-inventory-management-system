@@ -89,9 +89,9 @@ function CategoryTable({ categories, canManage, openDeleteModal }) {
                                             {category.name}
                                         </p>
 
-                                        <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
+                                        {/* <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">
                                             ID: {category.id}
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </div>
                             </td>
