@@ -20,7 +20,7 @@ export default function ProductsTable({
         <table className="min-w-full">
 
           <thead className="bg-gray-50 dark:bg-[#080d18]">
-            <tr className='dark: text-white'>
+            <tr className='dark:text-white'>
               <th className="px-6 py-3 text-left">Product</th>
               <th className="px-6 py-3 text-left">Category</th>
               <th className="px-6 py-3 text-center">Stock</th>
