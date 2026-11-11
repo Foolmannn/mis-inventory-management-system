@@ -7,10 +7,10 @@ export default function ProductsTable({
   filters,
 }) {
   return (
-    <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
+    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
 
-      <div className="border-b px-6 py-4">
-        <h2 className="text-lg font-semibold">
+      <div className="border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+        <h2 className="text-lg font-semibold dark:text-white">
           Products
         </h2>
       </div>
@@ -19,8 +19,8 @@ export default function ProductsTable({
 
         <table className="min-w-full">
 
-          <thead className="bg-gray-50">
-            <tr>
+          <thead className="bg-gray-50 dark:bg-[#080d18]">
+            <tr className='dark: text-white'>
               <th className="px-6 py-3 text-left">Product</th>
               <th className="px-6 py-3 text-left">Category</th>
               <th className="px-6 py-3 text-center">Stock</th>

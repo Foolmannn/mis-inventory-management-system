@@ -24,13 +24,9 @@ export default function ProductRow({
   return (
     <tr
       onClick={selectProduct}
-      className={`
-                cursor-pointer border-b transition
-
-                ${selected
-          ? 'bg-indigo-50'
-          : 'hover:bg-gray-50'}
-            `}
+      className={`cursor-pointer border-b border-gray-200 text-gray-900 transition dark:border-gray-800 dark:text-gray-100 ${
+        selected ? 'bg-indigo-50 dark:bg-indigo-950/50' : 'hover:bg-gray-50 dark:hover:bg-gray-800/50'
+      }`}
     >
       <td className="px-6 py-4 font-medium">
         {product.name}

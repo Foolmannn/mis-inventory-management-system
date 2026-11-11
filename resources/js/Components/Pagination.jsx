@@ -22,7 +22,7 @@ export default function Pagination({ links }) {
 
     return (
         <nav
-            className="flex items-center justify-end gap-2 border-t bg-white px-6 py-4"
+            className="flex items-center justify-end gap-2 border-t border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-[#0e172a]"
             aria-label="Pagination"
         >
             {links.map((link, index) => (
@@ -36,7 +36,7 @@ export default function Pagination({ links }) {
 
                         ${link.active
                             ? 'bg-indigo-600 text-white'
-                            : 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+                            : 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-[#080d18] dark:text-gray-200 dark:hover:bg-gray-800'
                         }
 
                         ${!link.url

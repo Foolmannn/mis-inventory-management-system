@@ -26,7 +26,7 @@ export default function Login({ status, canResetPassword }) {
             <Head title="Log in" />
 
             {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
+                <div className="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
                     {status}
                 </div>
             )}
@@ -101,7 +101,7 @@ export default function Login({ status, canResetPassword }) {
                     {/* // register link */}
                     {/* <Link
                         href={route('register')}
-                        className=" w-full text-center text-sm text-gray-500 underline hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className=" w-full text-center text-sm text-gray-500 underline hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100"
                     >
                         new user? Register here
                     </Link> */}

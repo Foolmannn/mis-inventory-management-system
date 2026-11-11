@@ -44,8 +44,8 @@ export default function StockActionForm({ product }) {
   }
 
   return (
-    <div className="rounded-xl border bg-white p-6 shadow-sm">
-      <h2 className="mb-6 text-lg font-semibold">
+    <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
+      <h2 className="mb-6 text-lg font-semibold dark:text-slate-100">
         Stock Adjustment
       </h2>
 
@@ -56,12 +56,12 @@ export default function StockActionForm({ product }) {
         {/* Action */}
         {isAdmin ? (
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Action
             </label>
 
             <div className="flex gap-6">
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 dark:text-white">
                 <input
                   type="radio"
                   name="action"
@@ -75,7 +75,7 @@ export default function StockActionForm({ product }) {
                 <span>Add Stock</span>
               </label>
 
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-2 dark:text-white">
                 <input
                   type="radio"
                   name="action"
@@ -92,11 +92,11 @@ export default function StockActionForm({ product }) {
           </div>
         ) : (
           <div>
-            <label className="mb-2 block text-sm font-medium text-gray-700">
+            <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               Action
             </label>
 
-            <div className="rounded-lg bg-gray-100 px-4 py-3 text-sm font-medium">
+            <div className="rounded-lg bg-gray-100 px-4 py-3 text-sm font-medium dark:bg-[#080d18]">
               Remove Stock
             </div>
           </div>
@@ -106,7 +106,7 @@ export default function StockActionForm({ product }) {
         <div>
           <label
             htmlFor="quantity"
-            className="mb-2 block text-sm font-medium text-gray-700"
+            className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Quantity
           </label>
@@ -119,11 +119,11 @@ export default function StockActionForm({ product }) {
             onChange={(e) =>
               setData('quantity', e.target.value)
             }
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-gray-700 dark:bg-[#080d18] dark:text-white"
           />
 
           {errors.quantity && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-sm text-red-600 dark:text-red-400">
               {errors.quantity}
             </p>
           )}
@@ -133,7 +133,7 @@ export default function StockActionForm({ product }) {
         <div>
           <label
             htmlFor="reason"
-            className="mb-2 block text-sm font-medium text-gray-700"
+            className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Reason
           </label>
@@ -146,11 +146,11 @@ export default function StockActionForm({ product }) {
               setData('reason', e.target.value)
             }
             placeholder="Enter the reason for this stock adjustment"
-            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+            className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-gray-700 dark:bg-[#080d18] dark:text-white"
           />
 
           {errors.reason && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-sm text-red-600 dark:text-red-400">
               {errors.reason}
             </p>
           )}

@@ -27,9 +27,9 @@ export default function Index({ history }) {
           <AuthenticatedLayout
               header={
                   <div className="flex items-center gap-2 text-sm font-medium">
-                      <span className="text-slate-400">MyStore</span>
-                      <Icon name="arrow" className="h-4 w-4 text-slate-400" />
-                      <span className="text-slate-700">Stock History</span>
+                      <span className="text-slate-400 dark:text-slate-500">MyStore</span>
+                      <Icon name="arrow" className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                      <span className="text-slate-700 dark:text-slate-200">Stock History</span>
                   </div>
               }
           >
@@ -38,17 +38,17 @@ export default function Index({ history }) {
       <div className="space-y-6 m-6">
 
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
             Stock History
           </h1>
 
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
             View all inventory changes in chronological order.
           </p>
         </div>
 
 
-        <div className="rounded-xl border bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
 
           <HistoryTable history={history} />
 

@@ -25,16 +25,16 @@ export default function Create() {
         <AuthenticatedLayout
             header={
                 <div className="flex items-center gap-2 text-sm">
-                    <span className="text-slate-400">MyStore</span>
-                    <span className="text-slate-300">›</span>
+                    <span className="text-slate-400 dark:text-slate-500">MyStore</span>
+                    <span className="text-slate-300 dark:text-slate-600">›</span>
                     <Link
                         href={route("category.index")}
-                        className="text-slate-500 hover:text-indigo-600"
+                        className="text-slate-500 hover:text-indigo-600 dark:text-slate-400"
                     >
                         Categories
                     </Link>
-                    <span className="text-slate-300">›</span>
-                    <span className="font-medium text-slate-700">
+                    <span className="text-slate-300 dark:text-slate-600">›</span>
+                    <span className="font-medium text-slate-700 dark:text-slate-200">
                         Add Category
                     </span>
                 </div>
@@ -42,27 +42,27 @@ export default function Create() {
         >
             <Head title="Add Category" />
 
-            <div className="min-h-screen bg-slate-50 px-5 py-8 sm:px-8">
+            <div className="min-h-screen bg-slate-50 px-5 py-8 dark:bg-[#080d18] sm:px-8">
                 {/* Page heading */}
                 <div className="mb-7">
-                    <h1 className="text-3xl font-bold text-slate-900">
+                    <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">
                         Add Category
                     </h1>
 
-                    <p className="mt-2 text-sm text-slate-500">
+                    <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
                         Create a new category to organize your inventory
                         products.
                     </p>
                 </div>
 
                 {/* Form card */}
-                <div className="max-w-3xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-                    <div className="border-b border-slate-100 px-6 py-5">
-                        <h2 className="text-lg font-bold text-slate-900">
+                <div className="max-w-3xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
+                    <div className="border-b border-slate-100 px-6 py-5 dark:border-slate-800">
+                        <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
                             Category Information
                         </h2>
 
-                        <p className="mt-1 text-sm text-slate-500">
+                        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                             Enter the basic details of your new category.
                         </p>
                     </div>
@@ -112,7 +112,7 @@ export default function Create() {
                                     }
                                     rows={5}
                                     placeholder="Describe what types of products belong in this category..."
-                                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    className="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-[#080d18] dark:text-white"
                                 />
 
                                 <InputError
@@ -120,7 +120,7 @@ export default function Create() {
                                     className="mt-2"
                                 />
 
-                                <p className="mt-2 text-xs text-slate-400">
+                                <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
                                     Provide a short description to help identify
                                     this category.
                                 </p>
@@ -128,7 +128,7 @@ export default function Create() {
                         </div>
 
                         {/* Form actions */}
-                        <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4">
+                        <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4 dark:border-slate-800 dark:bg-[#080d18]">
                             <Link href={route("category.index")}>
                                 <SecondaryButton type="button">
                                     Cancel

@@ -18,9 +18,9 @@ function ProductStatus({ status }) {
     const normalized = normalizeStatus(status);
 
     const styles = {
-        in_stock: "bg-emerald-50 text-emerald-700 ring-emerald-200",
-        low_stock: "bg-amber-50 text-amber-700 ring-amber-200",
-        out_of_stock: "bg-red-50 text-red-700 ring-red-200",
+        in_stock: "bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-950 dark:text-emerald-300 dark:ring-emerald-900",
+        low_stock: "bg-amber-50 text-amber-700 ring-amber-200 dark:bg-amber-950 dark:text-amber-300 dark:ring-amber-900",
+        out_of_stock: "bg-red-50 text-red-700 ring-red-200 dark:bg-red-950 dark:text-red-300 dark:ring-red-900",
     };
 
     const labels = {
@@ -33,7 +33,7 @@ function ProductStatus({ status }) {
         <span
             className={`inline-flex whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${
                 styles[normalized] ||
-                "bg-slate-100 text-slate-600 ring-slate-200"
+                "bg-slate-100 text-slate-600 ring-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:ring-slate-700"
             }`}
         >
             {labels[normalized] || status || "Unknown"}
@@ -110,15 +110,15 @@ function ProductTable({ products, openDeleteModal, canManage }) {
     if (products.length === 0) {
         return (
             <div className="px-6 py-20 text-center">
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
                     <Icon name="box" className="h-8 w-8" />
                 </div>
 
-                <h3 className="mt-4 font-semibold text-slate-800">
+                <h3 className="mt-4 font-semibold text-slate-800 dark:text-slate-100">
                     No products found
                 </h3>
 
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                     Try changing your search or filters.
                 </p>
             </div>
@@ -128,8 +128,8 @@ function ProductTable({ products, openDeleteModal, canManage }) {
     return (
         <div className="overflow-x-auto">
             <table className="w-full min-w-[1150px] text-left">
-                <thead className="bg-slate-50">
-                    <tr className="border-y border-slate-100 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <thead className="bg-slate-50 dark:bg-[#080d18]">
+                    <tr className="border-y border-slate-100 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:border-slate-800 dark:text-slate-400">
                         <th className="px-5 py-4">Product</th>
                         <th className="px-5 py-4">Category</th>
                         <th className="px-5 py-4">Purchase</th>
@@ -144,31 +144,31 @@ function ProductTable({ products, openDeleteModal, canManage }) {
                     </tr>
                 </thead>
 
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                     {products.map((product ,index) => (
                         <tr
                             key={product.id}
-                            className="transition hover:bg-slate-50/80"
+                            className="transition hover:bg-slate-50/80 dark:hover:bg-slate-800/50"
                         >
                             {/* Product */}
                      
                                  
                             <td className="px-5 py-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
+                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400">
                                         <Icon name="box" />
                                     </div>
 
-                                       <p className="mt-0.5 text-xm text-gray-900 font-bold">
+                                       <p className="mt-0.5 text-xm text-gray-900 font-bold dark:text-gray-100">
                                             {index+1}.
                                         </p>
                                     <div className="min-w-0">
-                                        <p className="font-semibold text-slate-800">
+                                        <p className="font-semibold text-slate-800 dark:text-slate-100">
                                             {product.name}
                                         </p>
 
                                         {/* <p
-                                            className="mt-0.5 max-w-48 truncate text-xs text-slate-400"
+                                            className="mt-0.5 max-w-48 truncate text-xs text-slate-400 dark:text-slate-500"
                                             title={product.description}
                                         >
                                             {product.description ||
@@ -180,27 +180,27 @@ function ProductTable({ products, openDeleteModal, canManage }) {
                             </td>
 
                             {/* Category */}
-                            <td className="px-5 py-4 text-sm text-slate-600">
+                            <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300">
                                 {product.category?.name || "Uncategorized"}
                             </td>
 
                             {/* Purchase price */}
-                            <td className="px-5 py-4 text-sm text-slate-600">
+                            <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300">
                                 {formatPrice(product.purchase_price)}
                             </td>
 
                             {/* Selling price */}
-                            <td className="px-5 py-4 text-sm font-semibold text-slate-800">
+                            <td className="px-5 py-4 text-sm font-semibold text-slate-800 dark:text-slate-100">
                                 {formatPrice(product.selling_price)}
                             </td>
 
                             {/* Quantity */}
-                            <td className="px-5 py-4 text-sm text-slate-600">
+                            <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300">
                                 {product.quantity}
                             </td>
 
                             {/* Minimum stock */}
-                            <td className="px-5 py-4 text-sm text-slate-600">
+                            <td className="px-5 py-4 text-sm text-slate-600 dark:text-slate-300">
                                 {product.minimum_stock}
                             </td>
 
@@ -219,7 +219,7 @@ function ProductTable({ products, openDeleteModal, canManage }) {
                                                 product.id,
                                             )}
                                             title="Edit product"
-                                            className="rounded-lg p-2 text-slate-500 hover:bg-indigo-50 hover:text-indigo-600"
+                                            className="rounded-lg p-2 text-slate-500 hover:bg-indigo-50 hover:text-indigo-600 dark:text-slate-400 dark:hover:bg-indigo-950/50"
                                         >
                                             <Icon name="edit" />
                                         </Link>
@@ -231,7 +231,7 @@ function ProductTable({ products, openDeleteModal, canManage }) {
                                             onClick={() =>
                                                 openDeleteModal(product)
                                             }
-                                            className="rounded-lg p-2 text-slate-500 hover:bg-red-50 hover:text-red-600"
+                                            className="rounded-lg p-2 text-slate-500 hover:bg-red-50 hover:text-red-600 dark:text-slate-400 dark:hover:bg-red-950/50"
                                         >
                                             <Icon name="delete" />
                                         </button>
@@ -370,35 +370,35 @@ export default function Index({
         <AuthenticatedLayout
             header={
                 <div className="flex items-center gap-2 text-sm font-medium">
-                    <span className="text-slate-400">MyStore</span>
-                    <span className="text-slate-300">›</span>
-                    <span className="text-slate-700">Products</span>
+                    <span className="text-slate-400 dark:text-slate-500">MyStore</span>
+                    <span className="text-slate-300 dark:text-slate-600">›</span>
+                    <span className="text-slate-700 dark:text-slate-200">Products</span>
                 </div>
             }
         >
             <Head title="Products" />
 
-            <div className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
+            <div className="min-h-screen bg-slate-50 px-4 py-8 dark:bg-[#080d18] sm:px-6 lg:px-8">
                 {/* Heading */}
                 <div className="mb-7">
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
                         Products
                     </h1>
 
-                    <p className="mt-2 text-base text-slate-500">
+                    <p className="mt-2 text-base text-slate-500 dark:text-slate-400">
                         View and manage all products in your inventory.
                     </p>
                 </div>
 
                 {/* Product container */}
-                <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
                     {/* Toolbar */}
                     <div className="flex flex-col gap-4 p-5 xl:flex-row xl:items-center">
                         {/* Search */}
                         <div className="relative min-w-0 flex-1">
                             <Icon
                                 name="search"
-                                className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
+                                className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400 dark:text-slate-500"
                             />
 
                             <input
@@ -406,7 +406,7 @@ export default function Index({
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 placeholder="Search products..."
-                                className="w-full rounded-lg border border-slate-200 py-3 pl-10 pr-4 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                                className="w-full rounded-lg border border-slate-200 py-3 pl-10 pr-4 text-sm text-slate-700 placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-[#080d18] dark:text-slate-100 dark:placeholder:text-slate-500"
                             />
                         </div>
 
@@ -414,7 +414,7 @@ export default function Index({
                         <select
                             value={categoryFilter}
                             onChange={(e) => setCategoryFilter(e.target.value)}
-                            className="rounded-lg border border-slate-200 px-4 py-3 pr-10 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
+                            className="rounded-lg border border-slate-200 px-4 py-3 pr-10 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100 dark:border-slate-700 dark:bg-[#080d18] dark:text-slate-100"
                         >
                             <option value="all">All categories</option>
 
@@ -432,7 +432,7 @@ export default function Index({
                         <select
                             value={stockFilter}
                             onChange={(e) => setStockFilter(e.target.value)}
-                            className="rounded-lg border border-slate-200 px-4 py-3 pr-10 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
+                            className="rounded-lg border border-slate-200 px-4 py-3 pr-10 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100 dark:border-slate-700 dark:bg-[#080d18] dark:text-slate-100"
                         >
                             <option value="all">All stock</option>
                             <option value="in_stock">In Stock</option>
@@ -443,7 +443,7 @@ export default function Index({
                         <select
                             value={sort}
                             onChange={(e) => setSort(e.target.value)}
-                            className="rounded-lg border pr-10 border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100"
+                            className="rounded-lg border pr-10 border-slate-200 px-4 py-3 text-sm text-slate-700 focus:border-indigo-400 focus:ring-indigo-100 dark:border-slate-700 dark:bg-[#080d18] dark:text-slate-100"
                         >
                             <option value="name">Name</option>
                             <option value="purchase_price">
@@ -465,7 +465,7 @@ export default function Index({
                             title={
                                 direction === "asc" ? "Ascending" : "Descending"
                             }
-                            className="inline-flex items-center justify-center rounded-lg border border-slate-200 px-4 py-3 text-lg font-semibold text-slate-700 transition hover:bg-slate-50"
+                            className="inline-flex items-center justify-center rounded-lg border border-slate-200 px-4 py-3 text-lg font-semibold text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
                         >
                             {direction === "asc" ? "↑" : "↓"}
                         </button>
@@ -474,7 +474,7 @@ export default function Index({
                         <button
                             type="button"
                             onClick={resetFilters}
-                            className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                            className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
                         >
                     <RiResetLeftFill size={20}/>
 
@@ -496,20 +496,20 @@ export default function Index({
    
 
                     {/* Results summary */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 px-5 py-3">
-                        <p className="text-sm text-slate-500">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 px-5 py-3 dark:border-slate-800">
+                        <p className="text-sm text-slate-500 dark:text-slate-400">
                             Showing{" "}
-                            <span className="font-semibold text-slate-800">
+                            <span className="font-semibold text-slate-800 dark:text-slate-100">
                                 {products?.from ?? 0}–{products?.to ?? 0}
                             </span>{" "}
                             of{" "}
-                            <span className="font-semibold text-slate-800">
+                            <span className="font-semibold text-slate-800 dark:text-slate-100">
                                 {products?.total ?? 0}
                             </span>{" "}
                             products
                         </p>
 
-                        <p className="text-xs text-slate-400">
+                        <p className="text-xs text-slate-400 dark:text-slate-500">
                             {products?.total ?? productList.length} total
                             products
                         </p>
@@ -524,8 +524,8 @@ export default function Index({
 
                     {/* Pagination */}
                     {paginationLinks.length > 0 && (
-                        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 px-5 py-4">
-                            <p className="text-sm text-slate-500">
+                        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-slate-100 px-5 py-4 dark:border-slate-800">
+                            <p className="text-sm text-slate-500 dark:text-slate-400">
                                 Page {products.current_page} of{" "}
                                 {products.last_page}
                             </p>
@@ -543,8 +543,8 @@ export default function Index({
                                             link.active
                                                 ? "bg-indigo-600 text-white"
                                                 : link.url
-                                                  ? "text-slate-600 hover:bg-slate-100"
-                                                  : "cursor-not-allowed text-slate-300"
+                                                  ? "text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                                                  : "cursor-not-allowed text-slate-300 dark:text-slate-600"
                                         }`}
                                         dangerouslySetInnerHTML={{
                                             __html: link.label,
@@ -563,23 +563,23 @@ export default function Index({
                 maxWidth="md"
             >
                 <div className="p-6">
-                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+                    <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-300">
                         <Icon name="delete" className="h-6 w-6" />
                     </div>
 
-                    <h2 className="text-lg font-bold text-slate-900">
+                    <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
                         Delete Product?
                     </h2>
 
-                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                    <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
                         Are you sure you want to delete{" "}
-                        <span className="font-semibold text-slate-800">
+                        <span className="font-semibold text-slate-800 dark:text-slate-100">
                             "{selectedProduct?.name}"
                         </span>
                         ?
                     </p>
 
-                    <p className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">
+                    <p className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700 dark:bg-red-950/40 dark:text-red-300">
                         This action cannot be undone.
                     </p>
 

@@ -14,23 +14,23 @@ const formatNumber = (value) =>
 
 function SummaryCard({ title, value, subtitle, icon, color }) {
     const colors = {
-        indigo: 'bg-indigo-50 text-indigo-600',
-        emerald: 'bg-emerald-50 text-emerald-600',
-        amber: 'bg-amber-50 text-amber-600',
-        rose: 'bg-rose-50 text-rose-600',
+        indigo: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-300',
+        emerald: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-300',
+        amber: 'bg-amber-50 text-amber-600 dark:bg-amber-950 dark:text-amber-300',
+        rose: 'bg-rose-50 text-rose-600 dark:bg-rose-950 dark:text-rose-300',
     };
 
     return (
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
             <div className="flex items-start justify-between">
                 <div>
-                    <p className="text-sm font-medium text-slate-500">
+                    <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
                         {title}
                     </p>
-                    <h3 className="mt-2 text-2xl font-bold text-slate-800">
+                    <h3 className="mt-2 text-2xl font-bold text-slate-800 dark:text-slate-100">
                         {value}
                     </h3>
-                        <div className="mt-1 text-xs text-slate-400">
+                        <div className="mt-1 text-xs text-slate-400 dark:text-slate-500">
                         {subtitle}
                     </div>
                 </div>
@@ -129,12 +129,12 @@ function StockStatusChart({ stockStatus }) {
     });
 
     return (
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
             <div className="mb-0">
                 {/* <h3 className="text-base font-semibold text-slate-800">
                     Stock Status
                 </h3> */}
-                <p className=" text-sm text-slate-500">
+                <p className=" text-sm text-slate-500 dark:text-slate-400">
                     Distribution of product availability
                 </p>
             </div>
@@ -148,11 +148,11 @@ function StockStatusChart({ stockStatus }) {
                             : '#e2e8f0',
                     }}
                 >
-                    <div className="flex h-10 w-10 flex-col items-center justify-center rounded-full bg-white">
-                        <span className="text-sm font-bold text-slate-800">
+                    <div className="flex h-10 w-10 flex-col items-center justify-center rounded-full bg-white dark:bg-[#080d18]">
+                        <span className="text-sm font-bold text-slate-800 dark:text-slate-100">
                             {formatNumber(total)}
                         </span>
-                        <span className="text-xs text-slate-400">
+                        <span className="text-xs text-slate-400 dark:text-slate-500">
                             {/* Products */}
                         </span>
                     </div>
@@ -174,12 +174,12 @@ function StockStatusChart({ stockStatus }) {
                                     }}
                                 />
 
-                                <span className="text-sm text-slate-600">
+                                <span className="text-sm text-slate-600 dark:text-slate-300">
                                     {item.name}
                                 </span>
                             </div>
 
-                            <span className="text-sm font-semibold text-slate-800">
+                            <span className="text-sm font-semibold text-slate-800 dark:text-slate-100">
                                 {formatNumber(item.value)}
                             </span>
                         </div>
@@ -238,13 +238,13 @@ function DonutChart({
     );
     // const total_categories = data.stats.categories.length
     return (
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
             <div className="mb-6">
-                <h3 className="text-base font-semibold text-slate-800">
+                <h3 className="text-base font-semibold text-slate-800 dark:text-slate-100">
                     {title}
                 </h3>
 
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                     {description}
                 </p>
             </div>
@@ -259,12 +259,12 @@ function DonutChart({
                             background: `conic-gradient(${gradient.join(', ')})`,
                         }}
                     >
-                        <div className="flex h-24 w-24 flex-col items-center justify-center rounded-full bg-white">
-                            <span className="text-xl font-bold text-slate-800">
+                        <div className="flex h-24 w-24 flex-col items-center justify-center rounded-full bg-white dark:bg-[#080d18]">
+                            <span className="text-xl font-bold text-slate-800 dark:text-slate-100">
                                 {total_quantity}
                             </span>
 
-                            <span className="mt-1 text-xs text-slate-400">
+                            <span className="mt-1 text-xs text-slate-400 dark:text-slate-500">
                                 {subtitle}
                             </span>
                         </div>
@@ -287,11 +287,11 @@ function DonutChart({
 
                                 <div className="min-w-0 flex-1 ">
                                     <div className="flex items-start justify-between gap-2 mr-10">
-                                        <span className="truncate text-sm font-medium text-slate-700">
+                                        <span className="truncate text-sm font-medium text-slate-700 dark:text-slate-200">
                                             {item.name}
                                         </span>
 
-                                        <span className="shrink-0 text-sm font-semibold text-slate-800">
+                                        <span className="shrink-0 text-sm font-semibold text-slate-800 dark:text-slate-100">
                                             {formatter(item[valueKey])}
                                         </span>
                                     </div>
@@ -307,7 +307,7 @@ function DonutChart({
                     </div>
                 </div>
             ) : (
-                <p className="py-12 text-center text-sm text-slate-400">
+                <p className="py-12 text-center text-sm text-slate-400 dark:text-slate-500">
                     No inventory data available.
                 </p>
             )}
@@ -414,16 +414,16 @@ export default function Index({
         <AuthenticatedLayout>
             <Head title="Inventory Reports" />
 
-            <div className="min-h-screen bg-slate-50 px-6 py-6">
+            <div className="min-h-screen bg-slate-50 px-6 py-6 dark:bg-[#080d18]">
 
                 {/* Header */}
                 <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
                     <div>
-                        <h1 className="text-2xl font-bold text-slate-800">
+                        <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
                             Inventory Reports
                         </h1>
 
-                        <p className="mt-1 text-sm text-slate-500">
+                        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                             Analyze your inventory, stock levels and valuation.
                         </p>
                     </div>
@@ -431,7 +431,7 @@ export default function Index({
                     <button
                         type="button"
                         onClick={() => window.print()}
-                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50"
+                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-[#0e172a] dark:text-slate-200 dark:hover:bg-slate-800"
                     >
                         <span>🖨️</span>
                         Print Report
@@ -477,8 +477,8 @@ export default function Index({
                         title="Potential Selling Value"
                         value={formatCurrency(stats.potential_selling_value)}
                         subtitle={
-                            <span className="font-semibold text-emerald-800">
-                                Potential Profit: <p className='font-bold text-lg text-emerald-600'>
+                            <span className="font-semibold text-emerald-800 dark:text-emerald-300">
+                                Potential Profit: <p className='font-bold text-lg text-emerald-600 dark:text-emerald-400'>
                                     {formatCurrency(stats.potential_profit)}
                                     </p> 
                             </span>
@@ -502,15 +502,15 @@ export default function Index({
         valueKey="inventory_value"
         formatter={formatCurrency}
         renderDetails={(category) => (
-            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500">
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
                 <span>
-                    Stock: <strong className="text-slate-700">
+                    Stock: <strong className="text-slate-700 dark:text-slate-200">
                         {formatNumber(category.stock)}
                     </strong>
                 </span>
 
                 <span>
-                    Products: <strong className="text-slate-700">
+                    Products: <strong className="text-slate-700 dark:text-slate-200">
                         {formatNumber(category.total_products)}
                     </strong>
                 </span>
@@ -534,14 +534,14 @@ export default function Index({
 </div>
 
                 {/* Product Stock Report */}
-                <div className="mt-7 rounded-xl border border-slate-200 bg-white shadow-sm">
+                <div className="mt-7 rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
 
-                    <div className="border-b border-slate-200 p-5">
-                        <h3 className="text-base font-semibold text-slate-800">
+                    <div className="border-b border-slate-200 p-5 dark:border-slate-800">
+                        <h3 className="text-base font-semibold text-slate-800 dark:text-slate-100">
                             Product Stock Report
                         </h3>
 
-                        <p className="mt-1 text-sm text-slate-500">
+                        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                             Search and analyze individual product stock levels.
                         </p>
 
@@ -553,13 +553,13 @@ export default function Index({
                                 value={search}
                                 onChange={(e) => setSearch(e.target.value)}
                                 placeholder="Search products..."
-                                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+                                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 dark:border-slate-700 dark:bg-[#080d18] dark:text-slate-100 dark:placeholder:text-slate-500"
                             />
 
                             <select
                                 value={categoryFilter}
                                 onChange={(e) => setCategoryFilter(e.target.value)}
-                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-indigo-500"
+                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-[#080d18] dark:text-slate-100"
                             >
                                 <option value="">All Categories</option>
 
@@ -576,7 +576,7 @@ export default function Index({
                             <select
                                 value={stockFilter}
                                 onChange={(e) => setStockFilter(e.target.value)}
-                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-indigo-500"
+                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-[#080d18] dark:text-slate-100"
                             >
                                 <option value="">All Stock Status</option>
                                 <option value="in_stock">In Stock</option>
@@ -587,7 +587,7 @@ export default function Index({
                             <select
                                 value={sort}
                                 onChange={(e) => setSort(e.target.value)}
-                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-indigo-500"
+                                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none focus:border-indigo-500 dark:border-slate-700 dark:bg-[#080d18] dark:text-slate-100"
                             >
                                 <option value="name">Sort by Name</option>
                                 <option value="quantity">Sort by Quantity</option>
@@ -603,7 +603,7 @@ export default function Index({
                                 onClick={() => setDirection(
                                     direction === 'asc' ? 'desc' : 'asc'
                                 )}
-                                className="text-xs font-medium text-indigo-600 hover:text-indigo-800"
+                                className="text-xs font-medium text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300"
                             >
                                 {direction === 'asc'
                                     ? '↑ Ascending'
@@ -619,7 +619,7 @@ export default function Index({
                                     setSort('name');
                                     setDirection('asc');
                                 }}
-                                className="text-xs font-medium text-slate-500 hover:text-indigo-600"
+                                className="text-xs font-medium text-slate-500 hover:text-indigo-600 dark:text-slate-400"
                             >
                                 Clear Filters
                             </button>
@@ -629,7 +629,7 @@ export default function Index({
                     {/* Table */}
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[850px] text-left text-sm">
-                            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500 dark:bg-[#080d18] dark:text-slate-400">
                                 <tr>
                                     <th className="px-5 py-4">Product</th>
                                     <th className="px-5 py-4">Category</th>
@@ -641,7 +641,7 @@ export default function Index({
                                 </tr>
                             </thead>
 
-                            <tbody className="divide-y divide-slate-100">
+                            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                                 {productList.length > 0 ? (
                                     productList.map((product) => {
                                         const status =
@@ -652,9 +652,9 @@ export default function Index({
                                                     : 'in_stock';
 
                                         const statusStyles = {
-                                            in_stock: 'bg-emerald-50 text-emerald-700',
-                                            low_stock: 'bg-amber-50 text-amber-700',
-                                            out_of_stock: 'bg-rose-50 text-rose-700',
+                                            in_stock: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
+                                            low_stock: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+                                            out_of_stock: 'bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300',
                                         };
 
                                         const statusLabels = {
@@ -666,29 +666,29 @@ export default function Index({
                                         return (
                                             <tr
                                                 key={product.id}
-                                                className="transition hover:bg-slate-50"
+                                                className="transition hover:bg-slate-50 dark:hover:bg-slate-800/50"
                                             >
-                                                <td className="px-5 py-4 font-medium text-slate-800">
+                                                <td className="px-5 py-4 font-medium text-slate-800 dark:text-slate-100">
                                                     {product.name}
                                                 </td>
 
-                                                <td className="px-5 py-4 text-slate-600">
+                                                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">
                                                     {product.category?.name || 'Uncategorized'}
                                                 </td>
 
-                                                <td className="px-5 py-4 font-semibold text-slate-700">
+                                                <td className="px-5 py-4 font-semibold text-slate-700 dark:text-slate-200">
                                                     {formatNumber(product.quantity)}
                                                 </td>
 
-                                                <td className="px-5 py-4 text-slate-600">
+                                                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">
                                                     {formatNumber(product.minimum_stock)}
                                                 </td>
 
-                                                <td className="px-5 py-4 text-slate-600">
+                                                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">
                                                     {formatCurrency(product.purchase_price)}
                                                 </td>
 
-                                                <td className="px-5 py-4 text-slate-600">
+                                                <td className="px-5 py-4 text-slate-600 dark:text-slate-300">
                                                     {formatCurrency(product.selling_price)}
                                                 </td>
 
@@ -704,7 +704,7 @@ export default function Index({
                                     <tr>
                                         <td
                                             colSpan="7"
-                                            className="px-5 py-12 text-center text-slate-400"
+                                            className="px-5 py-12 text-center text-slate-400 dark:text-slate-500"
                                         >
                                             No products found.
                                         </td>
@@ -716,8 +716,8 @@ export default function Index({
 
                     {/* Pagination */}
                     {products?.links && (
-                        <div className="flex flex-col gap-4 border-t border-slate-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
-                            <p className="text-xs text-slate-500">
+                        <div className="flex flex-col gap-4 border-t border-slate-200 px-5 py-4 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between">
+                            <p className="text-xs text-slate-500 dark:text-slate-400">
                                 Showing {products.from || 0} to {products.to || 0} of {products.total || 0} products
                             </p>
 

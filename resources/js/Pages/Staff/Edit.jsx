@@ -24,7 +24,7 @@ export default function Edit({ staffMember }) {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold text-gray-800">
+                <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
                     Edit Staff
                 </h2>
             }
@@ -37,26 +37,26 @@ export default function Edit({ staffMember }) {
                     <div className="mb-6 flex items-center gap-2 text-sm">
                         <Link
                             href={route("staff.index")}
-                            className="text-gray-500 hover:text-indigo-600"
+                            className="text-gray-500 hover:text-indigo-600 dark:text-gray-400"
                         >
                             Staff Management
                         </Link>
 
-                        <span className="text-gray-400">/</span>
+                        <span className="text-gray-400 dark:text-gray-600">/</span>
 
-                        <span className="font-medium text-gray-800">
+                        <span className="font-medium text-gray-800 dark:text-gray-200">
                             Edit Staff
                         </span>
                     </div>
 
                     {/* Form Card */}
-                    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-                        <div className="border-b border-gray-200 px-6 py-5">
-                            <h3 className="text-lg font-semibold text-gray-900">
+                    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-[#0e172a]">
+                        <div className="border-b border-gray-200 px-6 py-5 dark:border-gray-800">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                                 Edit Staff Information
                             </h3>
 
-                            <p className="mt-1 text-sm text-gray-500">
+                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                                 Update the account details for{" "}
                                 {staffMember.name}.
                             </p>
@@ -123,7 +123,7 @@ export default function Edit({ staffMember }) {
                                     onChange={(e) =>
                                         setData("role", e.target.value)
                                     }
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-[#080d18] dark:text-white"
                                     required
                                 >
                                     <option value="staff">Staff</option>
@@ -137,12 +137,12 @@ export default function Edit({ staffMember }) {
                             </div>
 
                             {/* Password Section */}
-                            <div className="border-t border-gray-200 pt-5">
-                                <h4 className="text-sm font-semibold text-gray-900">
+                            <div className="border-t border-gray-200 pt-5 dark:border-gray-800">
+                                <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                                     Change Password
                                 </h4>
 
-                                <p className="mt-1 text-sm text-gray-500">
+                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                                     Leave these fields empty if you don't want
                                     to change the existing password.
                                 </p>
@@ -202,7 +202,7 @@ export default function Edit({ staffMember }) {
                             </div>
 
                             {/* Actions */}
-                            <div className="flex items-center justify-end gap-3 border-t border-gray-200 pt-5">
+                            <div className="flex items-center justify-end gap-3 border-t border-gray-200 pt-5 dark:border-gray-800">
                                 <Link href={route("staff.index")}>
                                     <SecondaryButton type="button">
                                         Cancel
