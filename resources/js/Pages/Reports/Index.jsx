@@ -414,7 +414,7 @@ export default function Index({
         <AuthenticatedLayout>
             <Head title="Inventory Reports" />
 
-            <div className="min-h-screen bg-slate-50 px-6 py-6 dark:bg-[#080d18]">
+            <div className="min-h-screen bg-slate-50 px-4 py-6 dark:bg-[#080d18] sm:px-6">
 
                 {/* Header */}
                 <div className="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">

@@ -1,17 +1,26 @@
 
-import { Link, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
-import { MdDarkMode, MdLightMode, MdNotificationsNone, MdKeyboardArrowDown } from 'react-icons/md';
+import { MdClose, MdDarkMode, MdLightMode, MdMenu, MdNotificationsNone } from 'react-icons/md';
 import Sidebar from '@/Components/Sidebar';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const { props } = usePage();
-    const user = props.auth?.user;
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         setIsDarkMode(document.documentElement.classList.contains('dark'));
     }, []);
+
+    useEffect(() => {
+        if (!isMobileMenuOpen) return undefined;
+
+        const closeOnEscape = (event) => {
+            if (event.key === 'Escape') setIsMobileMenuOpen(false);
+        };
+
+        window.addEventListener('keydown', closeOnEscape);
+        return () => window.removeEventListener('keydown', closeOnEscape);
+    }, [isMobileMenuOpen]);
 
     const toggleTheme = () => {
         const nextIsDarkMode = !document.documentElement.classList.contains('dark');
@@ -23,34 +32,46 @@ export default function AuthenticatedLayout({ header, children }) {
         setIsDarkMode(nextIsDarkMode);
     };
 
-    const initials = user?.name
-        ? user.name
-            .split(' ')
-            .map((part) => part[0])
-            .join('')
-            .slice(0, 2)
-            .toUpperCase()
-        : 'U';
-
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#080d18]">
-
-            {/* Sidebar */}
-            <Sidebar />
+            <Sidebar
+                mobileOpen={isMobileMenuOpen}
+                onClose={() => setIsMobileMenuOpen(false)}
+            />
+            {isMobileMenuOpen && (
+                <button
+                    type="button"
+                    aria-label="Close navigation menu"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="fixed inset-0 z-20 bg-slate-950/50 lg:hidden"
+                />
+            )}
 
             {/* Main section */}
-            <div className="ml-[240px] min-h-screen">
+            <div className="min-h-screen min-w-0 lg:ml-[250px]">
 
                 {/* Topbar */}
-                <header className="fixed left-[250px] right-0 top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0e172a] px-8">
+                <header className="fixed left-0 right-0 top-0 z-30 flex h-16 min-w-0 items-center justify-between border-b border-slate-200 bg-white px-3 dark:border-slate-800 dark:bg-[#0e172a] sm:px-6 lg:left-[250px] lg:h-20 lg:px-8">
 
                     {/* Breadcrumb */}
-                    <div className="text-sm">
+                    <div className="flex min-w-0 flex-1 items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+                            aria-label={`${isMobileMenuOpen ? 'Close' : 'Open'} navigation menu`}
+                            aria-expanded={isMobileMenuOpen}
+                            aria-controls="app-sidebar"
+                            className="shrink-0 rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 hover:text-indigo-600 dark:text-slate-300 dark:hover:bg-[#1a2c52] dark:hover:text-indigo-400 lg:hidden"
+                        >
+                            {isMobileMenuOpen ? <MdClose size={22} /> : <MdMenu size={22} />}
+                        </button>
+                        <div className="min-w-0 truncate text-sm">
                         {header}
+                        </div>
                     </div>
 
                     {/* Right section */}
-                    <div className="flex items-center gap-6">
+                    <div className="ml-2 flex shrink-0 items-center gap-1 sm:gap-3">
 
                         {/* Notifications */}
                         <button
@@ -62,33 +83,6 @@ export default function AuthenticatedLayout({ header, children }) {
 
                             <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500 ring-2 ring-slate-300" />
                         </button>
-
-                        {/* User profile */}
-                        {/* <Link
-                            href={route('profile.edit')}
-                            className="flex items-center gap-3"
-                        >
-                            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900  text-sm font-bold text-indigo-600 dark:text-indigo-400">
-                                {initials}
-                            </div>
-
-                            <div className="hidden text-left sm:block">
-                                <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-                                    {user?.name || 'User'}
-                                </p>
-
-                                <p className="text-xs text-slate-500">
-                                    {user?.role === 'admin'
-                                        ? 'Store Owner'
-                                        : 'Staff Member'}
-                                </p>
-                            </div>
-
-                            <MdKeyboardArrowDown
-                                size={20}
-                                className="text-slate-400 dark:text-slate-600"
-                            />
-                        </Link> */}
 
                         <button
                             type="button"
@@ -104,7 +98,7 @@ export default function AuthenticatedLayout({ header, children }) {
                 </header>
 
                 {/* Page content */}
-                <main className="min-h-screen pt-20">
+                <main className="min-h-screen min-w-0 pt-16 lg:pt-20">
                     {children}
                 </main>
             </div>

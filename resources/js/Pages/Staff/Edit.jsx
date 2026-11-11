@@ -51,7 +51,7 @@ export default function Edit({ staffMember }) {
 
                     {/* Form Card */}
                     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-[#0e172a]">
-                        <div className="border-b border-gray-200 px-6 py-5 dark:border-gray-800">
+                        <div className="border-b border-gray-200 px-4 py-5 dark:border-gray-800 sm:px-6">
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                                 Edit Staff Information
                             </h3>
@@ -62,7 +62,7 @@ export default function Edit({ staffMember }) {
                             </p>
                         </div>
 
-                        <form onSubmit={submit} className="space-y-6 p-6">
+                        <form onSubmit={submit} className="space-y-6 p-4 sm:p-6">
                             {/* Name */}
                             <div>
                                 <InputLabel htmlFor="name" value="Full Name" />

@@ -50,7 +50,7 @@ export default function Create({ categories = [] }) {
                     </div>
 
                     <div className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-200 dark:bg-[#0e172a] dark:ring-gray-800">
-                        <div className="border-b border-gray-200 px-6 py-5 dark:border-gray-800">
+                        <div className="border-b border-gray-200 px-4 py-5 dark:border-gray-800 sm:px-6">
                             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                                 Product Information
                             </h3>
@@ -59,7 +59,7 @@ export default function Create({ categories = [] }) {
                             </p>
                         </div>
 
-                        <form onSubmit={submit} className="space-y-6 p-6">
+                        <form onSubmit={submit} className="space-y-6 p-4 sm:p-6">
                             {/* Product Name */}
                             <div>
                                 <InputLabel

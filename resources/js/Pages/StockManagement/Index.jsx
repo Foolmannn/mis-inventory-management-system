@@ -47,7 +47,7 @@ export default function Index({
             }>
       <Head title="Stock Management" />
 
-      <div className="space-y-6 m-6">
+      <div className="m-4 space-y-6 sm:m-6">
 
         <Header />
 

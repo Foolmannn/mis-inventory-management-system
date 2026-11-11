@@ -56,7 +56,7 @@ function CategoryTable({ categories, canManage, openDeleteModal }) {
                     <tr className="border-y border-slate-100 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:border-slate-800 dark:text-slate-400">
                         <th className="px-6 py-4">Category</th>
                         <th className="px-6 py-4">Description</th>
-                        <th className="px-6 py-4">Products</th>
+                        <th className="px-6 py-4">No. of Products</th>
 
                         {canManage && (
                             <th className="px-6 py-4 text-right">Actions</th>
@@ -108,17 +108,8 @@ function CategoryTable({ categories, canManage, openDeleteModal }) {
 
                             {/* Product count */}
                             <td className="px-6 py-4">
-                                <span className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 dark:bg-slate-800 dark:text-slate-200">
-                                    <MdInventory2
-                                        size={16}
-                                        className="text-slate-500 dark:text-slate-400"
-                                    />
-
+                                <span className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg bg-slate-100 px-4 py-1.5 text-md font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
                                     {category.products_count ?? 0}
-
-                                    {category.products_count === 1
-                                        ? "product"
-                                        : "products"}
                                 </span>
                             </td>
 

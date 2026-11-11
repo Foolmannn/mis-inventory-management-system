@@ -57,7 +57,7 @@ export default function Create() {
 
                 {/* Form card */}
                 <div className="max-w-3xl overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
-                    <div className="border-b border-slate-100 px-6 py-5 dark:border-slate-800">
+                    <div className="border-b border-slate-100 px-4 py-5 dark:border-slate-800 sm:px-6">
                         <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
                             Category Information
                         </h2>
@@ -68,7 +68,7 @@ export default function Create() {
                     </div>
 
                     <form onSubmit={submit}>
-                        <div className="space-y-6 p-6">
+                        <div className="space-y-6 p-4 sm:p-6">
                             {/* Category name */}
                             <div>
                                 <InputLabel
@@ -128,7 +128,7 @@ export default function Create() {
                         </div>
 
                         {/* Form actions */}
-                        <div className="flex items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-6 py-4 dark:border-slate-800 dark:bg-[#080d18]">
+                        <div className="flex flex-wrap items-center justify-end gap-3 border-t border-slate-100 bg-slate-50 px-4 py-4 dark:border-slate-800 dark:bg-[#080d18] sm:px-6">
                             <Link href={route("category.index")}>
                                 <SecondaryButton type="button">
                                     Cancel

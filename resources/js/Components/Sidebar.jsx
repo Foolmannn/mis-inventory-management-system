@@ -57,7 +57,7 @@ const navigation = [
     // },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ mobileOpen, onClose }) {
     const { url, props } = usePage();
 
     const user = props.auth?.user;
@@ -92,7 +92,12 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className="fixed inset-y-0 left-0 z-40 flex w-[250px] flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0e172a]">
+        <aside
+            id="app-sidebar"
+            className={`fixed inset-y-0 left-0 z-50 flex w-[250px] max-w-[85vw] flex-col border-r border-slate-200 bg-white transition-transform duration-200 dark:border-slate-800 dark:bg-[#0e172a] lg:translate-x-0 ${
+                mobileOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
+        >
 
             {/* Brand */}
             <div className="flex h-32 shrink-0 items-center gap-3 border-b border-slate-100 dark:border-slate-800 px-5">
@@ -140,6 +145,7 @@ export default function Sidebar() {
                             <Link
                                 key={item.title}
                                 href={route(item.routeName)}
+                                onClick={onClose}
                                 className={`flex items-center gap-3 rounded-lg px-4 py-3 text-[15px] font-medium transition-all duration-200 ${
                                     active
                                         ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400'
@@ -160,6 +166,7 @@ export default function Sidebar() {
                 {/* Profile */}
                 <Link
                     href={route('profile.edit')}
+                    onClick={onClose}
                     className="mb-2 flex items-center gap-3 rounded-xl bg-slate-50 dark:bg-slate-950 px-3 py-3 transition hover:bg-slate-100 dark:hover:bg-slate-900"
                 >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900 font-semibold text-indigo-600 dark:text-indigo-400">
@@ -180,6 +187,7 @@ export default function Sidebar() {
                 {/* Logout */}
                 <Link
                     href={route('logout')}
+                    onClick={onClose}
                     method="post"
                     as="button"
                     className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-400 transition hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-600 dark:hover:text-red-400"

@@ -35,7 +35,7 @@ export default function Index({ history }) {
           >
       <Head title="Stock History" />
 
-      <div className="space-y-6 m-6">
+      <div className="m-4 space-y-6 sm:m-6">
 
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
@@ -48,7 +48,7 @@ export default function Index({ history }) {
         </div>
 
 
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-[#0e172a]">
+        <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-[#0e172a] sm:p-6">
 
           <HistoryTable history={history} />
 

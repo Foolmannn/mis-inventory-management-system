@@ -39,7 +39,7 @@ export default function Welcome() {
 
                 {/* Navbar */}
                 <nav className="border-b border-slate-200 dark:border-0 bg-white dark:bg-[#0e172a]">
-                    <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+                    <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
 
                         {/* Logo / App Name */}
                         <Link
@@ -50,7 +50,7 @@ export default function Welcome() {
                                 <span className="text-xl font-bold">M</span>
                             </div>
 
-                            <span className="text-xl font-bold text-slate-800 dark:text-slate-100">
+                            <span className="text-lg font-bold text-slate-800 dark:text-slate-100 sm:text-xl">
                                 MIS Inventory
                             </span>
                         </Link>
@@ -87,7 +87,7 @@ export default function Welcome() {
                 </nav>
 
                 {/* Main Content */}
-                <main className="flex min-h-[calc(100vh-73px)] items-center justify-center px-6">
+                <main className="flex min-h-[calc(100vh-73px)] items-center justify-center px-4 py-12 sm:px-6">
 
                     <div className="max-w-2xl text-center">
 
@@ -108,7 +108,7 @@ export default function Welcome() {
                             </svg>
                         </div>
 
-                        <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl">
+                        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl">
                             Inventory Management System
                         </h1>
 
@@ -135,7 +135,7 @@ export default function Welcome() {
                 </main>
 
                 {/* Footer */}
-                <footer className="border-t border-slate-200 dark:border-0 bg-white dark:bg-[#0e172a] px-6 py-4 text-center">
+                <footer className="border-t border-slate-200 bg-white px-4 py-4 text-center dark:border-0 dark:bg-[#0e172a] sm:px-6">
                     <p className="text-sm text-slate-500">
                         © {new Date().getFullYear()} MIS Inventory Management System.
                         All rights reserved.
