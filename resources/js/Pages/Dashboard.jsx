@@ -84,9 +84,9 @@ function StatCard({
     warning = false,
 }) {
     return (
-        <div className="relative rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+        <div className="relative rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0e172a] p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
             {warning && (
-                <span className="absolute right-5 top-5 h-2.5 w-2.5 rounded-full bg-amber-400" />
+                <span className="absolute right-5 top-5 h-2.5 w-2.5 rounded-full bg-amber-400 dark:bg-amber-600" />
             )}
 
             <div
@@ -95,13 +95,13 @@ function StatCard({
                 <Icon name={icon} className="h-6 w-6" />
             </div>
 
-            <p className="mt-5 text-base font-medium text-slate-500">{title}</p>
+            <p className="mt-5 text-base font-medium text-slate-500 dark:text-slate-400">{title}</p>
 
-            <h3 className="mt-1 pr-10 text-3xl font-bold tracking-tight text-slate-950">
+            <h3 className="mt-1 pr-10 text-2xl font-bold tracking-tight text-slate-950 dark:text-slate-50">
                 {value}
             </h3>
 
-            <p className="mt-2 text-sm text-slate-400">{subtitle}</p>
+            <p className="mt-2 text-sm text-slate-400 dark:text-slate-500">{subtitle}</p>
         </div>
     );
 }
@@ -111,7 +111,7 @@ function StatCard({
 function InventoryOverview({ categories = [], isAdmin }) {
     const [currentPage, setCurrentPage] = useState(1);
 
-    const ITEMS_PER_PAGE = 10;
+    const ITEMS_PER_PAGE = 5;
 
     const validCategories = Array.isArray(categories) ? categories : [];
 
@@ -143,20 +143,20 @@ function InventoryOverview({ categories = [], isAdmin }) {
     ];
 
     return (
-        <div className="w-full rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0e172a] p-6 shadow-sm">
             {/* Header */}
             <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                    <h3 className="text-lg font-semibold text-slate-900">
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                         Inventory overview
                     </h3>
 
-                    <p className="mt-1 text-sm text-slate-500">
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                         Stock quantities by category
                     </p>
                 </div>
 
-                <span className="text-sm font-medium text-indigo-600">
+                <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
                     {validCategories.length} Categories
                 </span>
             </div>
@@ -165,7 +165,7 @@ function InventoryOverview({ categories = [], isAdmin }) {
             {currentCategories.length > 0 ? (
                 <>
                     <div className="mt-8 overflow-visible">
-                        <div className="flex h-64 items-end gap-4 border-b border-l border-slate-200 px-4 sm:gap-8">
+                        <div className="flex h-64 items-end gap-4 border-b border-l border-slate-200 dark:border-slate-800 px-4 sm:gap-8">
                             {currentCategories.map((category, index) => {
                                 const stock = Number(category.stock) || 0;
 
@@ -190,11 +190,11 @@ function InventoryOverview({ categories = [], isAdmin }) {
             -translate-x-1/2
             whitespace-nowrap
             rounded-lg
-            bg-slate-900
+            bg-slate-900 dark:bg-slate-100
             px-3
             py-2
             text-xs
-            text-white
+            text-white dark:text-black
             shadow-xl
             opacity-0
             invisible
@@ -208,9 +208,9 @@ function InventoryOverview({ categories = [], isAdmin }) {
                                                     {category.name}
                                                 </p>
 
-                                                <p className="mt-1 text-slate-300">
+                                                {/* <p className="mt-1 text-slate-300">
                                                     Category ID: {category.id}
-                                                </p>
+                                                </p> */}
 
                                                 <p className="mt-1 font-medium text-emerald-400">
                                                     Stock: {stock} units
@@ -225,18 +225,17 @@ function InventoryOverview({ categories = [], isAdmin }) {
             -translate-x-1/2
             border-4
             border-transparent
-            border-t-slate-900
+            border-t-slate-900 dark:border-t-slate-100
         "
                                                 />
                                             </div>
 
                                             {/* Vertical bar */}
                                             <div
-                                                className={`w-full max-w-16 rounded-t-lg ${
-                                                    colors[
-                                                        index % colors.length
+                                                className={`w-full max-w-16 rounded-t-lg ${colors[
+                                                    index % colors.length
                                                     ]
-                                                } transition-all duration-300 hover:opacity-80`}
+                                                    } transition-all duration-300 hover:opacity-80`}
                                                 style={{
                                                     height:
                                                         stock > 0
@@ -255,9 +254,9 @@ function InventoryOverview({ categories = [], isAdmin }) {
                                         </span>
 
                                         {/* Category ID */}
-                                        <span className="mt-1 text-[10px] text-slate-400">
+                                        {/* <span className="mt-1 text-[10px] text-slate-400">
                                             ID: {category.id}
-                                        </span>
+                                        </span> */}
                                     </div>
                                 );
                             })}
@@ -268,7 +267,7 @@ function InventoryOverview({ categories = [], isAdmin }) {
                     <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
                         <p className="text-xs text-slate-500">
                             Showing{" "}
-                            <span className="font-semibold text-slate-700">
+                            <span className="font-semibold text-slate-700 dark:text-slate-300">
                                 {startIndex + 1}–
                                 {Math.min(
                                     startIndex + ITEMS_PER_PAGE,
@@ -287,12 +286,12 @@ function InventoryOverview({ categories = [], isAdmin }) {
                                     )
                                 }
                                 disabled={safePage === 1}
-                                className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                                className="rounded-lg border border-slate-200 dark:border-slate-800 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-50 dark:hover:bg-slate-950 disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 Previous
                             </button>
 
-                            <span className="px-2 text-sm font-medium text-slate-600">
+                            <span className="px-2 text-sm font-medium text-slate-600 dark:text-slate-400">
                                 Page {safePage} of {Math.max(totalPages, 1)}
                             </span>
 
@@ -306,7 +305,7 @@ function InventoryOverview({ categories = [], isAdmin }) {
                                 disabled={
                                     safePage === totalPages || totalPages === 0
                                 }
-                                className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                                className="rounded-lg border border-slate-200 dark:border-slate-800 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-50 dark:hover:bg-slate-950 disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 Next
                             </button>
@@ -327,13 +326,13 @@ function InventoryOverview({ categories = [], isAdmin }) {
 // Quick action card.
 function QuickAction({ icon, title, description }) {
     return (
-        <div className="group flex min-h-28 flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 transition hover:border-indigo-300 hover:bg-indigo-50/30 hover:shadow-sm">
-            <div className="text-indigo-600 transition group-hover:scale-105">
+        <div className="group flex min-h-28 flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0e172a] p-5 transition hover:border-indigo-300 dark:hover:border-indigo-700 hover:bg-indigo-50/30 dark:hover:bg-indigo-950/30 hover:shadow-sm">
+            <div className="text-indigo-600 dark:text-indigo-400 transition group-hover:scale-105">
                 <Icon name={icon} />
             </div>
 
             <div>
-                <h4 className="font-semibold text-slate-800">{title}</h4>
+                <h4 className="font-semibold text-slate-800 dark:text-slate-200">{title}</h4>
                 <p className="mt-1 text-xs text-slate-400">{description}</p>
             </div>
         </div>
@@ -364,22 +363,22 @@ export default function Dashboard({
         <AuthenticatedLayout
             header={
                 <div className="flex items-center gap-2 text-sm font-medium">
-                    <span className="text-slate-400">MyStore</span>
-                    <Icon name="arrow" className="h-4 w-4 text-slate-400" />
-                    <span className="text-slate-700">Dashboard</span>
+                    <span className="text-slate-400 dark:text-slate-300">MyStore</span>
+                    <Icon name="arrow" className="h-4 w-4 text-slate-400 dark:text-slate-300" />
+                    <span className="text-slate-700 dark:text-slate-400">Dashboard</span>
                 </div>
             }
         >
             <Head title="Dashboard" />
 
-            <div className="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
+            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 px-4 py-8 sm:px-6 lg:px-8">
                 {/* Page heading */}
                 <div className="mb-7">
-                    <h1 className="text-3xl font-bold tracking-tight text-slate-900">
+                    <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
                         Dashboard
                     </h1>
 
-                    <p className="mt-2 text-base text-slate-500">
+                    <p className="mt-2 text-base text-slate-500 dark:text-slate-400">
                         Here's what's happening with your store today.
                     </p>
                 </div>
@@ -391,8 +390,8 @@ export default function Dashboard({
                         value={total_products}
                         subtitle="+2 this month"
                         icon="products"
-                        iconColor="text-indigo-600"
-                        iconBackground="bg-indigo-50"
+                        iconColor="text-indigo-600 dark:text-indigo-400"
+                        iconBackground="bg-indigo-50 dark:bg-indigo-950"
                     />
 
                     <StatCard
@@ -400,8 +399,8 @@ export default function Dashboard({
                         value={total_categories}
                         subtitle="Across all products"
                         icon="categories"
-                        iconColor="text-blue-600"
-                        iconBackground="bg-blue-50"
+                        iconColor="text-blue-600 dark:text-blue-400"
+                        iconBackground="bg-blue-50 dark:bg-blue-950"
                     />
 
                     <StatCard
@@ -409,8 +408,8 @@ export default function Dashboard({
                         value={total_stock}
                         subtitle="Units available"
                         icon="stock"
-                        iconColor="text-cyan-600"
-                        iconBackground="bg-cyan-50"
+                        iconColor="text-cyan-600 dark:text-cyan-400"
+                        iconBackground="bg-cyan-50 dark:bg-cyan-950"
                     />
 
                     <StatCard
@@ -418,8 +417,8 @@ export default function Dashboard({
                         value={low_stock_count}
                         subtitle="Needs attention"
                         icon="warning"
-                        iconColor="text-amber-600"
-                        iconBackground="bg-amber-50"
+                        iconColor="text-amber-600 dark:text-amber-400"
+                        iconBackground="bg-amber-50 dark:bg-amber-950"
                         warning={Number(low_stock_count) > 0}
                     />
                     <StatCard
@@ -427,8 +426,8 @@ export default function Dashboard({
                         value={in_stock_count}
                         subtitle="Above minimum stock"
                         icon="stock"
-                        iconColor="text-emerald-600"
-                        iconBackground="bg-emerald-50"
+                        iconColor="text-emerald-600 dark:text-emerald-400"
+                        iconBackground="bg-emerald-50 dark:bg-emerald-950"
                     />
 
                     <StatCard
@@ -436,8 +435,8 @@ export default function Dashboard({
                         value={out_of_stock_count}
                         subtitle="Products unavailable"
                         icon="warning"
-                        iconColor="text-red-600"
-                        iconBackground="bg-red-50"
+                        iconColor="text-red-600 dark:text-red-400"
+                        iconBackground="bg-red-50 dark:bg-red-950"
                         warning={Number(out_of_stock_count) > 0}
                     />
                     <StatCard
@@ -445,8 +444,8 @@ export default function Dashboard({
                         value={`Rs.${inventory_value}`}
                         subtitle="At purchase price"
                         icon="money"
-                        iconColor="text-emerald-600"
-                        iconBackground="bg-emerald-50"
+                        iconColor="text-emerald-600 dark:text-emerald-400"
+                        iconBackground="bg-emerald-50 dark:bg-emerald-950"
                     />
                 </div>
 
@@ -462,7 +461,7 @@ export default function Dashboard({
                     {/* Quick actions */}
                     {isAdmin && (
                         <div className="xl:col-span-2">
-                            <h3 className="text-lg font-semibold text-slate-900">
+                            <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
                                 Quick actions
                             </h3>
 

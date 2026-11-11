@@ -4,11 +4,12 @@ export default function Welcome() {
     return (
         <>
             <Head title="Welcome" />
-
-            <div className="min-h-screen bg-slate-50">
+{/* #080d18 */}
+{/* #0e172a */}
+            <div className="min-h-screen bg-slate-50 dark:bg-[#080d18]">
 
                 {/* Navbar */}
-                <nav className="border-b border-slate-200 bg-white">
+                <nav className="border-b border-slate-200 dark:border-0 bg-white dark:bg-[#0e172a]">
                     <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
 
                         {/* Logo / App Name */}
@@ -20,7 +21,7 @@ export default function Welcome() {
                                 <span className="text-xl font-bold">M</span>
                             </div>
 
-                            <span className="text-xl font-bold text-slate-800">
+                            <span className="text-xl font-bold text-slate-800 dark:text-slate-100">
                                 MIS Inventory
                             </span>
                         </Link>
@@ -51,7 +52,7 @@ export default function Welcome() {
 
                     <div className="max-w-2xl text-center">
 
-                        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-100">
+                        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-100 dark:bg-[#121e37]">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="h-10 w-10 text-indigo-600"
@@ -68,7 +69,7 @@ export default function Welcome() {
                             </svg>
                         </div>
 
-                        <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
+                        <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl">
                             Inventory Management System
                         </h1>
 
@@ -95,7 +96,7 @@ export default function Welcome() {
                 </main>
 
                 {/* Footer */}
-                <footer className="border-t border-slate-200 bg-white px-6 py-4 text-center">
+                <footer className="border-t border-slate-200 dark:border-0 bg-white dark:bg-[#0e172a] px-6 py-4 text-center">
                     <p className="text-sm text-slate-500">
                         © {new Date().getFullYear()} MIS Inventory Management System.
                         All rights reserved.
