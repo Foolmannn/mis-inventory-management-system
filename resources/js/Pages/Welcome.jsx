@@ -1,6 +1,7 @@
 import { Head, Link } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
+import { MdInventory2 } from 'react-icons/md';
 
 export default function Welcome() {
     const [isDarkMode, setIsDarkMode] = useState(false);
@@ -33,8 +34,8 @@ export default function Welcome() {
     return (
         <>
             <Head title="Welcome" />
-{/* #080d18 */}
-{/* #0e172a */}
+            {/* #080d18 */}
+            {/* #0e172a */}
             <div className="min-h-screen bg-slate-50 dark:bg-[#080d18]">
 
                 {/* Navbar */}
@@ -46,13 +47,21 @@ export default function Welcome() {
                             href="/"
                             className="flex items-center gap-3"
                         >
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600 text-white">
-                                <span className="text-xl font-bold">M</span>
-                            </div>
+                            <div className="flex shrink-0 items-center gap-3 border-slate-100 dark:border-slate-800 px-5">
+                                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm">
+                                    <MdInventory2 size={26} />
+                                </div>
 
-                            <span className="text-lg font-bold text-slate-800 dark:text-slate-100 sm:text-xl">
-                                MIS Inventory
-                            </span>
+                                <div>
+                                    <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-50">
+                                        MyStore
+                                    </h1>
+
+                                    <p className="text-xs font-medium tracking-[0.18em] text-slate-400 dark:text-slate-400">
+                                        INVENTORY
+                                    </p>
+                                </div>
+                            </div>
                         </Link>
 
                         {/* Authentication Buttons */}
@@ -89,23 +98,24 @@ export default function Welcome() {
                 {/* Main Content */}
                 <main className="flex min-h-[calc(100vh-73px)] items-center justify-center px-4 py-12 sm:px-6">
 
-                    <div className="max-w-2xl text-center">
+                    <div className="text-center">
 
-                        <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-indigo-100 dark:bg-[#121e37]">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-10 w-10 text-indigo-600"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                strokeWidth={1.8}
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                                />
-                            </svg>
+                        <div className="mx-auto mb-6 flex h-20 w-fit items-center justify-center rounded-2xl bg-indigo-100 dark:bg-[#121e37]">
+                            <div className="flex shrink-0 items-center gap-3 border-slate-100 dark:border-slate-800 px-5">
+                                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm">
+                                    <MdInventory2 size={26} />
+                                </div>
+
+                                <div>
+                                    <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-50">
+                                        MyStore
+                                    </h1>
+
+                                    <p className="text-xs font-medium tracking-[0.18em] text-slate-400 dark:text-slate-400">
+                                        INVENTORY
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
                         <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-50 sm:text-5xl">
