@@ -1,10 +1,11 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
 import { MdInventory2 } from 'react-icons/md';
 
 export default function Welcome() {
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const isAuthenticated = Boolean(usePage().props.auth?.user);
 
     useEffect(() => {
         const matchDarkMode = () => {
@@ -78,10 +79,10 @@ export default function Welcome() {
                             </button>
 
                             <Link
-                                href={route('login')}
+                                href={isAuthenticated ? route('dashboard') : route('login')}
                                 className="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
                             >
-                                Login
+                                {isAuthenticated ? 'Dashboard' : 'Login'}
                             </Link>
 
                             {/* <Link
@@ -131,10 +132,10 @@ export default function Welcome() {
                         <div className="mt-8 flex flex-wrap justify-center gap-4">
 
                             <Link
-                                href={route('login')}
+                                href={isAuthenticated ? route('dashboard') : route('login')}
                                 className="rounded-lg bg-indigo-600 px-7 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-indigo-700"
                             >
-                                Login to Dashboard
+                                {isAuthenticated ? 'Dashboard' : 'Login to Dashboard'}
                             </Link>
 
 
