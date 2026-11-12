@@ -43,6 +43,7 @@ const navigation = [
         title: 'Reports',
         routeName: 'reports.index',
         icon: MdAssessment,
+        adminOnly: true,
     },
     {
         title: 'Staff Management',
