@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Head, Link, router, usePage } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Modal from "@/Components/Modal";
@@ -11,8 +11,6 @@ import { MdAdd, MdEdit, MdDeleteOutline, MdMoreHoriz } from "react-icons/md";
 export default function Index({ staffMembers }) {
     const [selectedStaff, setSelectedStaff] = useState(null);
     const [deleting, setDeleting] = useState(false);
-
-    const { flash } = usePage().props;
 
     // Laravel pagination data
     const staffList = staffMembers?.data ?? [];
@@ -45,38 +43,25 @@ export default function Index({ staffMembers }) {
             <div className="space-y-6 p-6">
                 {/* Page Heading */}
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                         Staff Management
                     </h1>
 
-                    <p className="mt-1 text-sm text-gray-500">
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         Manage employee access and accounts.
                     </p>
                 </div>
 
-                {/* Flash Messages */}
-                {flash?.success && (
-                    <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
-                        {flash.success}
-                    </div>
-                )}
-
-                {flash?.error && (
-                    <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                        {flash.error}
-                    </div>
-                )}
-
                 {/* Staff Table Card */}
-                <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+                <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-[#0e172a]">
                     {/* Card Header */}
-                    <div className="flex flex-col justify-between gap-4 border-b border-gray-100 px-6 py-5 sm:flex-row sm:items-center">
+                    <div className="flex flex-col justify-between gap-4 border-b border-gray-100 px-6 py-5 dark:border-gray-800 sm:flex-row sm:items-center">
                         <div>
-                            <h2 className="text-lg font-semibold text-gray-900">
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                                 Staff Accounts
                             </h2>
 
-                            <p className="mt-1 text-sm text-gray-500">
+                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                                 {staffMembers?.total ?? staffList.length}{" "}
                                 employee accounts
                             </p>
@@ -93,38 +78,38 @@ export default function Index({ staffMembers }) {
 
                     {/* Table */}
                     <div className="overflow-x-auto">
-                        <table className="w-full min-w-[750px] divide-y divide-gray-100">
-                            <thead className="bg-gray-50">
+                        <table className="w-full min-w-[750px] divide-y divide-gray-100 dark:divide-gray-800">
+                            <thead className="bg-gray-50 dark:bg-[#080d18]">
                                 <tr>
-                                    <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                                         Staff Member
                                     </th>
 
-                                    <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                                         Email Address
                                     </th>
 
-                                    <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                                         Role
                                     </th>
 
-                                    <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
+                                    <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                                         Actions
                                     </th>
                                 </tr>
                             </thead>
 
-                            <tbody className="divide-y divide-gray-100 bg-white">
+                            <tbody className="divide-y divide-gray-100 bg-white dark:divide-gray-800 dark:bg-[#0e172a]">
                                 {staffList.length > 0 ? (
                                     staffList.map((staff) => (
                                         <tr
                                             key={staff.id}
-                                            className="transition hover:bg-gray-50"
+                                            className="transition hover:bg-gray-50 dark:hover:bg-gray-800/50"
                                         >
                                             {/* Staff Member */}
                                             <td className="whitespace-nowrap px-6 py-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700">
+                                                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-sm font-semibold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
                                                         {staff.name
                                                             ?.split(" ")
                                                             .map(
@@ -136,20 +121,20 @@ export default function Index({ staffMembers }) {
                                                             .toUpperCase()}
                                                     </div>
 
-                                                    <span className="text-sm font-semibold text-gray-900">
+                                                    <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                                                         {staff.name}
                                                     </span>
                                                 </div>
                                             </td>
 
                                             {/* Email */}
-                                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                                                 {staff.email}
                                             </td>
 
                                             {/* Role */}
                                             <td className="whitespace-nowrap px-6 py-4">
-                                                <span className="text-sm capitalize text-gray-600">
+                                                <span className="text-sm capitalize text-gray-600 dark:text-gray-300">
                                                     {staff.role}
                                                 </span>
                                             </td>
@@ -163,7 +148,7 @@ export default function Index({ staffMembers }) {
                                                             staff.id,
                                                         )}
                                                         title="Edit staff"
-                                                        className="rounded-md p-2 text-gray-500 transition hover:bg-indigo-50 hover:text-indigo-600"
+                                                        className="rounded-md p-2 text-gray-500 transition hover:bg-indigo-50 hover:text-indigo-600 dark:text-gray-400 dark:hover:bg-indigo-950/50"
                                                     >
                                                         <MdEdit size={21} />
                                                     </Link>
@@ -176,7 +161,7 @@ export default function Index({ staffMembers }) {
                                                             )
                                                         }
                                                         title="Delete staff"
-                                                        className="rounded-md p-2 text-gray-500 transition hover:bg-red-50 hover:text-red-600"
+                                                        className="rounded-md p-2 text-gray-500 transition hover:bg-red-50 hover:text-red-600 dark:text-gray-400 dark:hover:bg-red-950/50"
                                                     >
                                                         <MdDeleteOutline
                                                             size={21}
@@ -190,7 +175,7 @@ export default function Index({ staffMembers }) {
                                     <tr>
                                         <td
                                             colSpan="4"
-                                            className="px-6 py-12 text-center text-sm text-gray-500"
+                                            className="px-6 py-12 text-center text-sm text-gray-500 dark:text-gray-400"
                                         >
                                             No staff members found.
                                         </td>
@@ -202,8 +187,8 @@ export default function Index({ staffMembers }) {
 
                     {/* Pagination */}
                     {staffMembers?.links && staffMembers.last_page > 1 && (
-                        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 px-6 py-4">
-                            <p className="text-sm text-gray-500">
+                        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 px-6 py-4 dark:border-gray-800">
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
                                 Showing {staffMembers.from ?? 0} to{" "}
                                 {staffMembers.to ?? 0} of {staffMembers.total}{" "}
                                 staff members
@@ -219,8 +204,8 @@ export default function Index({ staffMembers }) {
                                             link.active
                                                 ? "bg-indigo-600 text-white"
                                                 : link.url
-                                                  ? "text-gray-600 hover:bg-gray-100"
-                                                  : "cursor-not-allowed text-gray-300"
+                                                  ? "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                                                  : "cursor-not-allowed text-gray-300 dark:text-gray-600"
                                         }`}
                                         onClick={(e) => {
                                             if (!link.url) e.preventDefault();
@@ -243,18 +228,18 @@ export default function Index({ staffMembers }) {
             <Modal show={!!selectedStaff} onClose={closeDeleteModal}>
                 <div className="p-6">
                     <div className="flex items-start gap-4">
-                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-300">
                             <MdDeleteOutline size={24} />
                         </div>
 
                         <div>
-                            <h2 className="text-lg font-semibold text-gray-900">
+                            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                                 Delete Staff Member
                             </h2>
 
-                            <p className="mt-2 text-sm text-gray-600">
+                            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
                                 Are you sure you want to delete{" "}
-                                <span className="font-semibold text-gray-900">
+                                <span className="font-semibold text-gray-900 dark:text-gray-100">
                                     {selectedStaff?.name}
                                 </span>
                                 ? This action cannot be undone.

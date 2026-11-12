@@ -1,0 +1,1 @@
+bash: shishir@Elysium:~/misProject/project/mis-inventory-management-system$: No such file or directory

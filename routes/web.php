@@ -40,11 +40,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/product/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
 });
 
-// report route
-Route::middleware(['auth', 'admin'])->group(function () {
-        Route::get('/reports', [ReportsController::class, 'index'])
-        ->name('reports.index');
-});
+// // report route
+// Route::middleware(['auth', 'admin'])->group(function () {
+//         Route::get('/reports', [ReportsController::class, 'index'])
+//         ->name('reports.index');
+// });
 
 
 
@@ -94,14 +94,21 @@ Route::middleware(['auth'])->group(function () {
         ->name('stock-history.index');
 });
 
-// reports 
-Route::get('/reports', [ReportsController::class, 'index'])
-    ->name('reports.index');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// Report routes - Admin only
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/reports', [ReportsController::class, 'index'])
+        ->name('reports.index');
+
+    Route::get('/reports/pdf-data', [ReportsController::class, 'pdfData'])
+        ->name('reports.pdf.data');
 });
 
 require __DIR__ . '/auth.php';

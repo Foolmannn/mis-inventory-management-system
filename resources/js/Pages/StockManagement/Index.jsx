@@ -40,14 +40,14 @@ export default function Index({
     <AuthenticatedLayout             
       header={
                 <div className="flex items-center gap-2 text-sm font-medium">
-                    <span className="text-slate-400">MyStore</span>
-                    <Icon name="arrow" className="h-4 w-4 text-slate-400" />
-                    <span className="text-slate-700">Stock Management</span>
+                    <span className="text-slate-400 dark:text-slate-500">MyStore</span>
+                    <Icon name="arrow" className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                    <span className="text-slate-700 dark:text-slate-200">Stock Management</span>
                 </div>
             }>
       <Head title="Stock Management" />
 
-      <div className="space-y-6 m-6">
+      <div className="m-4 space-y-6 sm:m-6">
 
         <Header />
 

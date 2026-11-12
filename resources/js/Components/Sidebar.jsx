@@ -50,14 +50,14 @@ const navigation = [
         icon: MdPeople,
         adminOnly: true,
     },
-    {
-        title: 'Settings',
-        routeName: null,
-        icon: MdSettings,
-    },
+    // {
+    //     title: 'Settings',
+    //     routeName: null,
+    //     icon: MdSettings,
+    // },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ mobileOpen, onClose }) {
     const { url, props } = usePage();
 
     const user = props.auth?.user;
@@ -77,6 +77,9 @@ export default function Sidebar() {
             dashboard: '/dashboard',
             'product.index': '/product',
             'category.index': '/category',
+            'stock-management.index': '/stock-management',
+            'stock-history.index': '/stock-history',
+            'reports.index': '/reports',
             'staff.index': '/staff',
         };
 
@@ -89,29 +92,34 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className="fixed inset-y-0 left-0 z-40 flex w-[250px] flex-col border-r border-slate-200 bg-white">
+        <aside
+            id="app-sidebar"
+            className={`fixed inset-y-0 left-0 z-50 flex w-[250px] max-w-[85vw] flex-col border-r border-slate-200 bg-white transition-transform duration-200 dark:border-slate-800 dark:bg-[#0e172a] lg:translate-x-0 ${
+                mobileOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
+        >
 
             {/* Brand */}
-            <div className="flex h-32 shrink-0 items-center gap-3 border-b border-slate-100 px-5">
+            <div className="flex h-32 shrink-0 items-center gap-3 border-b border-slate-100 dark:border-slate-800 px-5">
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-sm">
                     <MdInventory2 size={26} />
                 </div>
 
                 <div>
-                    <h1 className="text-lg font-bold tracking-tight text-slate-900">
+                    <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-slate-50">
                         MyStore
                     </h1>
 
-                    <p className="text-xs font-medium tracking-[0.18em] text-slate-400">
+                    <p className="text-xs font-medium tracking-[0.18em] text-slate-400 dark:text-slate-400">
                         INVENTORY
                     </p>
                 </div>
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 overflow-y-auto px-2 py-6">
+            <nav className="custom-scrollbar flex-1 overflow-y-auto px-2 py-6">
 
-                <p className="mb-4 px-4 text-xs font-bold tracking-[0.16em] text-slate-400">
+                <p className="mb-4 px-4 text-xs font-bold tracking-[0.16em] text-slate-400 dark:text-slate-200">
                     WORKSPACE
                 </p>
 
@@ -125,7 +133,7 @@ export default function Sidebar() {
                                 <div
                                     key={item.title}
                                     title="Coming soon"
-                                    className="flex cursor-not-allowed items-center gap-3 rounded-lg px-4 py-3 text-[15px] text-slate-400 opacity-70"
+                                    className="flex cursor-not-allowed items-center gap-3 rounded-lg px-4 py-3 text-[15px] text-slate-200 dark:text-slate-900 opacity-70"
                                 >
                                     <Icon size={21} />
                                     <span>{item.title}</span>
@@ -137,10 +145,11 @@ export default function Sidebar() {
                             <Link
                                 key={item.title}
                                 href={route(item.routeName)}
+                                onClick={onClose}
                                 className={`flex items-center gap-3 rounded-lg px-4 py-3 text-[15px] font-medium transition-all duration-200 ${
                                     active
-                                        ? 'bg-indigo-50 text-indigo-600'
-                                        : 'text-slate-600 hover:bg-slate-50 hover:text-indigo-600'
+                                        ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400'
+                                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-950 hover:text-indigo-600 dark:hover:text-indigo-400'
                                 }`}
                             >
                                 <Icon size={21} />
@@ -152,19 +161,20 @@ export default function Sidebar() {
             </nav>
 
             {/* User section */}
-            <div className="shrink-0 border-t border-slate-100 p-2">
+            <div className="shrink-0 border-t border-slate-100 dark:border-slate-800 p-2">
 
                 {/* Profile */}
                 <Link
                     href={route('profile.edit')}
-                    className="mb-2 flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-3 transition hover:bg-slate-100"
+                    onClick={onClose}
+                    className="mb-2 flex items-center gap-3 rounded-xl bg-slate-50 dark:bg-slate-950 px-3 py-3 transition hover:bg-slate-100 dark:hover:bg-slate-900"
                 >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 font-semibold text-indigo-600">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-900 font-semibold text-indigo-600 dark:text-indigo-400">
                         {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                     </div>
 
                     <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-slate-900">
+                        <p className="truncate text-sm font-semibold text-slate-900 dark:text-slate-100">
                             {user?.name || 'User'}
                         </p>
 
@@ -177,9 +187,10 @@ export default function Sidebar() {
                 {/* Logout */}
                 <Link
                     href={route('logout')}
+                    onClick={onClose}
                     method="post"
                     as="button"
-                    className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-slate-600 transition hover:bg-red-50 hover:text-red-600"
+                    className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-slate-600 dark:text-slate-400 transition hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-600 dark:hover:text-red-400"
                 >
                     <MdLogout size={21} />
                     Sign out

@@ -18,17 +18,17 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $purchasePrice = fake()->randomFloat(2, 50, 5000);
+        $purchasePrice = $this->faker->randomFloat(2, 50, 5000);
 
         return [
-            'name' => fake()->words(3, true),
-            'description' => fake()->sentence(),
+            'name' => $this->faker->words(3, true),
+            'description' => $this->faker->sentence(),
 
             'purchase_price' => $purchasePrice,
-            'selling_price' => $purchasePrice + fake()->randomFloat(2, 10, 1000),
+            'selling_price' => $purchasePrice + $this->faker->randomFloat(2, 10, 1000),
 
-            'quantity' => fake()->numberBetween(0, 200),
-            'minimum_stock' => fake()->numberBetween(5, 30),
+            'quantity' => $this->faker->numberBetween(0, 200),
+            'minimum_stock' => $this->faker->numberBetween(5, 30),
 
             'category_id' => Category::inRandomOrder()->value('id'),
         ];
