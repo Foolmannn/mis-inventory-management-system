@@ -88,7 +88,6 @@ The application follows Laravel's MVC architecture with an Inertia.js + React fr
 
 ## Screenshots
 
-> Screenshots can be found in `docs/screenshots/`.
 
 | Dashboard                                      |
 | ---------------------------------------------- |
